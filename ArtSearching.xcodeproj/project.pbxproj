@@ -25,6 +25,7 @@
 		2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB88F5E18FE7D16006880E7 /* LCYRenrenViewController.m */; };
 		2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F5F18FE7D16006880E7 /* LCYRenrenViewController.xib */; };
 		2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */; };
+		2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB88F6A18FE93E2006880E7 /* LCYCommon.m */; };
 		6121ECE95A5640A0A0145C43 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B09BA3E9159480CA5BCC9D9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +62,8 @@
 		2FB88F5E18FE7D16006880E7 /* LCYRenrenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenViewController.m; sourceTree = "<group>"; };
 		2FB88F5F18FE7D16006880E7 /* LCYRenrenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenViewController.xib; sourceTree = "<group>"; };
 		2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LCYRenrenLeftBarButton@2x.png"; sourceTree = "<group>"; };
+		2FB88F6918FE93E2006880E7 /* LCYCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYCommon.h; sourceTree = "<group>"; };
+		2FB88F6A18FE93E2006880E7 /* LCYCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYCommon.m; sourceTree = "<group>"; };
 		4B09BA3E9159480CA5BCC9D9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +131,7 @@
 		2FB88F2F18FE4723006880E7 /* ArtSearching */ = {
 			isa = PBXGroup;
 			children = (
+				2FB88F6818FE93AC006880E7 /* Common */,
 				2FB88F5C18FE7CFA006880E7 /* renren */,
 				2FB88F3818FE4723006880E7 /* LCYAppDelegate.h */,
 				2FB88F3918FE4723006880E7 /* LCYAppDelegate.m */,
@@ -192,6 +196,15 @@
 				2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */,
 			);
 			path = renren;
+			sourceTree = "<group>";
+		};
+		2FB88F6818FE93AC006880E7 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2FB88F6918FE93E2006880E7 /* LCYCommon.h */,
+				2FB88F6A18FE93E2006880E7 /* LCYCommon.m */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -328,6 +341,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
+				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
 				2FB88F3618FE4723006880E7 /* main.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,

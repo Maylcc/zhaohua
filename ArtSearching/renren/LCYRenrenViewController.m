@@ -7,6 +7,7 @@
 //
 
 #import "LCYRenrenViewController.h"
+#import "LCYCommon.h"
 
 @interface LCYRenrenViewController ()
 @property (strong, nonatomic) IBOutlet UIView *dataFerocious;
