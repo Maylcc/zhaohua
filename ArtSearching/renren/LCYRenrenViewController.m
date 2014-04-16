@@ -28,7 +28,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    // 修改按键
+    // 添加数据凶猛按钮
     UIBarButtonItem *leftNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.dataFerocious];
     self.navigationItem.leftBarButtonItem = leftNaviButton;
 }

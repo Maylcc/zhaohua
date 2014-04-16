@@ -26,6 +26,11 @@
 		2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F5F18FE7D16006880E7 /* LCYRenrenViewController.xib */; };
 		2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */; };
 		2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB88F6A18FE93E2006880E7 /* LCYCommon.m */; };
+		2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F6D18FE9D9A006880E7 /* tab_button1@2x.png */; };
+		2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F6F18FE9D9A006880E7 /* tab_button2@2x.png */; };
+		2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */; };
+		2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */; };
+		2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */; };
 		6121ECE95A5640A0A0145C43 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B09BA3E9159480CA5BCC9D9 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +69,11 @@
 		2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LCYRenrenLeftBarButton@2x.png"; sourceTree = "<group>"; };
 		2FB88F6918FE93E2006880E7 /* LCYCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYCommon.h; sourceTree = "<group>"; };
 		2FB88F6A18FE93E2006880E7 /* LCYCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYCommon.m; sourceTree = "<group>"; };
+		2FB88F6D18FE9D9A006880E7 /* tab_button1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button1@2x.png"; sourceTree = "<group>"; };
+		2FB88F6F18FE9D9A006880E7 /* tab_button2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button2@2x.png"; sourceTree = "<group>"; };
+		2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button3@2x.png"; sourceTree = "<group>"; };
+		2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4@2x.png"; sourceTree = "<group>"; };
+		2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4_in@2x.png"; sourceTree = "<group>"; };
 		4B09BA3E9159480CA5BCC9D9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +195,7 @@
 		2FB88F6418FE85E9006880E7 /* LCYAssets */ = {
 			isa = PBXGroup;
 			children = (
+				2FB88F6C18FE9D9A006880E7 /* global */,
 				2FB88F6518FE8603006880E7 /* renren */,
 			);
 			path = LCYAssets;
@@ -205,6 +216,18 @@
 				2FB88F6A18FE93E2006880E7 /* LCYCommon.m */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		2FB88F6C18FE9D9A006880E7 /* global */ = {
+			isa = PBXGroup;
+			children = (
+				2FB88F6D18FE9D9A006880E7 /* tab_button1@2x.png */,
+				2FB88F6F18FE9D9A006880E7 /* tab_button2@2x.png */,
+				2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */,
+				2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */,
+				2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */,
+			);
+			path = global;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,7 +310,12 @@
 			files = (
 				2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */,
 				2FB88F3418FE4723006880E7 /* InfoPlist.strings in Resources */,
+				2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */,
+				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
+				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
+				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
+				2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */,
 				2FB88F3F18FE4723006880E7 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
