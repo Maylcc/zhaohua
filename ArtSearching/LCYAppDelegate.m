@@ -7,6 +7,7 @@
 //
 
 #import "LCYAppDelegate.h"
+#import "LCYRenrenViewController.h"
 
 @implementation LCYAppDelegate
 
@@ -18,6 +19,10 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    LCYRenrenViewController *mainVC = [[LCYRenrenViewController alloc] init];
+    mainVC.title = @"人人策画";
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:mainVC];
+    self.window.rootViewController = navigation;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
