@@ -43,10 +43,10 @@
     
     if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
         [self.searchBarVerticalSpace setConstant:100];
-        NSLog(@"portrait");
+        NSLog(@"portrait 123");
     } else {
         [self.searchBarVerticalSpace setConstant:200];
-        NSLog(@"landscape");
+        NSLog(@"landscape 321");
     }
     
 }
