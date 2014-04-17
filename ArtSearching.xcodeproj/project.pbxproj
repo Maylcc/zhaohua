@@ -40,6 +40,7 @@
 		8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAF18FFA497002520D3 /* Icon_ios7@2x.png */; };
 		8B565BB618FFA497002520D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB018FFA497002520D3 /* Icon.png */; };
 		8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB118FFA497002520D3 /* Icon@2x.png */; };
+		8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB918FFA947002520D3 /* back_icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,9 @@
 		8B565BAF18FFA497002520D3 /* Icon_ios7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_ios7@2x.png"; sourceTree = "<group>"; };
 		8B565BB018FFA497002520D3 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		8B565BB118FFA497002520D3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		8B565BB918FFA947002520D3 /* back_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_icon@2x.png"; sourceTree = "<group>"; };
+		8B565BBB18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8B565BBC18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -251,6 +255,7 @@
 		8B565BA518FFA0A2002520D3 /* DataXM */ = {
 			isa = PBXGroup;
 			children = (
+				8B565BB818FFA902002520D3 /* MainDataList */,
 				8B565BAB18FFA47E002520D3 /* ImageResource */,
 				8B565BA618FFA0C3002520D3 /* DataListViewController.h */,
 				8B565BA718FFA0C3002520D3 /* DataListViewController.m */,
@@ -270,6 +275,14 @@
 				8B565BB118FFA497002520D3 /* Icon@2x.png */,
 			);
 			name = ImageResource;
+			sourceTree = "<group>";
+		};
+		8B565BB818FFA902002520D3 /* MainDataList */ = {
+			isa = PBXGroup;
+			children = (
+				8B565BB918FFA947002520D3 /* back_icon@2x.png */,
+			);
+			name = MainDataList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,6 +349,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 2FB88F1B18FE4723006880E7;
 			productRefGroup = 2FB88F2518FE4723006880E7 /* Products */;
@@ -363,6 +377,7 @@
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
 				8B565BB318FFA497002520D3 /* Default.png in Resources */,
+				8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */,
 				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
 				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
 				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
@@ -452,6 +467,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2FB88F3318FE4723006880E7 /* en */,
+				8B565BBB18FFACF4002520D3 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -460,6 +476,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2FB88F5018FE4724006880E7 /* en */,
+				8B565BBC18FFACF4002520D3 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
