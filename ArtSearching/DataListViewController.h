@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DataListViewController : UIViewController
-
+@interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    IBOutlet UITableView *dataTableV;
+}
 @end
