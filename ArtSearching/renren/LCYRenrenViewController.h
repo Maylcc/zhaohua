@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LCYRenrenViewController : UIViewController
-
+{
+    IBOutlet UIToolbar *tabBar;
+}
 @end
