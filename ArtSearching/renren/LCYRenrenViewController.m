@@ -8,7 +8,7 @@
 
 #import "LCYRenrenViewController.h"
 #import "LCYCommon.h"
-
+#import "DataListViewController.h"
 @interface LCYRenrenViewController ()
 /**
  *  数据凶猛按钮
@@ -51,6 +51,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [tabBar setHidden:NO];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -62,6 +68,10 @@
 #pragma mark -Actions
 - (IBAction)renrenLeftNaviButtonPressed:(id)sender{
     // TODO: 跳转到数据凶猛
+    DataListViewController *dataList = [[DataListViewController alloc] initWithNibName:NSStringFromClass([DataListViewController class]) bundle:nil];
+    [tabBar setHidden:YES];
+    [self.navigationController pushViewController:dataList animated:YES];
+    
 }
 
 - (IBAction)barButtonPressed:(id)sender {

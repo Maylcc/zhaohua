@@ -32,6 +32,14 @@
 		2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */; };
 		2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */; };
 		6121ECE95A5640A0A0145C43 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B09BA3E9159480CA5BCC9D9 /* libPods.a */; };
+		8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B565BA718FFA0C3002520D3 /* DataListViewController.m */; };
+		8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BA818FFA0C3002520D3 /* DataListViewController.xib */; };
+		8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAC18FFA497002520D3 /* Default-568h@2x.png */; };
+		8B565BB318FFA497002520D3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAD18FFA497002520D3 /* Default.png */; };
+		8B565BB418FFA497002520D3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAE18FFA497002520D3 /* Default@2x.png */; };
+		8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAF18FFA497002520D3 /* Icon_ios7@2x.png */; };
+		8B565BB618FFA497002520D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB018FFA497002520D3 /* Icon.png */; };
+		8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB118FFA497002520D3 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +83,15 @@
 		2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4@2x.png"; sourceTree = "<group>"; };
 		2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4_in@2x.png"; sourceTree = "<group>"; };
 		4B09BA3E9159480CA5BCC9D9 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B565BA618FFA0C3002520D3 /* DataListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataListViewController.h; sourceTree = "<group>"; };
+		8B565BA718FFA0C3002520D3 /* DataListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataListViewController.m; sourceTree = "<group>"; };
+		8B565BA818FFA0C3002520D3 /* DataListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataListViewController.xib; sourceTree = "<group>"; };
+		8B565BAC18FFA497002520D3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8B565BAD18FFA497002520D3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8B565BAE18FFA497002520D3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		8B565BAF18FFA497002520D3 /* Icon_ios7@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_ios7@2x.png"; sourceTree = "<group>"; };
+		8B565BB018FFA497002520D3 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		8B565BB118FFA497002520D3 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -141,6 +158,7 @@
 		2FB88F2F18FE4723006880E7 /* ArtSearching */ = {
 			isa = PBXGroup;
 			children = (
+				8B565BA518FFA0A2002520D3 /* DataXM */,
 				2FB88F6818FE93AC006880E7 /* Common */,
 				2FB88F5C18FE7CFA006880E7 /* renren */,
 				2FB88F3818FE4723006880E7 /* LCYAppDelegate.h */,
@@ -230,6 +248,30 @@
 			path = global;
 			sourceTree = "<group>";
 		};
+		8B565BA518FFA0A2002520D3 /* DataXM */ = {
+			isa = PBXGroup;
+			children = (
+				8B565BAB18FFA47E002520D3 /* ImageResource */,
+				8B565BA618FFA0C3002520D3 /* DataListViewController.h */,
+				8B565BA718FFA0C3002520D3 /* DataListViewController.m */,
+				8B565BA818FFA0C3002520D3 /* DataListViewController.xib */,
+			);
+			name = DataXM;
+			sourceTree = "<group>";
+		};
+		8B565BAB18FFA47E002520D3 /* ImageResource */ = {
+			isa = PBXGroup;
+			children = (
+				8B565BAC18FFA497002520D3 /* Default-568h@2x.png */,
+				8B565BAD18FFA497002520D3 /* Default.png */,
+				8B565BAE18FFA497002520D3 /* Default@2x.png */,
+				8B565BAF18FFA497002520D3 /* Icon_ios7@2x.png */,
+				8B565BB018FFA497002520D3 /* Icon.png */,
+				8B565BB118FFA497002520D3 /* Icon@2x.png */,
+			);
+			name = ImageResource;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -280,6 +322,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Duostec;
 				TargetAttributes = {
+					2FB88F2318FE4723006880E7 = {
+						DevelopmentTeam = ER62D3UHDE;
+					};
 					2FB88F4318FE4723006880E7 = {
 						TestTargetID = 2FB88F2318FE4723006880E7;
 					};
@@ -308,13 +353,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */,
+				8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */,
+				8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */,
 				2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */,
 				2FB88F3418FE4723006880E7 /* InfoPlist.strings in Resources */,
+				8B565BB418FFA497002520D3 /* Default@2x.png in Resources */,
 				2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */,
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
+				8B565BB318FFA497002520D3 /* Default.png in Resources */,
+				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
 				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
 				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
+				8B565BB618FFA497002520D3 /* Icon.png in Resources */,
 				2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */,
 				2FB88F3F18FE4723006880E7 /* Images.xcassets in Resources */,
 			);
@@ -368,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
 				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
@@ -490,9 +543,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArtSearching/ArtSearching-Prefix.pch";
 				INFOPLIST_FILE = "ArtSearching/ArtSearching-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -504,9 +559,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArtSearching/ArtSearching-Prefix.pch";
 				INFOPLIST_FILE = "ArtSearching/ArtSearching-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
