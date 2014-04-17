@@ -7,6 +7,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYRenrenViewController">
             <connections>
                 <outlet property="dataFerocious" destination="QiS-Cx-jJJ" id="i9G-88-YZf"/>
+                <outlet property="icySearchingBar" destination="4ri-oN-tfC" id="YNo-we-JPW"/>
+                <outlet property="searchBarVerticalSpace" destination="cWW-Su-pkS" id="Nfa-o2-lPK"/>
                 <outlet property="tabBar" destination="JqI-IZ-WM9" id="QW2-Vq-ufM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,36 +18,53 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-IZ-WM9">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-IZ-WM9">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="fat-ir-xYX"/>
-                    </constraints>
                     <items>
-                        <barButtonItem image="tab_button1.png" width="80" style="plain" id="JO8-Yl-te3">
+                        <barButtonItem tag="1" image="tab_button1.png" width="80" style="plain" id="JO8-Yl-te3">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="barButtonPressed:" destination="-1" id="WDO-SP-eWC"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="azc-P3-kOU"/>
-                        <barButtonItem image="tab_button2.png" width="80" style="plain" id="5z6-Me-Uvj">
+                        <barButtonItem tag="2" image="tab_button2.png" width="80" style="plain" id="5z6-Me-Uvj">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="barButtonPressed:" destination="-1" id="QjB-8i-dd2"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="QHB-6J-BCN"/>
-                        <barButtonItem image="tab_button3.png" width="80" style="plain" id="PEc-HN-HoA">
+                        <barButtonItem tag="3" image="tab_button3.png" width="80" style="plain" id="PEc-HN-HoA">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="barButtonPressed:" destination="-1" id="nJ4-67-a4m"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="eg6-GB-D9e"/>
-                        <barButtonItem image="tab_button4.png" width="80" style="plain" id="PZF-AI-8Rw">
+                        <barButtonItem tag="4" image="tab_button4.png" width="80" style="plain" id="PZF-AI-8Rw">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="barButtonPressed:" destination="-1" id="7gC-Ml-Eht"/>
+                            </connections>
                         </barButtonItem>
                     </items>
                 </toolbar>
+                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-oN-tfC">
+                    <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="DPG-8F-cmw"/>
+                    </constraints>
+                    <textInputTraits key="textInputTraits"/>
+                </searchBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="JqI-IZ-WM9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bl6-z9-2gt"/>
-                <constraint firstAttribute="bottom" secondItem="JqI-IZ-WM9" secondAttribute="bottom" id="cEz-y1-vZw"/>
-                <constraint firstAttribute="trailing" secondItem="JqI-IZ-WM9" secondAttribute="trailing" id="m7a-yX-QsG"/>
+                <constraint firstItem="4ri-oN-tfC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Cha-sI-tuX"/>
+                <constraint firstAttribute="trailing" secondItem="4ri-oN-tfC" secondAttribute="trailing" id="Se0-qS-Wku"/>
+                <constraint firstItem="4ri-oN-tfC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="cWW-Su-pkS"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
