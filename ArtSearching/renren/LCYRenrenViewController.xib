@@ -7,12 +7,9 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYRenrenViewController">
             <connections>
                 <outlet property="dataFerocious" destination="QiS-Cx-jJJ" id="i9G-88-YZf"/>
-<<<<<<< HEAD
                 <outlet property="icySearchingBar" destination="4ri-oN-tfC" id="YNo-we-JPW"/>
                 <outlet property="searchBarVerticalSpace" destination="cWW-Su-pkS" id="Nfa-o2-lPK"/>
-=======
                 <outlet property="tabBar" destination="JqI-IZ-WM9" id="QW2-Vq-ufM"/>
->>>>>>> pr/2
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

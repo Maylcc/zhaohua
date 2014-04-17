@@ -25,11 +25,9 @@
     self.window.rootViewController = navigation;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-<<<<<<< HEAD
-=======
+
     NSLog(@"gg");
     NSLog(@"test");
->>>>>>> pr/2
     return YES;
 }
 
