@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5D2916E0-41A9-4A08-B5B2-C51A91CC9C6C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ArtSearching</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2F1058FA-7DD1-4652-9762-17D613758878</key>
+		<string>https://github.com/duostec/zhaohua.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ArtSearching.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2F1058FA-7DD1-4652-9762-17D613758878</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/duostec/zhaohua.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2F1058FA-7DD1-4652-9762-17D613758878</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2F1058FA-7DD1-4652-9762-17D613758878</string>
+			<key>IDESourceControlWCCName</key>
+			<string>zhaohua</string>
+		</dict>
+	</array>
+</dict>
+</plist>
