@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -8,6 +8,11 @@
             <connections>
                 <outlet property="dataFerocious" destination="QiS-Cx-jJJ" id="i9G-88-YZf"/>
                 <outlet property="icySearchingBar" destination="4ri-oN-tfC" id="9If-sF-bsN"/>
+                <outlet property="icyTableView" destination="r8c-Oo-SYB" id="18D-Ac-e27"/>
+                <outlet property="leftImageView" destination="Uoc-Sh-Egq" id="3s8-7X-YPM"/>
+                <outlet property="leftLabel" destination="y6S-Dr-XLh" id="Gzy-b9-2JH"/>
+                <outlet property="rightImageView" destination="Q8g-LK-Gvu" id="YpX-4T-GHT"/>
+                <outlet property="rightLabel" destination="1gs-rr-WNK" id="Lcd-4v-ONG"/>
                 <outlet property="searchBarVerticalSpace" destination="cWW-Su-pkS" id="Nfa-o2-lPK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -53,7 +58,7 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-oN-tfC">
+                <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-oN-tfC">
                     <rect key="frame" x="0.0" y="64" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -65,6 +70,10 @@
                     <rect key="frame" x="0.0" y="158" width="320" height="366"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Ek3-F0-Ivi"/>
+                        <outlet property="delegate" destination="-1" id="qbn-DP-cpJ"/>
+                    </connections>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfP-Hh-wWv">
                     <rect key="frame" x="0.0" y="108" width="320" height="50"/>
@@ -89,7 +98,7 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHv-GX-fN4">
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHv-GX-fN4">
                                     <rect key="frame" x="0.0" y="0.0" width="110" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal">
@@ -105,6 +114,61 @@
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbj-sF-TiV">
                             <rect key="frame" x="0.0" y="0.0" width="210" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="all_ex_left_filled.png" translatesAutoresizingMaskIntoConstraints="NO" id="Uoc-Sh-Egq">
+                                    <rect key="frame" x="20" y="15" width="85" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="all_ex_right_blank.png" translatesAutoresizingMaskIntoConstraints="NO" id="Q8g-LK-Gvu">
+                                    <rect key="frame" x="105" y="15" width="85" height="20"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="所有展览" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y6S-Dr-XLh">
+                                    <rect key="frame" x="37" y="14" width="50" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的展览" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gs-rr-WNK">
+                                    <rect key="frame" x="113" y="15" width="50" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" red="0.39607846736907959" green="0.59215688705444336" blue="0.19215688109397888" alpha="1" colorSpace="deviceRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="all_ex_right_badge.png" translatesAutoresizingMaskIntoConstraints="NO" id="wCB-KD-Qna">
+                                    <rect key="frame" x="169" y="19" width="12" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfa-B5-d2x">
+                                    <rect key="frame" x="163" y="19" width="24" height="12"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WFC-Ze-nCc">
+                                    <rect key="frame" x="0.0" y="0.0" width="105" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="allExButtonPressed:" destination="-1" eventType="touchUpInside" id="aZz-Xk-VJU"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ro7-Xw-gJV">
+                                    <rect key="frame" x="105" y="0.0" width="105" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="myExButtonPressed:" destination="-1" eventType="touchUpInside" id="GKV-5d-e7c"/>
+                                    </connections>
+                                </button>
+                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
@@ -157,6 +221,9 @@
     </objects>
     <resources>
         <image name="LCYRenrenLeftBarButton.png" width="19" height="19"/>
+        <image name="all_ex_left_filled.png" width="85" height="20"/>
+        <image name="all_ex_right_badge.png" width="12" height="12"/>
+        <image name="all_ex_right_blank.png" width="85" height="20"/>
         <image name="i_want_build_bg1.png" width="77" height="19"/>
         <image name="i_want_build_plus.png" width="13" height="13"/>
         <image name="tab_button1.png" width="80" height="49"/>
