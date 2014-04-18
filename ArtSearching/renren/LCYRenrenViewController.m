@@ -41,21 +41,9 @@
     UIBarButtonItem *leftNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.dataFerocious];
     self.navigationItem.leftBarButtonItem = leftNaviButton;
     
-    if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
-        [self.searchBarVerticalSpace setConstant:100];
-        NSLog(@"portrait 123");
-    } else {
-        [self.searchBarVerticalSpace setConstant:200];
-        NSLog(@"landscape 321");
-    }
     NSLog(@"%@",hostURLPrefix);
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [tabBar setHidden:NO];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -69,7 +57,6 @@
 - (IBAction)renrenLeftNaviButtonPressed:(id)sender{
     // TODO: 跳转到数据凶猛
     DataListViewController *dataList = [[DataListViewController alloc] initWithNibName:NSStringFromClass([DataListViewController class]) bundle:nil];
-    [tabBar setHidden:YES];
     [self.navigationController pushViewController:dataList animated:YES];
     
 }
