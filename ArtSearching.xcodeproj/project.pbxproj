@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA571900D1B50053B15D /* i_want_build_bg1@2x.png */; };
+		2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA581900D1B50053B15D /* i_want_build_plus@2x.png */; };
 		2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2718FE4723006880E7 /* Foundation.framework */; };
 		2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2918FE4723006880E7 /* CoreGraphics.framework */; };
 		2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2B18FE4723006880E7 /* UIKit.framework */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2820EA571900D1B50053B15D /* i_want_build_bg1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_want_build_bg1@2x.png"; sourceTree = "<group>"; };
+		2820EA581900D1B50053B15D /* i_want_build_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_want_build_plus@2x.png"; sourceTree = "<group>"; };
 		2FB88F2418FE4723006880E7 /* ArtSearching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSearching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB88F2718FE4723006880E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FB88F2918FE4723006880E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -229,6 +233,8 @@
 		2FB88F6518FE8603006880E7 /* renren */ = {
 			isa = PBXGroup;
 			children = (
+				2820EA571900D1B50053B15D /* i_want_build_bg1@2x.png */,
+				2820EA581900D1B50053B15D /* i_want_build_plus@2x.png */,
 				2FB88F6618FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png */,
 			);
 			path = renren;
@@ -398,9 +404,11 @@
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
 				8B565BB318FFA497002520D3 /* Default.png in Resources */,
+				2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */,
 				8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */,
 				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
 				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
+				2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */,
 				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
 				8B565BB618FFA497002520D3 /* Icon.png in Resources */,
 				2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */,

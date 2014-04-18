@@ -67,4 +67,10 @@
 }
 
 
+- (IBAction)iWantButtonPressed:(id)sender {
+    NSLog(@"我要策展");
+}
+
+
+
 @end
