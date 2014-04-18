@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking/AFNetworking.h>
+#import "LCYCommon.h"
+#import "ZXYProvider.h"
+@interface NetConnect : NSObject<NSXMLParserDelegate>
+{
+    ZXYProvider *dataProvider;
+}
++(NetConnect *)sharedSelf;
 
-@interface NetConnect : NSObject
-
+-(void)obtainStartList;
 @end

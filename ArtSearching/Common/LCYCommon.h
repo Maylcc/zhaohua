@@ -17,5 +17,5 @@ CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 
 #pragma mark - 凶猛的数据
 CA_EXTERN NSString *const hostForXM;
 CA_EXTERN NSString *const startList;
-
+CA_EXTERN NSString *const imageHost;
 @end
