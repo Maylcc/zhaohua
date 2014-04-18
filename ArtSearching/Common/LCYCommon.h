@@ -12,4 +12,8 @@
 
 CA_EXTERN NSString *const hostURLPrefix;   /**< 接口URL前缀 */
 
+#pragma mark - 凶猛的数据
+CA_EXTERN NSString *const hostForXM;
+CA_EXTERN NSString *const startList;
+
 @end

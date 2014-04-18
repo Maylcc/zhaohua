@@ -48,7 +48,7 @@
         [self.searchBarVerticalSpace setConstant:200];
         NSLog(@"landscape 321");
     }
-    
+    NSLog(@"%@",hostURLPrefix);
 }
 
 - (void)viewWillAppear:(BOOL)animated

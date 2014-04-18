@@ -34,6 +34,7 @@
     [backBtn addTarget:self action:@selector(backView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
+    [self obtainAllStartData];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -43,10 +44,23 @@
     // Dispose of any resources txvhat can be recreated.
 }
 
+- (void)obtainAllStartData
+{
+    NSString *hostUrl = [NSString stringWithFormat:@"%@%@",hostForXM,startList];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:hostUrl]];
+    AFHTTPRequestOperation *operate = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operate setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"success string is %@",operation.responseString);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"fail string is %@",operation.responseString);
+    }];
+    [operate start];
+}
+
 #pragma mark - table代理以及数据源
 //-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{
-//   
+//    return 0 ;
 //}
 //
 //-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

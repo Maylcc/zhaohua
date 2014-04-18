@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import <AFNetworking/AFNetworking.h>
+#import "LCYCommon.h"
 @interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UITableView *dataTableV;
