@@ -56,6 +56,10 @@
     [self saveContext];
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 - (void)saveContext
 {
     NSError *error = nil;

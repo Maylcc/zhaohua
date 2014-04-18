@@ -10,7 +10,9 @@
 
 @interface LCYCommon : NSObject
 
-CA_EXTERN NSString *const hostURLPrefix;   /**< 接口URL前缀 */
+CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
+CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
+CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 */
 
 #pragma mark - 凶猛的数据
 CA_EXTERN NSString *const hostForXM;
