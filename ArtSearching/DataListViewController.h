@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <AFNetworking/AFNetworking.h>
 #import "LCYCommon.h"
+#import "NetConnect.h"
+#import "ZXYProvider.h"
 @interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UITableView *dataTableV;
+    ZXYProvider *dataProvider;
+    NetConnect *netConnect;
+    NSArray *arrArtList;
+    NSArray *arrArtistsList;
+    NSArray *arrGalleryList;
 }
 @end
