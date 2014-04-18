@@ -17,9 +17,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-IZ-WM9">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JqI-IZ-WM9">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="QrA-pX-JLe"/>
+                    </constraints>
                     <items>
                         <barButtonItem tag="1" image="tab_button1.png" width="80" style="plain" id="JO8-Yl-te3">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,12 +61,74 @@
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
                 </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="r8c-Oo-SYB">
+                    <rect key="frame" x="0.0" y="158" width="320" height="366"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yfP-Hh-wWv">
+                    <rect key="frame" x="0.0" y="108" width="320" height="50"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hys-8y-kVI">
+                            <rect key="frame" x="210" y="0.0" width="110" height="50"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="i_want_build_bg1.png" translatesAutoresizingMaskIntoConstraints="NO" id="K9U-Vm-cjZ">
+                                    <rect key="frame" x="17" y="15" width="77" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="i_want_build_plus.png" translatesAutoresizingMaskIntoConstraints="NO" id="9gC-bh-8BR">
+                                    <rect key="frame" x="22" y="18" width="13" height="13"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我要策展" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MbA-mc-yTA">
+                                    <rect key="frame" x="37" y="13" width="51" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lHv-GX-fN4">
+                                    <rect key="frame" x="0.0" y="0.0" width="110" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="iWantButtonPressed:" destination="-1" eventType="touchUpInside" id="M6W-9a-ptN"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbj-sF-TiV">
+                            <rect key="frame" x="0.0" y="0.0" width="210" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="hk0-CI-gtV"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="JqI-IZ-WM9" firstAttribute="top" secondItem="r8c-Oo-SYB" secondAttribute="bottom" id="7ka-qv-yLN"/>
+                <constraint firstAttribute="trailing" secondItem="JqI-IZ-WM9" secondAttribute="trailing" id="AGW-zm-0jO"/>
+                <constraint firstItem="yfP-Hh-wWv" firstAttribute="top" secondItem="4ri-oN-tfC" secondAttribute="bottom" id="CSg-2k-q6E"/>
                 <constraint firstItem="4ri-oN-tfC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Cha-sI-tuX"/>
+                <constraint firstItem="r8c-Oo-SYB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Neu-ZO-dSo"/>
                 <constraint firstAttribute="trailing" secondItem="4ri-oN-tfC" secondAttribute="trailing" id="Se0-qS-Wku"/>
+                <constraint firstItem="JqI-IZ-WM9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TgX-KJ-RMd"/>
+                <constraint firstItem="yfP-Hh-wWv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XRh-uZ-E5w"/>
+                <constraint firstAttribute="trailing" secondItem="yfP-Hh-wWv" secondAttribute="trailing" id="Y08-wA-hBs"/>
+                <constraint firstAttribute="trailing" secondItem="r8c-Oo-SYB" secondAttribute="trailing" id="ZYx-6G-18V"/>
                 <constraint firstItem="4ri-oN-tfC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="cWW-Su-pkS"/>
+                <constraint firstAttribute="bottom" secondItem="JqI-IZ-WM9" secondAttribute="bottom" id="ot3-OS-OMF"/>
+                <constraint firstItem="r8c-Oo-SYB" firstAttribute="top" secondItem="yfP-Hh-wWv" secondAttribute="bottom" id="sgc-Xb-GVx"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -92,6 +157,8 @@
     </objects>
     <resources>
         <image name="LCYRenrenLeftBarButton.png" width="19" height="19"/>
+        <image name="i_want_build_bg1.png" width="77" height="19"/>
+        <image name="i_want_build_plus.png" width="13" height="13"/>
         <image name="tab_button1.png" width="80" height="49"/>
         <image name="tab_button2.png" width="80" height="49"/>
         <image name="tab_button3.png" width="80" height="49"/>
