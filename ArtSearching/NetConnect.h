@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <AFNetworking/AFNetworking.h>
+#import "LCYCommon.h"
 @interface NetConnect : NSObject
++(NetConnect *)sharedSelf;
 
+-(void)obtainStartList;
 @end

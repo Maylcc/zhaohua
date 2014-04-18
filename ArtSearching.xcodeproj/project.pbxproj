@@ -41,6 +41,7 @@
 		8B565BB618FFA497002520D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB018FFA497002520D3 /* Icon.png */; };
 		8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB118FFA497002520D3 /* Icon@2x.png */; };
 		8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB918FFA947002520D3 /* back_icon@2x.png */; };
+		8B565BC118FFDAB8002520D3 /* NetConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B565BC018FFDAB8002520D3 /* NetConnect.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,8 @@
 		8B565BB918FFA947002520D3 /* back_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_icon@2x.png"; sourceTree = "<group>"; };
 		8B565BBB18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		8B565BBC18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8B565BBF18FFDAB8002520D3 /* NetConnect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetConnect.h; sourceTree = "<group>"; };
+		8B565BC018FFDAB8002520D3 /* NetConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetConnect.m; sourceTree = "<group>"; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -255,6 +258,8 @@
 		8B565BA518FFA0A2002520D3 /* DataXM */ = {
 			isa = PBXGroup;
 			children = (
+				8B565BBE18FFD963002520D3 /* DataProvider */,
+				8B565BBD18FFD95A002520D3 /* NetConnect */,
 				8B565BB818FFA902002520D3 /* MainDataList */,
 				8B565BAB18FFA47E002520D3 /* ImageResource */,
 				8B565BA618FFA0C3002520D3 /* DataListViewController.h */,
@@ -283,6 +288,22 @@
 				8B565BB918FFA947002520D3 /* back_icon@2x.png */,
 			);
 			name = MainDataList;
+			sourceTree = "<group>";
+		};
+		8B565BBD18FFD95A002520D3 /* NetConnect */ = {
+			isa = PBXGroup;
+			children = (
+				8B565BBF18FFDAB8002520D3 /* NetConnect.h */,
+				8B565BC018FFDAB8002520D3 /* NetConnect.m */,
+			);
+			name = NetConnect;
+			sourceTree = "<group>";
+		};
+		8B565BBE18FFD963002520D3 /* DataProvider */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = DataProvider;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -440,6 +461,7 @@
 				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
 				2FB88F3618FE4723006880E7 /* main.m in Sources */,
+				8B565BC118FFDAB8002520D3 /* NetConnect.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

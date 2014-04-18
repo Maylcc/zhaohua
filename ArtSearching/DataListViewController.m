@@ -46,15 +46,7 @@
 
 - (void)obtainAllStartData
 {
-    NSString *hostUrl = [NSString stringWithFormat:@"%@%@",hostForXM,startList];
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:hostUrl]];
-    AFHTTPRequestOperation *operate = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operate setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"success string is %@",operation.responseString);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"fail string is %@",operation.responseString);
-    }];
-    [operate start];
+   
 }
 
 #pragma mark - table代理以及数据源

@@ -41,13 +41,13 @@
     UIBarButtonItem *leftNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.dataFerocious];
     self.navigationItem.leftBarButtonItem = leftNaviButton;
     
-    if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
-        [self.searchBarVerticalSpace setConstant:100];
-        NSLog(@"portrait 123");
-    } else {
-        [self.searchBarVerticalSpace setConstant:200];
-        NSLog(@"landscape 321");
-    }
+//    if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
+//        [self.searchBarVerticalSpace setConstant:100];
+//        NSLog(@"portrait 123");
+//    } else {
+//        [self.searchBarVerticalSpace setConstant:200];
+//        NSLog(@"landscape 321");
+//    }
     NSLog(@"%@",hostURLPrefix);
 }
 
