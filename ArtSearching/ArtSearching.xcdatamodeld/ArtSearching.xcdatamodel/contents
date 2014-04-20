@@ -2,33 +2,33 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13C64" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="StartArtistsList" representedClassName="StartArtistsList" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="beScanTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="beStoreTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id_Art" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beScanTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="beStoreTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id_Art" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_small" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="workCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="StartArtList" representedClassName="StartArtList" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="beScanTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="beStoreTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id_Art" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beScanTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="beStoreTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id_Art" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url_Small" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="StartGalleryList" representedClassName="StartGalleryList" syncable="YES">
-        <attribute name="beScanTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="beStoreTime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id_Art" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beScanTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="beStoreTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="id_Art" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="workCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="workCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
         <element name="StartArtistsList" positionX="-63" positionY="-18" width="128" height="148"/>
-        <element name="StartArtList" positionX="-54" positionY="45" width="128" height="148"/>
+        <element name="StartArtList" positionX="-54" positionY="45" width="128" height="150"/>
         <element name="StartGalleryList" positionX="-36" positionY="81" width="128" height="133"/>
     </elements>
 </model>

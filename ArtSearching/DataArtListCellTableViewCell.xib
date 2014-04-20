@@ -78,9 +78,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placehold_image.png" translatesAutoresizingMaskIntoConstraints="NO" id="j5C-pM-A5D">
-                        <rect key="frame" x="15" y="48" width="290" height="150"/>
+                        <rect key="frame" x="15" y="59" width="290" height="139"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </imageView>
                 </subviews>
             </tableViewCellContentView>
