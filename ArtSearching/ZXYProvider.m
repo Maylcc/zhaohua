@@ -127,6 +127,49 @@ static ZXYProvider *instance = nil;
 
 }
 
+-(NSArray *)readCoreDataFromDB:(NSString *)stringName isDes:(BOOL)isDes orderByKey:(id)stringKey, ...
+{
+    NSMutableArray *paramsArr = [[NSMutableArray alloc] init];
+    va_list params;
+    va_start(params, stringKey);
+    id arg ;
+    if(stringKey)
+    {
+        id startString = stringKey;
+        [paramsArr addObject:startString];
+        while ((arg = va_arg(params, id))) {
+            if(arg)
+            {
+                [paramsArr addObject:arg];
+            }
+        }
+        va_end(params);
+    }
+    LCYAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *manageContext = [app managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:stringName inManagedObjectContext:manageContext ];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSMutableArray *sortArr = [[NSMutableArray alloc] init];
+    for(int i = 0;i<paramsArr.count;i++)
+    {
+        NSSortDescriptor *des = [NSSortDescriptor sortDescriptorWithKey:[paramsArr objectAtIndex:i] ascending:isDes];
+        [sortArr addObject:des];
+    }
+    [request setSortDescriptors:sortArr];
+    [request setEntity:entity];
+    NSError *error;
+    NSArray *resultArr = [manageContext executeFetchRequest:request error:&error];
+    if(error)
+    {
+        NSAssert(error, @"readCoreDataFromDB: error");
+        return nil;
+    }
+    else
+    {
+        return resultArr;
+    }
+
+}
 #pragma mark - save
 -(BOOL)saveDataToCoreData:(NSDictionary *)dic withDBName:(NSString *)dbName
 {
@@ -147,6 +190,7 @@ static ZXYProvider *instance = nil;
      }
      else
      {
+         //NSArray *arr = [NSArray arrayWithObjects:<#(id), ...#>, nil]
 //         NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
 //         [[NSNotificationCenter defaultCenter] postNotification:noti];
          return YES;
