@@ -18,6 +18,11 @@
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
 		28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */; };
+		28DB54D11904A9E100E4734D /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54CE1904A9E100E4734D /* renren_admire@2x.png */; };
+		28DB54D21904A9E100E4734D /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54CF1904A9E100E4734D /* renren_comment@2x.png */; };
+		28DB54D31904A9E100E4734D /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54D01904A9E100E4734D /* renren_share@2x.png */; };
+		28DB54D71904C05C00E4734D /* LCYBuildExhibitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DB54D51904C05C00E4734D /* LCYBuildExhibitionViewController.m */; };
+		28DB54D81904C05C00E4734D /* LCYBuildExhibitionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54D61904C05C00E4734D /* LCYBuildExhibitionViewController.xib */; };
 		2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2718FE4723006880E7 /* Foundation.framework */; };
 		2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2918FE4723006880E7 /* CoreGraphics.framework */; };
 		2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2B18FE4723006880E7 /* UIKit.framework */; };
@@ -95,6 +100,12 @@
 		28A997D4190125C000A09E17 /* LCYRenrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRenrenTableViewCell.h; sourceTree = "<group>"; };
 		28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenTableViewCell.m; sourceTree = "<group>"; };
 		28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenTableViewCell.xib; sourceTree = "<group>"; };
+		28DB54CE1904A9E100E4734D /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
+		28DB54CF1904A9E100E4734D /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
+		28DB54D01904A9E100E4734D /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		28DB54D41904C05C00E4734D /* LCYBuildExhibitionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYBuildExhibitionViewController.h; sourceTree = "<group>"; };
+		28DB54D51904C05C00E4734D /* LCYBuildExhibitionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYBuildExhibitionViewController.m; sourceTree = "<group>"; };
+		28DB54D61904C05C00E4734D /* LCYBuildExhibitionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYBuildExhibitionViewController.xib; sourceTree = "<group>"; };
 		2FB88F2418FE4723006880E7 /* ArtSearching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSearching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB88F2718FE4723006880E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FB88F2918FE4723006880E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -280,6 +291,9 @@
 				28A997D4190125C000A09E17 /* LCYRenrenTableViewCell.h */,
 				28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */,
 				28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */,
+				28DB54D41904C05C00E4734D /* LCYBuildExhibitionViewController.h */,
+				28DB54D51904C05C00E4734D /* LCYBuildExhibitionViewController.m */,
+				28DB54D61904C05C00E4734D /* LCYBuildExhibitionViewController.xib */,
 			);
 			path = renren;
 			sourceTree = "<group>";
@@ -296,6 +310,9 @@
 		2FB88F6518FE8603006880E7 /* renren */ = {
 			isa = PBXGroup;
 			children = (
+				28DB54CE1904A9E100E4734D /* renren_admire@2x.png */,
+				28DB54CF1904A9E100E4734D /* renren_comment@2x.png */,
+				28DB54D01904A9E100E4734D /* renren_share@2x.png */,
 				2820EA631900F1200053B15D /* all_ex_right_badge@2x.png */,
 				2820EA5B1900F0C30053B15D /* all_ex_left_blank@2x.png */,
 				2820EA5C1900F0C30053B15D /* all_ex_left_filled@2x.png */,
@@ -491,6 +508,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28DB54D31904A9E100E4734D /* renren_share@2x.png in Resources */,
 				8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */,
 				8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */,
 				8B6E96D119013663006E6752 /* DataArtListCellTableViewCell.xib in Resources */,
@@ -498,6 +516,7 @@
 				8B6E96C91901364B006E6752 /* hotPoint_data@2x.png in Resources */,
 				8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */,
 				2820EA5F1900F0C30053B15D /* all_ex_left_blank@2x.png in Resources */,
+				28DB54D21904A9E100E4734D /* renren_comment@2x.png in Resources */,
 				8B6E96C61901364B006E6752 /* artist_Attention@2x.png in Resources */,
 				8B6E96C51901364B006E6752 /* 22@2x.png in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,
@@ -506,6 +525,7 @@
 				8B565BB418FFA497002520D3 /* Default@2x.png in Resources */,
 				2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */,
 				28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */,
+				28DB54D81904C05C00E4734D /* LCYBuildExhibitionViewController.xib in Resources */,
 				8B6E96C41901364B006E6752 /* 1_07@2x.png in Resources */,
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2820EA601900F0C30053B15D /* all_ex_left_filled@2x.png in Resources */,
@@ -515,6 +535,7 @@
 				2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */,
 				8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */,
 				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
+				28DB54D11904A9E100E4734D /* renren_admire@2x.png in Resources */,
 				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
 				2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */,
 				2820EA611900F0C30053B15D /* all_ex_right_blank@2x.png in Resources */,
@@ -577,6 +598,7 @@
 			files = (
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				8B6E96E4190136E8006E6752 /* StartArtistsList.m in Sources */,
+				28DB54D71904C05C00E4734D /* LCYBuildExhibitionViewController.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,

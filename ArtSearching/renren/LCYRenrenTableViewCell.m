@@ -31,4 +31,31 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - Actions
+/**
+ *  评论
+ *
+ *  @param sender 按钮
+ */
+- (IBAction)commentButtonPressed:(id)sender {
+    NSLog(@"comment button pressed");
+}
+/**
+ *  欣赏
+ *
+ *  @param sender 按钮
+ */
+- (IBAction)enjoyButtonPressed:(id)sender {
+    NSLog(@"enjoy button pressed");
+}
+/**
+ *  分享
+ *
+ *  @param sender 按钮
+ */
+- (IBAction)shareButtonPressed:(id)sender {
+    NSLog(@"share button pressed");
+}
+
+
 @end
