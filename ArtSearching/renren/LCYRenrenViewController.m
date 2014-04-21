@@ -10,6 +10,8 @@
 #import "LCYCommon.h"
 #import "DataListViewController.h"
 #import "LCYDataModels.h"
+#import "LCYRenrenTableViewCell.h"
+#import "LCYBuildExhibitionViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
@@ -35,6 +37,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 @interface LCYRenrenViewController ()
 {
     LCYRenrenSegStatus currentStatus;
+    BOOL isRenrenTableViewCellRegistered;
 }
 
 /**
@@ -90,6 +93,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     self.navigationItem.leftBarButtonItem = leftNaviButton;
     
     currentStatus = LCYRenrenSegStatusAll;
+    isRenrenTableViewCellRegistered = NO;
     
     [self loadExData];
 }
@@ -103,7 +107,6 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 
 - (void)loadExData{
     NSString *URLString = [NSString stringWithFormat:@"%@%@",hostURLPrefix,ActivityList];
-    NSLog(@"%@",URLString);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
@@ -137,6 +140,9 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
  */
 - (IBAction)iWantButtonPressed:(id)sender {
     NSLog(@"我要策展");
+    LCYBuildExhibitionViewController *buildVC = [[LCYBuildExhibitionViewController alloc] init];
+    buildVC.title = @"我要策展";
+    [self.navigationController pushViewController:buildVC animated:YES];
 }
 /**
  *  所有展览
@@ -151,6 +157,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
         self.rightImageView.image = [UIImage imageNamed:@"all_ex_right_blank.png"];
         [self.rightLabel setTextColor:[UIColor RenrenGreen]];
         currentStatus = LCYRenrenSegStatusAll;
+        [self reloadTableView];
     }
 }
 /**
@@ -166,7 +173,12 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
         self.rightImageView.image = [UIImage imageNamed:@"all_ex_right_filled.png"];
         [self.rightLabel setTextColor:[UIColor whiteColor]];
         currentStatus = LCYRenrenSegStatusMine;
+        [self reloadTableView];
     }
+}
+
+- (void)reloadTableView{
+    [self.icyTableView reloadData];
 }
 #pragma mark - NSXMLParserDelegate
 
@@ -184,11 +196,46 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
                                                                  options:kNilOptions
                                                                    error:&error];
     self.activityListBase = [LCYActivityListBase modelObjectWithDictionary:jsonResponse];
+    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - UITableView Data Source and Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 0;
+    if (!self.activityListBase) {
+        return 0;
+    }
+    else{
+        if (currentStatus == LCYRenrenSegStatusAll) {
+            return [self.activityListBase.activityList count];
+        } else{
+            return 0;
+        }
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"renrenTableViewIdentifier";
+    
+    if (currentStatus == LCYRenrenSegStatusAll) {
+        if (!isRenrenTableViewCellRegistered) {
+            UINib *nib = [UINib nibWithNibName:@"LCYRenrenTableViewCell" bundle:nil];
+            [tableView registerNib:nib forCellReuseIdentifier:identifier];
+            isRenrenTableViewCellRegistered = YES;
+        }
+        LCYRenrenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        return cell;
+    } else {
+        return nil;
+    }
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 420.0;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"select row at row: %ld",(long)indexPath.row);
 }
 
 @end
