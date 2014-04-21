@@ -7,6 +7,8 @@
 //
 
 #import "NetConnect.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+#import "DownLoadPictureOperation.h"
 @interface NetConnect()
 {
     BOOL isStringElement;
@@ -15,12 +17,15 @@
 @end
 @implementation NetConnect
 static NetConnect *netConnect;
+static NSOperationQueue *queue;
 + (NetConnect *)sharedSelf
 {
     @synchronized(self)
     {
         if(netConnect == nil)
         {
+            queue = [[NSOperationQueue alloc] init];
+            [queue setMaxConcurrentOperationCount:1];
             return [[self alloc] init];
         }
     }
@@ -36,13 +41,18 @@ static NetConnect *netConnect;
     }
     return nil;
 }
+#pragma mark - 判断网络是否连接
+//- (BOOL)isNetConnect
+//{
+//    
+//}
 
+#pragma  mark - 获取明星数据
 -(void)obtainStartList
 {
     NSString *hostUrl = [NSString stringWithFormat:@"%@%@",hostForXM,startList];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:hostUrl]];
     AFHTTPRequestOperation *operate = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    
     [operate setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSData *returnData = [operation responseData];
@@ -58,6 +68,7 @@ static NetConnect *netConnect;
 
 - (void)obTainDataForCoreData:(NSString *)stringData
 {
+    fileManager = [ZXYFileOperation sharedSelf];
     dataProvider = [ZXYProvider sharedInstance];
     NSDictionary *dicData          = [self stringToJSONData:stringData];
     NSDictionary *startArtistsList = [self stringToJSONData:[dicData objectForKey:@"StarArtistsList"] ];
@@ -71,6 +82,19 @@ static NetConnect *netConnect;
     [dataProvider saveStartArtistsList:artistsList];
     [dataProvider saveStartArtList:workList];
     [dataProvider saveStartGalleryList:gallerList];
+    NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:noti];
+    NSArray *allStartArt = [dataProvider readCoreDataFromDB:@"StartArtList" orderByKey:@"beScanTime" isDes:NO];
+    for(int i = 0;i<allStartArt.count;i++)
+    {
+        NSString *filePaths = [fileManager findArtOfStartByID:[[allStartArt objectAtIndex:i] valueForKeyPath:@"id_Art"]];
+        if([fileManager fileExistsAtPath:filePaths])
+        {
+            continue;
+        }
+        DownLoadPictureOperation *downPicOperation = [[DownLoadPictureOperation alloc] initWithUrl:allStartArt[i]];
+        [queue addOperation:downPicOperation];
+    }
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict

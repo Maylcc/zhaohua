@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ZXYFileOperation;
 @interface DataArtListCellTableViewCell : UITableViewCell
+{
+    ZXYFileOperation *fileOperation;
+}
 @property (weak, nonatomic) IBOutlet UILabel *indexLbl;
 @property (weak, nonatomic) IBOutlet UILabel *artNameLbl;
 @property (weak, nonatomic) IBOutlet UILabel *authodLbl;
@@ -16,5 +19,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *collectNum;
 @property (weak, nonatomic) IBOutlet UIImageView *dataImg;
 @property (weak, nonatomic) IBOutlet UIImageView *artImage;
-
+@property (nonatomic,strong)NSString *cellIndex;
 @end

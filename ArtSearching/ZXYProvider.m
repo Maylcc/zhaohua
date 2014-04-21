@@ -60,8 +60,8 @@ static ZXYProvider *instance = nil;
 {
     LCYAppDelegate *app = [[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *manageContext = [app managedObjectContext];
-    NSEntityDescription *entity = [[NSEntityDescription alloc] init];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:stringName];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:stringName inManagedObjectContext:manageContext ];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:entity];
     NSError *error;
     NSArray *resultArr = [manageContext executeFetchRequest:request error:&error];
@@ -74,6 +74,57 @@ static ZXYProvider *instance = nil;
     {
         return resultArr;
     }
+}
+
+-(NSArray *)readCoreDataFromDB:(NSString *)stringName withContent:(NSString *)content andKey:(NSString *)key
+{
+    LCYAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *manageContext = [app managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:stringName inManagedObjectContext:manageContext ];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    if(key != nil || content!=nil)
+    {
+        NSString *stringFormat = [NSString stringWithFormat:@"%@==\'%@\'",key,content];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:stringFormat];
+        [request setPredicate:predicate];
+    }
+    [request setEntity:entity];
+    NSError *error;
+    NSArray *resultArr = [manageContext executeFetchRequest:request error:&error];
+    if(error)
+    {
+        NSAssert(error, @"readCoreDataFromDB: error");
+        return nil;
+    }
+    else
+    {
+        return resultArr;
+    }
+
+}
+
+- (NSArray *)readCoreDataFromDB:(NSString *)stringName orderByKey:(NSString *)stringKey isDes:(BOOL)isDes
+{
+    LCYAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *manageContext = [app managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:stringName inManagedObjectContext:manageContext ];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSSortDescriptor *sorDiscriper = [NSSortDescriptor sortDescriptorWithKey:stringKey ascending:isDes];
+    NSArray *sortArr = [NSArray arrayWithObjects:sorDiscriper, nil];
+    [request setSortDescriptors:sortArr];
+    [request setEntity:entity];
+    NSError *error;
+    NSArray *resultArr = [manageContext executeFetchRequest:request error:&error];
+    if(error)
+    {
+        NSAssert(error, @"readCoreDataFromDB: error");
+        return nil;
+    }
+    else
+    {
+        return resultArr;
+    }
+
 }
 
 #pragma mark - save
@@ -96,6 +147,8 @@ static ZXYProvider *instance = nil;
      }
      else
      {
+//         NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
+//         [[NSNotificationCenter defaultCenter] postNotification:noti];
          return YES;
      }
 }
@@ -105,20 +158,22 @@ static ZXYProvider *instance = nil;
     [self deleteCoreDataFromDB:@"StartArtistsList"];
     LCYAppDelegate *app = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *manageContext = [app managedObjectContext];
-    StartArtistsList *startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartArtistsList" inManagedObjectContext:manageContext];
+    StartArtistsList *startArtist ;
     for(int i = 0;i<artists.count;i++)
     {
+       startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartArtistsList" inManagedObjectContext:manageContext];
         NSDictionary *dic = [artists objectAtIndex:i];
-        startArtist.id_Art = [dic valueForKey:@"id"];
-        startArtist.beScanTime = [dic valueForKey:@"beScanTime"];
-        startArtist.beStoreTime = [dic valueForKey:@"beStoreTime"];
+        startArtist.id_Art = (NSNumber *)[dic objectForKey:@"id"];
+        startArtist.beScanTime = (NSNumber *)[dic objectForKey:@"beScanTime"];
+        startArtist.beStoreTime = (NSNumber *)[dic objectForKey:@"beStoreTime"];
         startArtist.author      = [dic valueForKey:@"author"];
-        startArtist.workCount   = [dic valueForKey:@"workCount"];
+        startArtist.workCount   = (NSNumber *)[dic objectForKey:@"workCount"];
         startArtist.url         = [dic valueForKey:@"url"];
         startArtist.url_small   = [dic valueForKey:@"url_s"];
     }
     if([manageContext save:nil])
     {
+
         return YES;
     }
     else
@@ -132,13 +187,15 @@ static ZXYProvider *instance = nil;
      [self deleteCoreDataFromDB:@"StartArtList"];
     LCYAppDelegate *app = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *manageContext = [app managedObjectContext];
-    StartArtList *startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartArtList" inManagedObjectContext:manageContext];
+    StartArtList *startArtist;
     for(int i = 0;i<artList.count;i++)
     {
+        startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartArtList" inManagedObjectContext:manageContext];
+
         NSDictionary *dic = [artList objectAtIndex:i];
-        startArtist.id_Art = [dic valueForKey:@"id"];
-        startArtist.beScanTime = [dic valueForKey:@"beScanTime"];
-        startArtist.beStoreTime = [dic valueForKey:@"beStoreTime"];
+        startArtist.id_Art = (NSNumber *)[dic objectForKey:@"id"];
+        startArtist.beScanTime = (NSNumber *)[dic objectForKey:@"beScanTime"];
+        startArtist.beStoreTime = (NSNumber *)[dic objectForKey:@"beStoreTime"];
         startArtist.author      = [dic valueForKey:@"author"];
         startArtist.url         = [dic valueForKey:@"url"];
         startArtist.url_Small   = [dic valueForKey:@"url_s"];
@@ -146,6 +203,8 @@ static ZXYProvider *instance = nil;
     }
     if([manageContext save:nil])
     {
+//        NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
+//        [[NSNotificationCenter defaultCenter] postNotification:noti];
         return YES;
     }
     else
@@ -160,19 +219,21 @@ static ZXYProvider *instance = nil;
     [self deleteCoreDataFromDB:@"StartGalleryList"];
     LCYAppDelegate *app = [UIApplication sharedApplication].delegate;
     NSManagedObjectContext *manageContext = [app managedObjectContext];
-    StartGalleryList *startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartGalleryList" inManagedObjectContext:manageContext];
+    StartGalleryList *startArtist;
     for(int i = 0;i<galleryList.count;i++)
     {
+        startArtist = [NSEntityDescription insertNewObjectForEntityForName:@"StartGalleryList" inManagedObjectContext:manageContext];
         NSDictionary *dic = [galleryList objectAtIndex:i];
-        startArtist.id_Art = [dic valueForKey:@"id"];
-        startArtist.beScanTime = [dic valueForKey:@"beScanTime"];
-        startArtist.beStoreTime = [dic valueForKey:@"beStoreTime"];
+        startArtist.id_Art = (NSNumber *)[dic objectForKey:@"id"];
+        startArtist.beScanTime = (NSNumber *)[dic objectForKey:@"beScanTime"];
+        startArtist.beStoreTime = (NSNumber *)[dic objectForKey:@"beStoreTime"];
         startArtist.name      = [dic valueForKey:@"name"];
         startArtist.url         = [dic valueForKey:@"url"];
-        startArtist.workCount   = [dic valueForKey:@"workCount"];
+        startArtist.workCount   = (NSNumber *)[dic objectForKey:@"workCount"];
     }
     if([manageContext save:nil])
     {
+       
         return YES;
     }
     else
