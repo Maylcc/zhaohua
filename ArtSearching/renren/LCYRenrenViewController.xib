@@ -6,6 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYRenrenViewController">
             <connections>
+                <outlet property="badgeImageView" destination="wCB-KD-Qna" id="yIq-AG-aY6"/>
+                <outlet property="badgeLabel" destination="pfa-B5-d2x" id="fPj-QL-VLs"/>
                 <outlet property="dataFerocious" destination="QiS-Cx-jJJ" id="i9G-88-YZf"/>
                 <outlet property="icySearchingBar" destination="4ri-oN-tfC" id="9If-sF-bsN"/>
                 <outlet property="icyTableView" destination="r8c-Oo-SYB" id="18D-Ac-e27"/>
@@ -66,6 +68,9 @@
                         <constraint firstAttribute="height" constant="44" id="DPG-8F-cmw"/>
                     </constraints>
                     <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="if0-t1-kea"/>
+                    </connections>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="r8c-Oo-SYB">
                     <rect key="frame" x="0.0" y="158" width="320" height="366"/>
@@ -134,17 +139,17 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="我的展览" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1gs-rr-WNK">
-                                    <rect key="frame" x="113" y="15" width="50" height="21"/>
+                                    <rect key="frame" x="118" y="14" width="50" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                     <color key="textColor" red="0.39607846736907959" green="0.59215688705444336" blue="0.19215688109397888" alpha="1" colorSpace="deviceRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="all_ex_right_badge.png" translatesAutoresizingMaskIntoConstraints="NO" id="wCB-KD-Qna">
+                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="all_ex_right_badge.png" translatesAutoresizingMaskIntoConstraints="NO" id="wCB-KD-Qna">
                                     <rect key="frame" x="169" y="19" width="12" height="12"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </imageView>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfa-B5-d2x">
+                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfa-B5-d2x">
                                     <rect key="frame" x="163" y="19" width="24" height="12"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="8"/>
