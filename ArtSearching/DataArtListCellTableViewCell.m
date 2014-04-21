@@ -7,12 +7,13 @@
 //
 
 #import "DataArtListCellTableViewCell.h"
-
+#import "ZXYFileOperation.h"
 @implementation DataArtListCellTableViewCell
 
 - (void)awakeFromNib
 {
     // Initialization code
+   
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -21,5 +22,11 @@
 
     // Configure the view for the selected state
 }
+
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+}
+
 
 @end

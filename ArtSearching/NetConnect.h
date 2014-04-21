@@ -10,11 +10,20 @@
 #import <AFNetworking/AFNetworking.h>
 #import "LCYCommon.h"
 #import "ZXYProvider.h"
+#import "ZXYFileOperation.h"
 @interface NetConnect : NSObject<NSXMLParserDelegate>
 {
     ZXYProvider *dataProvider;
+    ZXYFileOperation *fileManager;
 }
 +(NetConnect *)sharedSelf;
-
+/*
+ 从服务器获取明星作品以及明星画廊
+ */
 -(void)obtainStartList;
+
+/*
+ 判断用户是否连接网络
+ */
+-(BOOL)isNetConnect;
 @end

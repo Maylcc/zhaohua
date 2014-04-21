@@ -2,7 +2,7 @@
 //  StartArtList.h
 //  ArtSearching
 //
-//  Created by developer on 14-4-18.
+//  Created by developer on 14-4-20.
 //  Copyright (c) 2014年 Duostec. All rights reserved.
 //
 
@@ -13,9 +13,9 @@
 @interface StartArtList : NSManagedObject
 
 @property (nonatomic, retain) NSString * author;
-@property (nonatomic, retain) NSString * beScanTime;
-@property (nonatomic, retain) NSString * beStoreTime;
-@property (nonatomic, retain) NSString * id_Art;
+@property (nonatomic, retain) NSNumber * beScanTime;
+@property (nonatomic, retain) NSNumber * beStoreTime;
+@property (nonatomic, retain) NSNumber * id_Art;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * url_Small;

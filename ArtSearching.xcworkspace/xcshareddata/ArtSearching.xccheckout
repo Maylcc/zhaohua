@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>A363CDD7-C20F-4B51-8DD7-DBA6BC924A79</string>
+	<string>510A5812-02FD-4241-AB14-06C222E1ADC7</string>
 	<key>IDESourceControlProjectName</key>
 	<string>ArtSearching</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>2F1058FA-7DD1-4652-9762-17D613758878</key>
-		<string>https://github.com/duostec/zhaohua.git</string>
+		<key>5D6605FF-65E6-4D77-807A-84ADA343AEFB</key>
+		<string>https://github.com/ChinaPicture/zhaohua.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>ArtSearching.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>2F1058FA-7DD1-4652-9762-17D613758878</key>
+		<key>5D6605FF-65E6-4D77-807A-84ADA343AEFB</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/duostec/zhaohua.git</string>
+	<string>https://github.com/ChinaPicture/zhaohua.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>2F1058FA-7DD1-4652-9762-17D613758878</string>
+	<string>5D6605FF-65E6-4D77-807A-84ADA343AEFB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>2F1058FA-7DD1-4652-9762-17D613758878</string>
+			<string>5D6605FF-65E6-4D77-807A-84ADA343AEFB</string>
 			<key>IDESourceControlWCCName</key>
 			<string>zhaohua</string>
 		</dict>

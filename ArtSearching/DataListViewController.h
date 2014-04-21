@@ -11,6 +11,7 @@
 #import "LCYCommon.h"
 #import "NetConnect.h"
 #import "ZXYProvider.h"
+@class ZXYFileOperation;
 @interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UITableView *dataTableV;
@@ -19,5 +20,6 @@
     NSArray *arrArtList;
     NSArray *arrArtistsList;
     NSArray *arrGalleryList;
+    ZXYFileOperation *fileOperation;
 }
 @end
