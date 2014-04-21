@@ -63,11 +63,11 @@
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         UIImage *downImg = (UIImage *)responseObject;
-        NSData *imageData = UIImageJPEGRepresentation(downImg, 0.9);
-        [imageData writeToFile:[fileManager findArtOfStartByID:startArt.id_Art] atomically:YES];
+        NSData *imageData = UIImageJPEGRepresentation(downImg, 0.9
+                                                      );
+        [imageData writeToFile:[fileManager findArtOfStartByUrl:startArt.url_Small] atomically:YES];
         isDown = YES;
-        NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
-        [[NSNotificationCenter defaultCenter] postNotification:noti];
+       
         NSLog(@"success");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         isDown = YES;
