@@ -14,6 +14,8 @@
 		2820EA611900F0C30053B15D /* all_ex_right_blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA5D1900F0C30053B15D /* all_ex_right_blank@2x.png */; };
 		2820EA621900F0C30053B15D /* all_ex_right_filled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA5E1900F0C30053B15D /* all_ex_right_filled@2x.png */; };
 		2820EA641900F1200053B15D /* all_ex_right_badge@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA631900F1200053B15D /* all_ex_right_badge@2x.png */; };
+		282B67FB190525EF000DC945 /* LCYRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 282B67F9190525EF000DC945 /* LCYRegisterViewController.m */; };
+		282B67FC190525EF000DC945 /* LCYRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 282B67FA190525EF000DC945 /* LCYRegisterViewController.xib */; };
 		28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997CE190122AE00A09E17 /* LCYActivityList.m */; };
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
@@ -23,6 +25,13 @@
 		28DB54E11904E79F00E4734D /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54DE1904E79F00E4734D /* renren_admire@2x.png */; };
 		28DB54E21904E79F00E4734D /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54DF1904E79F00E4734D /* renren_comment@2x.png */; };
 		28DB54E31904E79F00E4734D /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54E01904E79F00E4734D /* renren_share@2x.png */; };
+		28DB54E51904F1B200E4734D /* build_confirm_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54E41904F1B200E4734D /* build_confirm_button@2x.png */; };
+		28DB54E81904FC9100E4734D /* LCYBuildCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DB54E71904FC9100E4734D /* LCYBuildCollectionViewCell.m */; };
+		28DB54EA1904FCA200E4734D /* LCYBuildCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54E91904FCA200E4734D /* LCYBuildCollectionViewCell.xib */; };
+		28DB54ED1904FDA800E4734D /* build_dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54EB1904FDA800E4734D /* build_dot@2x.png */; };
+		28DB54EE1904FDA800E4734D /* build_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54EC1904FDA800E4734D /* build_plus@2x.png */; };
+		28DB54F21905017D00E4734D /* LCYMyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28DB54F01905017D00E4734D /* LCYMyCollectionViewController.m */; };
+		28DB54F31905017D00E4734D /* LCYMyCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28DB54F11905017D00E4734D /* LCYMyCollectionViewController.xib */; };
 		2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2718FE4723006880E7 /* Foundation.framework */; };
 		2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2918FE4723006880E7 /* CoreGraphics.framework */; };
 		2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2B18FE4723006880E7 /* UIKit.framework */; };
@@ -97,6 +106,9 @@
 		2820EA5D1900F0C30053B15D /* all_ex_right_blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all_ex_right_blank@2x.png"; sourceTree = "<group>"; };
 		2820EA5E1900F0C30053B15D /* all_ex_right_filled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all_ex_right_filled@2x.png"; sourceTree = "<group>"; };
 		2820EA631900F1200053B15D /* all_ex_right_badge@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all_ex_right_badge@2x.png"; sourceTree = "<group>"; };
+		282B67F8190525EF000DC945 /* LCYRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterViewController.h; sourceTree = "<group>"; };
+		282B67F9190525EF000DC945 /* LCYRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterViewController.m; sourceTree = "<group>"; };
+		282B67FA190525EF000DC945 /* LCYRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRegisterViewController.xib; sourceTree = "<group>"; };
 		28A997CD190122AE00A09E17 /* LCYActivityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYActivityList.h; sourceTree = "<group>"; };
 		28A997CE190122AE00A09E17 /* LCYActivityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYActivityList.m; sourceTree = "<group>"; };
 		28A997CF190122AE00A09E17 /* LCYActivityListBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYActivityListBase.h; sourceTree = "<group>"; };
@@ -111,6 +123,15 @@
 		28DB54DE1904E79F00E4734D /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
 		28DB54DF1904E79F00E4734D /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
 		28DB54E01904E79F00E4734D /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		28DB54E41904F1B200E4734D /* build_confirm_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "build_confirm_button@2x.png"; sourceTree = "<group>"; };
+		28DB54E61904FC9100E4734D /* LCYBuildCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYBuildCollectionViewCell.h; sourceTree = "<group>"; };
+		28DB54E71904FC9100E4734D /* LCYBuildCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYBuildCollectionViewCell.m; sourceTree = "<group>"; };
+		28DB54E91904FCA200E4734D /* LCYBuildCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYBuildCollectionViewCell.xib; sourceTree = "<group>"; };
+		28DB54EB1904FDA800E4734D /* build_dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "build_dot@2x.png"; sourceTree = "<group>"; };
+		28DB54EC1904FDA800E4734D /* build_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "build_plus@2x.png"; sourceTree = "<group>"; };
+		28DB54EF1905017D00E4734D /* LCYMyCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYMyCollectionViewController.h; sourceTree = "<group>"; };
+		28DB54F01905017D00E4734D /* LCYMyCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYMyCollectionViewController.m; sourceTree = "<group>"; };
+		28DB54F11905017D00E4734D /* LCYMyCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYMyCollectionViewController.xib; sourceTree = "<group>"; };
 		2FB88F2418FE4723006880E7 /* ArtSearching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSearching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB88F2718FE4723006880E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FB88F2918FE4723006880E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -212,6 +233,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		282B67F719052584000DC945 /* userInfo */ = {
+			isa = PBXGroup;
+			children = (
+				282B67F8190525EF000DC945 /* LCYRegisterViewController.h */,
+				282B67F9190525EF000DC945 /* LCYRegisterViewController.m */,
+				282B67FA190525EF000DC945 /* LCYRegisterViewController.xib */,
+			);
+			path = userInfo;
+			sourceTree = "<group>";
+		};
 		2FB88F1B18FE4723006880E7 = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +282,7 @@
 				8B565BA518FFA0A2002520D3 /* DataXM */,
 				2FB88F6818FE93AC006880E7 /* Common */,
 				2FB88F5C18FE7CFA006880E7 /* renren */,
+				282B67F719052584000DC945 /* userInfo */,
 				2FB88F3818FE4723006880E7 /* LCYAppDelegate.h */,
 				2FB88F3918FE4723006880E7 /* LCYAppDelegate.m */,
 				2FB88F3E18FE4723006880E7 /* Images.xcassets */,
@@ -293,9 +325,15 @@
 		2FB88F5C18FE7CFA006880E7 /* renren */ = {
 			isa = PBXGroup;
 			children = (
+				28DB54EF1905017D00E4734D /* LCYMyCollectionViewController.h */,
+				28DB54F01905017D00E4734D /* LCYMyCollectionViewController.m */,
+				28DB54F11905017D00E4734D /* LCYMyCollectionViewController.xib */,
 				28DB54D91904E79200E4734D /* LCYBuildExhibitionViewController.h */,
 				28DB54DA1904E79200E4734D /* LCYBuildExhibitionViewController.m */,
 				28DB54DB1904E79200E4734D /* LCYBuildExhibitionViewController.xib */,
+				28DB54E61904FC9100E4734D /* LCYBuildCollectionViewCell.h */,
+				28DB54E71904FC9100E4734D /* LCYBuildCollectionViewCell.m */,
+				28DB54E91904FCA200E4734D /* LCYBuildCollectionViewCell.xib */,
 				28A997CD190122AE00A09E17 /* LCYActivityList.h */,
 				28A997CE190122AE00A09E17 /* LCYActivityList.m */,
 				28A997CF190122AE00A09E17 /* LCYActivityListBase.h */,
@@ -322,6 +360,9 @@
 		2FB88F6518FE8603006880E7 /* renren */ = {
 			isa = PBXGroup;
 			children = (
+				28DB54EB1904FDA800E4734D /* build_dot@2x.png */,
+				28DB54EC1904FDA800E4734D /* build_plus@2x.png */,
+				28DB54E41904F1B200E4734D /* build_confirm_button@2x.png */,
 				28DB54DE1904E79F00E4734D /* renren_admire@2x.png */,
 				28DB54DF1904E79F00E4734D /* renren_comment@2x.png */,
 				28DB54E01904E79F00E4734D /* renren_share@2x.png */,
@@ -535,17 +576,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28DB54E51904F1B200E4734D /* build_confirm_button@2x.png in Resources */,
 				8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */,
+				282B67FC190525EF000DC945 /* LCYRegisterViewController.xib in Resources */,
+				28DB54EA1904FCA200E4734D /* LCYBuildCollectionViewCell.xib in Resources */,
 				8BBEE114190361E90067FE37 /* personal_setting@2x.png in Resources */,
 				8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */,
 				28DB54E21904E79F00E4734D /* renren_comment@2x.png in Resources */,
 				8B6E96D119013663006E6752 /* DataArtListCellTableViewCell.xib in Resources */,
 				8B6E96C81901364B006E6752 /* hotPoint_collect@2x.png in Resources */,
 				8B6E96C91901364B006E6752 /* hotPoint_data@2x.png in Resources */,
+				28DB54EE1904FDA800E4734D /* build_plus@2x.png in Resources */,
 				8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */,
 				2820EA5F1900F0C30053B15D /* all_ex_left_blank@2x.png in Resources */,
 				8B6E96C61901364B006E6752 /* artist_Attention@2x.png in Resources */,
 				8B6E96C51901364B006E6752 /* 22@2x.png in Resources */,
+				28DB54ED1904FDA800E4734D /* build_dot@2x.png in Resources */,
 				8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,
 				2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */,
@@ -572,6 +618,7 @@
 				8B565BB618FFA497002520D3 /* Icon.png in Resources */,
 				2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */,
 				28DB54E31904E79F00E4734D /* renren_share@2x.png in Resources */,
+				28DB54F31905017D00E4734D /* LCYMyCollectionViewController.xib in Resources */,
 				2FB88F3F18FE4723006880E7 /* Images.xcassets in Resources */,
 				2820EA621900F0C30053B15D /* all_ex_right_filled@2x.png in Resources */,
 				8BBEE112190361A60067FE37 /* search_artist_portal@2x.png in Resources */,
@@ -628,10 +675,13 @@
 			files = (
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
+				282B67FB190525EF000DC945 /* LCYRegisterViewController.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
+				28DB54F21905017D00E4734D /* LCYMyCollectionViewController.m in Sources */,
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
+				28DB54E81904FC9100E4734D /* LCYBuildCollectionViewCell.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
 				8BBEE11D190383E80067FE37 /* StartGalleryList.m in Sources */,
