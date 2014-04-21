@@ -9,6 +9,7 @@
 #import "NetConnect.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import "DownLoadPictureOperation.h"
+#import "DownLoadArtistPictureOperation.h"
 @interface NetConnect()
 {
     BOOL isStringElement;
@@ -85,15 +86,48 @@ static NSOperationQueue *queue;
     NSNotification *noti = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:noti];
     NSArray *allStartArt = [dataProvider readCoreDataFromDB:@"StartArtList" orderByKey:@"beScanTime" isDes:NO];
+    NSArray *allStartArtist = [dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO];
+    NSArray *allStartGallery = [dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO];
     for(int i = 0;i<allStartArt.count;i++)
     {
-        NSString *filePaths = [fileManager findArtOfStartByID:[[allStartArt objectAtIndex:i] valueForKeyPath:@"id_Art"]];
+        NSString *filePaths = [fileManager findArtOfStartByUrl:[[allStartArt objectAtIndex:i] valueForKeyPath:@"url_Small"]];
         if([fileManager fileExistsAtPath:filePaths])
         {
             continue;
         }
         DownLoadPictureOperation *downPicOperation = [[DownLoadPictureOperation alloc] initWithUrl:allStartArt[i]];
         [queue addOperation:downPicOperation];
+    }
+    
+    for(int i = 0;i<allStartArtist.count;i++)
+    {
+        NSString *filePaths = [fileManager findArtistOfStartByUrl:[[allStartArtist objectAtIndex:i]valueForKey:@"url_small"]andID:[[allStartArtist objectAtIndex:i]valueForKey:@"id_Art"] withType:@""];
+        if([fileManager fileExistsAtPath:filePaths])
+        {
+            continue;
+        }
+        DownLoadArtistPictureOperation *downOperation = [[DownLoadArtistPictureOperation alloc] initWithUrl:[[allStartArtist objectAtIndex:i]valueForKey:@"url_small"] byType:@"StartArtistsList" andID:[[allStartArtist objectAtIndex:i] valueForKeyPath:@"id_Art"]];
+        [queue addOperation:downOperation];
+    }
+    for(int i = 0;i<allStartGallery.count;i++)
+    {
+        NSString *filePaths = [fileManager findArtistOfStartByUrl:[[allStartGallery objectAtIndex:i]valueForKey:@"url"]andID:[[allStartGallery objectAtIndex:i]valueForKey:@"id_Art"] withType:@""];
+        if([fileManager fileExistsAtPath:filePaths])
+        {
+            continue;
+        }
+        DownLoadArtistPictureOperation *downOperation = [[DownLoadArtistPictureOperation alloc] initWithUrl:[[allStartGallery objectAtIndex:i]valueForKey:@"url"] byType:@"StartGalleryList" andID:[[allStartGallery objectAtIndex:i] valueForKey:@"id_Art"]];
+        [queue addOperation:downOperation];
+    }
+    while (YES) {
+       
+            if(queue.operations.count == 0)
+            {
+                NSNotification *notis = [NSNotification notificationWithName:@"DataListViewFresh" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotification:notis];
+                break;
+            }
+        
     }
 }
 

@@ -34,7 +34,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         netConnect = [NetConnect sharedSelf];
         dataProvider = [ZXYProvider sharedInstance];
         arrArtistsList = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO]];
-        arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" orderByKey:@"beScanTime" isDes:NO]];
+        arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" isDes:NO orderByKey:@"beScanTime",@"beStoreTime",nil]];
         arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
         fileOperation = [ZXYFileOperation sharedSelf];
     }
@@ -53,8 +53,14 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     [backBtn addTarget:self action:@selector(backView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
-    [self obtainAllStartData];
+    
     // Do any additional setup after loading the view from its nib.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self obtainAllStartData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,8 +71,8 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
 - (void)obtainAllStartData
 {
-//    [NSThread detachNewThreadSelector:@selector(obtainStartList) toTarget:netConnect withObject:nil];
-    [netConnect obtainStartList];
+   [NSThread detachNewThreadSelector:@selector(obtainStartList) toTarget:netConnect withObject:nil];
+    //[netConnect obtainStartList];
 }
 
 #pragma mark - table代理以及数据源
@@ -138,25 +144,26 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                     cellArt = (DataArtListCellTableViewCell *)oneObject;
                 }
             }
+            StartArtList *artList = [arrArtList objectAtIndex:indexPath.row];
+            cellArt.authodLbl.text = artList.author;
+            cellArt.artNameLbl.text = artList.title;
+            cellArt.cellIndex = [NSString stringWithFormat:@"%d",artList.id_Art.intValue ];
+            cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
+            cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
+            cellArt.indexLbl.text   = [NSString stringWithFormat:@"%d",indexPath.row+1];
+            NSString *pathString = [fileOperation findArtOfStartByUrl:artList.url_Small];
+            if([fileOperation fileExistsAtPath:pathString])
+            {
+                cellArt.artImage.image = [UIImage imageWithContentsOfFile:pathString];
+            }
+            else
+            {
+                NSLog(@"没有内容");
+            }
+            //cellArt.artImage.image  =
+            cell = cellArt;
+
         }
-        StartArtList *artList = [arrArtList objectAtIndex:indexPath.row];
-        cellArt.authodLbl.text = artList.author;
-        cellArt.artNameLbl.text = artList.title;
-        cellArt.cellIndex = [NSString stringWithFormat:@"%d",artList.id_Art.intValue ];
-        cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
-        cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
-        cellArt.indexLbl.text   = [NSString stringWithFormat:@"%d",indexPath.row+1];
-        NSString *pathString = [fileOperation findArtOfStartByID:artList.id_Art];
-        if([fileOperation fileExistsAtPath:pathString])
-        {
-            cellArt.artImage.image = [UIImage imageWithContentsOfFile:pathString];
-        }
-        else
-        {
-            NSLog(@"没有内容");
-        }
-        //cellArt.artImage.image  =
-        cell = cellArt;
     }
     else
     {
@@ -172,28 +179,38 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                     galleryCell = (DataStartGallertyCell *)oneObject;
                 }
             }
+            if(indexPath.section == 1)
+            {
+                StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
+                galleryCell.authordName.text = artist.author;
+                galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
+                galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
+                galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+                galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+                NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
+                if([fileOperation fileExistsAtPath:filePath])
+                {
+                    galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""]];
+                }
+            }
+            else
+            {
+                StartGalleryList *artist = [arrGalleryList objectAtIndex:indexPath.row];
+                galleryCell.authordName.text = artist.name;
+                galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
+                galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
+                galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+                galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+                NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
+                if([fileOperation fileExistsAtPath:filePath])
+                {
+                    galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""]];
+                }
+
+            }
+            cell = galleryCell;
         }
-        if(indexPath.section == 1)
-        {
-            StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
-            galleryCell.authordName.text = artist.author;
-            galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
-            galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
-        }
-        else
-        {
-            StartGalleryList *artist = [arrGalleryList objectAtIndex:indexPath.row];
-            galleryCell.authordName.text = artist.name;
-            galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
-            galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
-        }
-        cell = galleryCell;
-    }
-    if(cell == nil)
-    {
-        NSLog(@"section is %d and row is %d",indexPath.section,indexPath.row);
+        
     }
     return cell;
 }
@@ -225,11 +242,17 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
 - (void)refreshCurrentTable:(NSNotification *)noti
 {
+    [self performSelectorOnMainThread:@selector(refreshTable) withObject:nil waitUntilDone:YES];
+        //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"DataListViewFresh" object:nil];
+}
+
+- (void)refreshTable
+{
     arrArtistsList = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO]];
-    arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" orderByKey:@"beScanTime" isDes:NO]];
+    arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" isDes:NO orderByKey:@"beScanTime",@"beStoreTime",nil]];
     arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
     [dataTableV reloadData];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"DataListViewFresh" object:nil];
+
 }
 
 @end

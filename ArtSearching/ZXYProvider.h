@@ -16,6 +16,7 @@
 -(NSArray *)readCoreDataFromDB:(NSString *)stringName;
 -(NSArray *)readCoreDataFromDB:(NSString *)stringName withContent:(NSString *)content andKey:(NSString *)key;
 -(NSArray *)readCoreDataFromDB:(NSString *)stringName orderByKey:(NSString *)stringKey isDes:(BOOL)isDes;
+-(NSArray *)readCoreDataFromDB:(NSString *)stringName isDes:(BOOL)isDes orderByKey:(id) stringKey,... ;
 -(BOOL)saveDataToCoreData:(NSDictionary *)dic withDBName:(NSString *)dbName;
 -(BOOL)saveStartArtistsList:(NSArray *)artists;
 -(BOOL)saveStartArtList:(NSArray *)artList;

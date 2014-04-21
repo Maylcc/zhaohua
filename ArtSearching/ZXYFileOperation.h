@@ -30,4 +30,17 @@
    获得星级作品图片的地址传入id
  */
 - (NSString *)findArtOfStartByID:(NSNumber *)art_id;
+
+/*
+ 获取星级作品图片的地址 传入url
+ */
+
+- (NSString *)findArtOfStartByUrl:(NSString *)url;
+
+/*
+ 获得星级作者图片的地址 传入url
+ */
+- (NSString *)findArtistOfStartByUrl:(NSString *)url andID:(NSString *)userid withType:(NSString *)type;
+
+
 @end
