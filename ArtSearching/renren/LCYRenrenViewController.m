@@ -16,7 +16,7 @@
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
 @interface LCYRenrenViewController ()
-<NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource>
+<NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
 
 typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     LCYRenrenSegStatusAll,      /**< 所有展览 */
@@ -70,6 +70,15 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
  *  我的展览
  */
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+/**
+ *  展览申请数字背景图片（红点）
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *badgeImageView;
+/**
+ *  展览申请数字
+ */
+@property (weak, nonatomic) IBOutlet UILabel *badgeLabel;
+
 
 @end
 
@@ -201,20 +210,20 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 
 #pragma mark - UITableView Data Source and Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (!self.activityListBase) {
-        return 0;
-    }
-    else{
-        if (currentStatus == LCYRenrenSegStatusAll) {
-            return [self.activityListBase.activityList count];
-        } else{
+    if (currentStatus == LCYRenrenSegStatusAll) {
+        if (!self.activityListBase) {
             return 0;
         }
+        return [self.activityListBase.activityList count];
+    } else{
+        return 1+0;
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *identifier = @"renrenTableViewIdentifier";
+    static NSString *identifier = @"renrenTableViewIdentifier";         /**< 所有展览 */
+    static NSString *identifier2 = @"renrenTableViewIdentifier2";       /**< 我的展览请求 */
+    static NSString *identifier3 = @"renrenTableViewIdentifier3";       /**< 我的展览 */
     
     if (currentStatus == LCYRenrenSegStatusAll) {
         if (!isRenrenTableViewCellRegistered) {
@@ -225,17 +234,32 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
         LCYRenrenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
         return cell;
     } else {
+        if (indexPath.row == 0) {
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier2];
+            cell.textLabel.text = @"1231";
+            return cell;
+        }
         return nil;
     }
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (currentStatus == LCYRenrenSegStatusMine) {
+        if (indexPath.row == 0) {
+            return 44;
+        }
+    }
     return 420.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"select row at row: %ld",(long)indexPath.row);
+}
+
+#pragma mark - UISearchBar Delegate Methods
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
 }
 
 @end
