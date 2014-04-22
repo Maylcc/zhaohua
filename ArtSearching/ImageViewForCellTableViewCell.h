@@ -10,4 +10,5 @@
 
 @interface ImageViewForCellTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *bigImageView;
 @end

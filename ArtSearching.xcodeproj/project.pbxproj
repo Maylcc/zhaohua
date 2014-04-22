@@ -98,6 +98,8 @@
 		8BBEE13F190523C00067FE37 /* comment_write@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBEE13E190523C00067FE37 /* comment_write@2x.png */; };
 		8BBEE143190524E80067FE37 /* UserCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BBEE141190524E80067FE37 /* UserCommentCell.m */; };
 		8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BBEE142190524E80067FE37 /* UserCommentCell.xib */; };
+		8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC5E9A01906195F00D2CF26 /* CommentDetail.m */; };
+		8BC5E9A419061AE300D2CF26 /* ArtDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BC5E9A319061AE300D2CF26 /* ArtDetail.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -232,6 +234,10 @@
 		8BBEE140190524E80067FE37 /* UserCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCommentCell.h; sourceTree = "<group>"; };
 		8BBEE141190524E80067FE37 /* UserCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCommentCell.m; sourceTree = "<group>"; };
 		8BBEE142190524E80067FE37 /* UserCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserCommentCell.xib; sourceTree = "<group>"; };
+		8BC5E99F1906195F00D2CF26 /* CommentDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentDetail.h; path = ../CommentDetail.h; sourceTree = "<group>"; };
+		8BC5E9A01906195F00D2CF26 /* CommentDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentDetail.m; path = ../CommentDetail.m; sourceTree = "<group>"; };
+		8BC5E9A219061AE300D2CF26 /* ArtDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtDetail.h; sourceTree = "<group>"; };
+		8BC5E9A319061AE300D2CF26 /* ArtDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtDetail.m; sourceTree = "<group>"; };
 		EFBF4BB8214E4FF387526A74 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -501,6 +507,10 @@
 				8BBEE119190383E80067FE37 /* StartArtList.m */,
 				8BBEE115190383E70067FE37 /* StartArtistsList.h */,
 				8BBEE116190383E70067FE37 /* StartArtistsList.m */,
+				8BC5E99F1906195F00D2CF26 /* CommentDetail.h */,
+				8BC5E9A01906195F00D2CF26 /* CommentDetail.m */,
+				8BC5E9A219061AE300D2CF26 /* ArtDetail.h */,
+				8BC5E9A319061AE300D2CF26 /* ArtDetail.m */,
 			);
 			name = DataProvider;
 			sourceTree = "<group>";
@@ -755,6 +765,7 @@
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				8BBEE13719051BD70067FE37 /* ArtDetailContentArtCell.m in Sources */,
+				8BC5E9A419061AE300D2CF26 /* ArtDetail.m in Sources */,
 				8BBEE143190524E80067FE37 /* UserCommentCell.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
@@ -776,6 +787,7 @@
 				8B6E96D219013663006E6752 /* DataStartGallertyCell.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,
 				282B6806190527F0000DC945 /* LCYBuildCollectionViewCell.m in Sources */,
+				8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */,
 				8BBEE12419038DBF0067FE37 /* ZXYFileOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

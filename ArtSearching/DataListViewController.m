@@ -13,6 +13,7 @@
 #import "StartArtList.h"
 #import "StartArtistsList.h"
 #import "StartGalleryList.h"
+#import "ArtDetailViewController.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -232,7 +233,15 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     return 22;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        StartArtList *art = [arrArtList objectAtIndex:indexPath.row];
+        ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:art.id_Art.stringValue andWorkUrl:art.url withBundleName:@"ArtDetailViewController"];
+        [self.navigationController pushViewController:artDetailViewController animated:YES];
+    }
+}
 
 #pragma mark - 返回函数
 - (void)backView

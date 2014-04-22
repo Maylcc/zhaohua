@@ -26,4 +26,11 @@
  判断用户是否连接网络
  */
 -(BOOL)isNetConnect;
+
+/*
+ 从服务器获取星级作品的详细页面的内容
+ */
+-(void)obtainStartArtDetailInfo:(NSString *)workID;
+
+
 @end

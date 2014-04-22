@@ -15,10 +15,14 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0aM-YI-ffc">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0aM-YI-ffc">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="568" id="4nr-PP-y5d"/>
+                        <constraint firstAttribute="width" constant="320" id="gEJ-7o-FFc"/>
+                    </constraints>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="bla-vf-gEO"/>
                         <outlet property="delegate" destination="-1" id="gqp-J5-sFV"/>
@@ -26,6 +30,12 @@
                 </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="0aM-YI-ffc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7RJ-po-gFZ"/>
+                <constraint firstAttribute="trailing" secondItem="0aM-YI-ffc" secondAttribute="trailing" id="Aoy-V2-iZz"/>
+                <constraint firstItem="0aM-YI-ffc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="LV8-XQ-0ok"/>
+                <constraint firstAttribute="bottom" secondItem="0aM-YI-ffc" secondAttribute="bottom" id="Lmi-pP-IXe"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>

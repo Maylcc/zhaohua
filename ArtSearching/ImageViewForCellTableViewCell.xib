@@ -13,13 +13,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="217"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9o3-aj-Ai4">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9o3-aj-Ai4">
                         <rect key="frame" x="0.0" y="7" width="320" height="204"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </imageView>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="bigImageView" destination="9o3-aj-Ai4" id="Jig-Zm-Hgk"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

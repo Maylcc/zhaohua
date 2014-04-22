@@ -12,4 +12,6 @@
 {
     IBOutlet UITableView *contentTableView;
 }
+
+-(id)initWithWorkID:(NSString *)userid andWorkUrl:(NSString *)workUrl withBundleName:(NSString *)bundleName;
 @end

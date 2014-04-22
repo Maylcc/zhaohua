@@ -18,4 +18,5 @@ CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 
 CA_EXTERN NSString *const hostForXM;
 CA_EXTERN NSString *const startList;
 CA_EXTERN NSString *const imageHost;
+CA_EXTERN NSString *const startArtDetail;
 @end
