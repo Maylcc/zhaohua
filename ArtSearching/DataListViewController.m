@@ -145,26 +145,25 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                     cellArt = (DataArtListCellTableViewCell *)oneObject;
                 }
             }
-            StartArtList *artList = [arrArtList objectAtIndex:indexPath.row];
-            cellArt.authodLbl.text = artList.author;
-            cellArt.artNameLbl.text = artList.title;
-            cellArt.cellIndex = [NSString stringWithFormat:@"%d",artList.id_Art.intValue ];
-            cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
-            cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
-            cellArt.indexLbl.text   = [NSString stringWithFormat:@"%d",indexPath.row+1];
-            NSString *pathString = [fileOperation findArtOfStartByUrl:artList.url_Small];
-            if([fileOperation fileExistsAtPath:pathString])
-            {
-                cellArt.artImage.image = [UIImage imageWithContentsOfFile:pathString];
-            }
-            else
-            {
-                NSLog(@"没有内容");
-            }
-            //cellArt.artImage.image  =
-            cell = cellArt;
-
         }
+        StartArtList *artList = [arrArtList objectAtIndex:indexPath.row];
+        cellArt.authodLbl.text = artList.author;
+        cellArt.artNameLbl.text = artList.title;
+        cellArt.cellIndex = [NSString stringWithFormat:@"%d",artList.id_Art.intValue ];
+        cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
+        cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
+        cellArt.indexLbl.text   = [NSString stringWithFormat:@"%d",indexPath.row+1];
+        NSString *pathString = [fileOperation findArtOfStartByUrl:artList.url_Small];
+        if([fileOperation fileExistsAtPath:pathString])
+        {
+            cellArt.artImage.image = [UIImage imageWithContentsOfFile:pathString];
+        }
+        else
+        {
+            cellArt.artImage.image = [UIImage imageNamed:@"placehold_image.png"];
+        }
+
+        cell = cellArt;
     }
     else
     {
@@ -180,37 +179,49 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                     galleryCell = (DataStartGallertyCell *)oneObject;
                 }
             }
-            if(indexPath.section == 1)
+            
+        }
+        if(indexPath.section == 1)
+        {
+            StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
+            galleryCell.authordName.text = artist.author;
+            galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
+            galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+            galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+            NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
+            if([fileOperation fileExistsAtPath:filePath])
             {
-                StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
-                galleryCell.authordName.text = artist.author;
-                galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
-                galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-                galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
-                galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
-                NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
-                if([fileOperation fileExistsAtPath:filePath])
-                {
-                    galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""]];
-                }
+                galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""]];
             }
             else
             {
-                StartGalleryList *artist = [arrGalleryList objectAtIndex:indexPath.row];
-                galleryCell.authordName.text = artist.name;
-                galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
-                galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-                galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
-                galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
-                NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
-                if([fileOperation fileExistsAtPath:filePath])
-                {
-                    galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""]];
-                }
-
+                galleryCell.authordImage.image = [UIImage imageNamed:@"personal_setting.png"];
             }
-            cell = galleryCell;
         }
+        else
+        {
+            StartGalleryList *artist = [arrGalleryList objectAtIndex:indexPath.row];
+            galleryCell.authordName.text = artist.name;
+            galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
+            galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+            galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+            NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
+            if([fileOperation fileExistsAtPath:filePath])
+            {
+                galleryCell.authordImage.image = [UIImage imageWithContentsOfFile:[fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""]];
+            }
+            else
+            {
+                galleryCell.authordImage.image = [UIImage imageNamed:@"personal_setting.png"];
+            }
+            
+        }
+        
+
+        cell = galleryCell;
+        
         
     }
     return cell;

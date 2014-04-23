@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol showBigImage <NSObject>
+-(void)showBigImageDelegate;
+@end
 @interface ImageViewForCellTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *bigImageView;
+@property (nonatomic,strong) id<showBigImage>delegate;
+
 @end

@@ -11,10 +11,11 @@
 #import "ArtDetail.h"
 #import "CommentDetail.h"
 #import "ArtDetailContentArtCell.h"
-#import "ImageViewForCellTableViewCell.h"
+
 #import "UserCommentCell.h"
 #import "NetConnect.h"
 #import "ZXYFileOperation.h"
+#import "ShowBigImageViewController.h"
 @interface ArtDetailViewController ()
 {
     NSString *_workID;
@@ -41,17 +42,6 @@
     {
         self.workID = userid;
         self.imageURL = workUrl;
-        dataProvider = [ZXYProvider sharedInstance];
-        commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
-        netConnect = [NetConnect sharedSelf];
-       // NSArray *artDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
-        NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
-        fileOperate = [ZXYFileOperation sharedSelf];
-        if(allDetails.count)
-        {
-            artDetail = [allDetails objectAtIndex:0];
-        }
-        
     }
     return self;
 }
@@ -59,8 +49,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 0, 45, 45);
+    [backBtn setImage:[UIImage imageNamed:@"back_icon.png"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backViewBtn:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    self.navigationItem.leftBarButtonItem = leftBtn;
     NSNotificationCenter *noti = [NSNotificationCenter defaultCenter];
     [noti addObserver:self selector:@selector(refreshCurrentTable:) name:@"artDetailNotification" object:nil];
+       //[netConnect obtainStartArtDetailInfo:self.workID];
+    
+    fileOperate = [ZXYFileOperation sharedSelf];
     NSString *filePath = [fileOperate findArtOfStartByUrlBig:self.imageURL];
     if(![fileOperate fileExistsAtPath:filePath])
     {
@@ -70,10 +69,18 @@
     {
         imageData = [NSData dataWithContentsOfFile:filePath];
     }
-
-    [netConnect obtainStartArtDetailInfo:self.workID];
+    dataProvider = [ZXYProvider sharedInstance];
+    netConnect = [NetConnect sharedSelf];
+    [NSThread detachNewThreadSelector:@selector(obtainStartArtDetailInfo:) toTarget:netConnect withObject:self.workID];
     
+    NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
+    commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
     
+    if(allDetails.count)
+    {
+        artDetail = [allDetails objectAtIndex:0];
+    }
+    [contentTableView reloadData];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -100,8 +107,18 @@
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+}
+
 - (void)refreshCurrentTable:(NSNotification *)noti
 {
+    if(!self)
+    {
+        return;
+    }
     NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
     if(allDetails.count)
     {
@@ -110,6 +127,7 @@
 
     commentArr = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
        [contentTableView reloadData];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"artDetailNotification" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -164,6 +182,7 @@
     if(indexPath.section == 0)
     {
         ImageViewForCellTableViewCell *imageCell = [tableView dequeueReusableCellWithIdentifier:imageCellIdentifier];
+        
         if(imageCell == nil)
         {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ImageViewForCellTableViewCell class]) owner:self options:nil];
@@ -172,6 +191,7 @@
                 if([oneObject isKindOfClass:[ImageViewForCellTableViewCell class]])
                 {
                     imageCell = (ImageViewForCellTableViewCell *)oneObject;
+                    
                 }
             }
             if(imageData)
@@ -179,6 +199,7 @@
                 imageCell.bigImageView.image = [UIImage imageWithData:imageData];
             }
         }
+        imageCell.delegate = self;
         cell = imageCell;
     }
     else if(indexPath.section == 1)
@@ -195,12 +216,15 @@
                 }
             }
         }
-        imageCell.authodLbl.text = artDetail.author;
-        imageCell.titleLbl.text  = artDetail.workName;
-        imageCell.sizeLbl.text   = [NSString stringWithFormat:@"%@",artDetail.workSize];
-        imageCell.typeLbl.text   = artDetail.workCategory;
-        imageCell.concerdNum.text = [NSString stringWithFormat:@"%d次关注",artDetail.beStoreTime.intValue];
-        imageCell.commentNum.text = [NSString stringWithFormat:@"这张画已经被说了%d次",artDetail.beCommentTime.intValue];
+        if(artDetail)
+        {
+            imageCell.authodLbl.text = artDetail.author;
+            imageCell.titleLbl.text  = artDetail.workName;
+            imageCell.sizeLbl.text   = [NSString stringWithFormat:@"%@",artDetail.workSize];
+            imageCell.typeLbl.text   = artDetail.workCategory;
+            imageCell.concerdNum.text = [NSString stringWithFormat:@"%d次关注",artDetail.beStoreTime.intValue];
+            imageCell.commentNum.text = [NSString stringWithFormat:@"这张画已经被说了%d次",artDetail.beCommentTime.intValue];
+        }
         cell = imageCell;
     }
     else
@@ -239,5 +263,28 @@
     {
         return YES;
     }
+}
+
+- (void)showBigImageDelegate
+{
+    if(imageData)
+    {
+        ShowBigImageViewController *bigImage = [[ShowBigImageViewController alloc] initWithImageData:imageData];
+        bigImage.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        UINavigationController *navigation =[ [UINavigationController alloc]initWithRootViewController:bigImage];
+        [self presentViewController:navigation animated:YES completion:^{
+            
+        }];
+        
+    }
+    else
+    {
+        return;
+    }
+}
+
+- (void)backViewBtn:(id)sender
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

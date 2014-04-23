@@ -56,6 +56,11 @@
 		2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */; };
 		2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */; };
 		2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */; };
+		8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167119075D2400C7D300 /* ShowBigImageViewController.m */; };
+		8B06167419075D2400C7D300 /* ShowBigImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */; };
+		8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */; };
+		8B06167A19079B1C00C7D300 /* AuthodDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167819079B1C00C7D300 /* AuthodDetailViewController.xib */; };
+		8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167F1907A1FF00C7D300 /* ArtistInfo.m */; };
 		8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B565BA718FFA0C3002520D3 /* DataListViewController.m */; };
 		8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BA818FFA0C3002520D3 /* DataListViewController.xib */; };
 		8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BAC18FFA497002520D3 /* Default-568h@2x.png */; };
@@ -175,6 +180,15 @@
 		2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button3@2x.png"; sourceTree = "<group>"; };
 		2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4@2x.png"; sourceTree = "<group>"; };
 		2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4_in@2x.png"; sourceTree = "<group>"; };
+		8B06167019075D2400C7D300 /* ShowBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowBigImageViewController.h; sourceTree = "<group>"; };
+		8B06167119075D2400C7D300 /* ShowBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowBigImageViewController.m; sourceTree = "<group>"; };
+		8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowBigImageViewController.xib; sourceTree = "<group>"; };
+		8B06167619079B1C00C7D300 /* AuthodDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthodDetailViewController.h; sourceTree = "<group>"; };
+		8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthodDetailViewController.m; sourceTree = "<group>"; };
+		8B06167819079B1C00C7D300 /* AuthodDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AuthodDetailViewController.xib; sourceTree = "<group>"; };
+		8B06167D1907A1FF00C7D300 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
+		8B06167E1907A1FF00C7D300 /* ArtistInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistInfo.h; sourceTree = "<group>"; };
+		8B06167F1907A1FF00C7D300 /* ArtistInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistInfo.m; sourceTree = "<group>"; };
 		8B565BA618FFA0C3002520D3 /* DataListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataListViewController.h; sourceTree = "<group>"; };
 		8B565BA718FFA0C3002520D3 /* DataListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataListViewController.m; sourceTree = "<group>"; };
 		8B565BA818FFA0C3002520D3 /* DataListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataListViewController.xib; sourceTree = "<group>"; };
@@ -435,6 +449,34 @@
 			path = global;
 			sourceTree = "<group>";
 		};
+		8B06167519079AAB00C7D300 /* authorDetail */ = {
+			isa = PBXGroup;
+			children = (
+				8B06167619079B1C00C7D300 /* AuthodDetailViewController.h */,
+				8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */,
+				8B06167819079B1C00C7D300 /* AuthodDetailViewController.xib */,
+				8B06167B19079C2900C7D300 /* AuthodDetailCell */,
+			);
+			name = authorDetail;
+			sourceTree = "<group>";
+		};
+		8B06167B19079C2900C7D300 /* AuthodDetailCell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AuthodDetailCell;
+			sourceTree = "<group>";
+		};
+		8B06167C1907A1F500C7D300 /* modalTemp */ = {
+			isa = PBXGroup;
+			children = (
+				8B06167D1907A1FF00C7D300 /* DataModels.h */,
+				8B06167E1907A1FF00C7D300 /* ArtistInfo.h */,
+				8B06167F1907A1FF00C7D300 /* ArtistInfo.m */,
+			);
+			name = modalTemp;
+			sourceTree = "<group>";
+		};
 		8B565BA518FFA0A2002520D3 /* DataXM */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +494,7 @@
 				8B6E96CD19013663006E6752 /* DataStartGallertyCell.h */,
 				8B6E96CE19013663006E6752 /* DataStartGallertyCell.m */,
 				8B6E96CF19013663006E6752 /* DataStartGallertyCell.xib */,
+				8B06167519079AAB00C7D300 /* authorDetail */,
 				8BBEE1281905170D0067FE37 /* ArtDetail */,
 			);
 			name = DataXM;
@@ -474,7 +517,6 @@
 		8B565BB818FFA902002520D3 /* MainDataList */ = {
 			isa = PBXGroup;
 			children = (
-				8B565BB918FFA947002520D3 /* back_icon@2x.png */,
 			);
 			name = MainDataList;
 			sourceTree = "<group>";
@@ -482,6 +524,7 @@
 		8B6E96BD19013634006E6752 /* mainDataList */ = {
 			isa = PBXGroup;
 			children = (
+				8B565BB918FFA947002520D3 /* back_icon@2x.png */,
 				8BBEE13919051C630067FE37 /* detailArt */,
 				8BBEE113190361E90067FE37 /* personal_setting@2x.png */,
 				8BBEE111190361A60067FE37 /* search_artist_portal@2x.png */,
@@ -499,6 +542,7 @@
 		8B6E96D419013670006E6752 /* DataProvider */ = {
 			isa = PBXGroup;
 			children = (
+				8B06167C1907A1F500C7D300 /* modalTemp */,
 				8B6E96DD190136B0006E6752 /* ZXYProvider.h */,
 				8B6E96DE190136B0006E6752 /* ZXYProvider.m */,
 				8BBEE11B190383E80067FE37 /* StartGalleryList.h */,
@@ -543,6 +587,9 @@
 				8BBEE129190517EF0067FE37 /* ArtDetailViewController.h */,
 				8BBEE12A190517EF0067FE37 /* ArtDetailViewController.m */,
 				8BBEE12B190517EF0067FE37 /* ArtDetailViewController.xib */,
+				8B06167019075D2400C7D300 /* ShowBigImageViewController.h */,
+				8B06167119075D2400C7D300 /* ShowBigImageViewController.m */,
+				8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */,
 				8BBEE12E1905188A0067FE37 /* ArtDetailCell */,
 			);
 			name = ArtDetail;
@@ -668,7 +715,9 @@
 				8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */,
 				2820EA5F1900F0C30053B15D /* all_ex_left_blank@2x.png in Resources */,
 				8BBEE13819051BD70067FE37 /* ArtDetailContentArtCell.xib in Resources */,
+				8B06167419075D2400C7D300 /* ShowBigImageViewController.xib in Resources */,
 				8B6E96C61901364B006E6752 /* artist_Attention@2x.png in Resources */,
+				8B06167A19079B1C00C7D300 /* AuthodDetailViewController.xib in Resources */,
 				8B6E96C51901364B006E6752 /* 22@2x.png in Resources */,
 				8BBEE13F190523C00067FE37 /* comment_write@2x.png in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
@@ -760,6 +809,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */,
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
@@ -769,6 +819,7 @@
 				8BBEE143190524E80067FE37 /* UserCommentCell.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
+				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
@@ -780,6 +831,7 @@
 				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				282B680A190527F0000DC945 /* LCYMyCollectionViewController.m in Sources */,
 				282B6810190527FB000DC945 /* LCYRegisterViewController.m in Sources */,
+				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
 				28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,

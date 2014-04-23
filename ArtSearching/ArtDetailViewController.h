@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ArtDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+#import "ImageViewForCellTableViewCell.h"
+@interface ArtDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,showBigImage>
 {
     IBOutlet UITableView *contentTableView;
 }
