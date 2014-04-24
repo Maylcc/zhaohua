@@ -8,3 +8,4 @@
 
 #import "LCYActivityList.h"
 #import "LCYActivityListBase.h"
+#import "LCYLoginResult.h"

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		280F3E0619065567000217D7 /* LCYLoginResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 280F3E0519065567000217D7 /* LCYLoginResult.m */; };
+		280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 280F3E08190673A2000217D7 /* LCYUserInformationViewController.m */; };
+		280F3E0B190673A2000217D7 /* LCYUserInformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 280F3E09190673A2000217D7 /* LCYUserInformationViewController.xib */; };
 		2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA571900D1B50053B15D /* i_want_build_bg1@2x.png */; };
 		2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA581900D1B50053B15D /* i_want_build_plus@2x.png */; };
 		2820EA5F1900F0C30053B15D /* all_ex_left_blank@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2820EA5B1900F0C30053B15D /* all_ex_left_blank@2x.png */; };
@@ -28,6 +31,14 @@
 		282B681B19052815000DC945 /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681519052815000DC945 /* renren_admire@2x.png */; };
 		282B681C19052815000DC945 /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681619052815000DC945 /* renren_comment@2x.png */; };
 		282B681D19052815000DC945 /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681719052815000DC945 /* renren_share@2x.png */; };
+		28730D651906139F005EA7DE /* launh_sure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28730D641906139F005EA7DE /* launh_sure@2x.png */; };
+		28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28730D6719061882005EA7DE /* LCYRegisterStep1ViewController.m */; };
+		28730D6A19061882005EA7DE /* LCYRegisterStep1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D6819061882005EA7DE /* LCYRegisterStep1ViewController.xib */; };
+		28730D6C19063E47005EA7DE /* service_line_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28730D6B19063E47005EA7DE /* service_line_on@2x.png */; };
+		28730D7019063F32005EA7DE /* LCYRegisterStep2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28730D6E19063F32005EA7DE /* LCYRegisterStep2ViewController.m */; };
+		28730D7119063F32005EA7DE /* LCYRegisterStep2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D6F19063F32005EA7DE /* LCYRegisterStep2ViewController.xib */; };
+		28730D751906410B005EA7DE /* LCYAddProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28730D731906410B005EA7DE /* LCYAddProfileViewController.m */; };
+		28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */; };
 		28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997CE190122AE00A09E17 /* LCYActivityList.m */; };
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
@@ -118,6 +129,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		280F3E0419065567000217D7 /* LCYLoginResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYLoginResult.h; sourceTree = "<group>"; };
+		280F3E0519065567000217D7 /* LCYLoginResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYLoginResult.m; sourceTree = "<group>"; };
+		280F3E07190673A2000217D7 /* LCYUserInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYUserInformationViewController.h; sourceTree = "<group>"; };
+		280F3E08190673A2000217D7 /* LCYUserInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYUserInformationViewController.m; sourceTree = "<group>"; };
+		280F3E09190673A2000217D7 /* LCYUserInformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYUserInformationViewController.xib; sourceTree = "<group>"; };
 		2820EA571900D1B50053B15D /* i_want_build_bg1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_want_build_bg1@2x.png"; sourceTree = "<group>"; };
 		2820EA581900D1B50053B15D /* i_want_build_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_want_build_plus@2x.png"; sourceTree = "<group>"; };
 		2820EA5B1900F0C30053B15D /* all_ex_left_blank@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "all_ex_left_blank@2x.png"; sourceTree = "<group>"; };
@@ -143,6 +159,17 @@
 		282B681519052815000DC945 /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
 		282B681619052815000DC945 /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
 		282B681719052815000DC945 /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		28730D641906139F005EA7DE /* launh_sure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launh_sure@2x.png"; sourceTree = "<group>"; };
+		28730D6619061882005EA7DE /* LCYRegisterStep1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterStep1ViewController.h; sourceTree = "<group>"; };
+		28730D6719061882005EA7DE /* LCYRegisterStep1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterStep1ViewController.m; sourceTree = "<group>"; };
+		28730D6819061882005EA7DE /* LCYRegisterStep1ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRegisterStep1ViewController.xib; sourceTree = "<group>"; };
+		28730D6B19063E47005EA7DE /* service_line_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "service_line_on@2x.png"; sourceTree = "<group>"; };
+		28730D6D19063F32005EA7DE /* LCYRegisterStep2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterStep2ViewController.h; sourceTree = "<group>"; };
+		28730D6E19063F32005EA7DE /* LCYRegisterStep2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterStep2ViewController.m; sourceTree = "<group>"; };
+		28730D6F19063F32005EA7DE /* LCYRegisterStep2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRegisterStep2ViewController.xib; sourceTree = "<group>"; };
+		28730D721906410B005EA7DE /* LCYAddProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYAddProfileViewController.h; sourceTree = "<group>"; };
+		28730D731906410B005EA7DE /* LCYAddProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYAddProfileViewController.m; sourceTree = "<group>"; };
+		28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYAddProfileViewController.xib; sourceTree = "<group>"; };
 		28A997CD190122AE00A09E17 /* LCYActivityList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYActivityList.h; sourceTree = "<group>"; };
 		28A997CE190122AE00A09E17 /* LCYActivityList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYActivityList.m; sourceTree = "<group>"; };
 		28A997CF190122AE00A09E17 /* LCYActivityListBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYActivityListBase.h; sourceTree = "<group>"; };
@@ -285,9 +312,23 @@
 		282B680C190527FB000DC945 /* userInfo */ = {
 			isa = PBXGroup;
 			children = (
+				280F3E0419065567000217D7 /* LCYLoginResult.h */,
+				280F3E0519065567000217D7 /* LCYLoginResult.m */,
 				282B680D190527FB000DC945 /* LCYRegisterViewController.h */,
 				282B680E190527FB000DC945 /* LCYRegisterViewController.m */,
 				282B680F190527FB000DC945 /* LCYRegisterViewController.xib */,
+				28730D6619061882005EA7DE /* LCYRegisterStep1ViewController.h */,
+				28730D6719061882005EA7DE /* LCYRegisterStep1ViewController.m */,
+				28730D6819061882005EA7DE /* LCYRegisterStep1ViewController.xib */,
+				28730D6D19063F32005EA7DE /* LCYRegisterStep2ViewController.h */,
+				28730D6E19063F32005EA7DE /* LCYRegisterStep2ViewController.m */,
+				28730D6F19063F32005EA7DE /* LCYRegisterStep2ViewController.xib */,
+				28730D721906410B005EA7DE /* LCYAddProfileViewController.h */,
+				28730D731906410B005EA7DE /* LCYAddProfileViewController.m */,
+				28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */,
+				280F3E07190673A2000217D7 /* LCYUserInformationViewController.h */,
+				280F3E08190673A2000217D7 /* LCYUserInformationViewController.m */,
+				280F3E09190673A2000217D7 /* LCYUserInformationViewController.xib */,
 			);
 			path = userInfo;
 			sourceTree = "<group>";
@@ -440,6 +481,8 @@
 		2FB88F6C18FE9D9A006880E7 /* global */ = {
 			isa = PBXGroup;
 			children = (
+				28730D6B19063E47005EA7DE /* service_line_on@2x.png */,
+				28730D641906139F005EA7DE /* launh_sure@2x.png */,
 				2FB88F6D18FE9D9A006880E7 /* tab_button1@2x.png */,
 				2FB88F6F18FE9D9A006880E7 /* tab_button2@2x.png */,
 				2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */,
@@ -722,8 +765,11 @@
 				8BBEE13F190523C00067FE37 /* comment_write@2x.png in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
 				282B6807190527F0000DC945 /* LCYBuildCollectionViewCell.xib in Resources */,
+				28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */,
 				8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,
+				280F3E0B190673A2000217D7 /* LCYUserInformationViewController.xib in Resources */,
+				28730D7119063F32005EA7DE /* LCYRegisterStep2ViewController.xib in Resources */,
 				2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */,
 				2FB88F3418FE4723006880E7 /* InfoPlist.strings in Resources */,
 				8B565BB418FFA497002520D3 /* Default@2x.png in Resources */,
@@ -736,13 +782,16 @@
 				8BBEE12D190517EF0067FE37 /* ArtDetailViewController.xib in Resources */,
 				8B6E96C41901364B006E6752 /* 1_07@2x.png in Resources */,
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
+				28730D6C19063E47005EA7DE /* service_line_on@2x.png in Resources */,
 				2820EA601900F0C30053B15D /* all_ex_left_filled@2x.png in Resources */,
 				8B6E96D319013663006E6752 /* DataStartGallertyCell.xib in Resources */,
 				282B6809190527F0000DC945 /* LCYBuildExhibitionViewController.xib in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
 				8B565BB318FFA497002520D3 /* Default.png in Resources */,
+				28730D651906139F005EA7DE /* launh_sure@2x.png in Resources */,
 				2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */,
 				8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */,
+				28730D6A19061882005EA7DE /* LCYRegisterStep1ViewController.xib in Resources */,
 				282B6811190527FB000DC945 /* LCYRegisterViewController.xib in Resources */,
 				282B681D19052815000DC945 /* renren_share@2x.png in Resources */,
 				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
@@ -822,8 +871,10 @@
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
+				28730D7019063F32005EA7DE /* LCYRegisterStep2ViewController.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
+				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
 				8BBEE12C190517EF0067FE37 /* ArtDetailViewController.m in Sources */,
 				8BBEE11D190383E80067FE37 /* StartGalleryList.m in Sources */,
@@ -833,11 +884,14 @@
 				282B6810190527FB000DC945 /* LCYRegisterViewController.m in Sources */,
 				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
+				28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */,
 				28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
 				2FB88F3618FE4723006880E7 /* main.m in Sources */,
+				28730D751906410B005EA7DE /* LCYAddProfileViewController.m in Sources */,
 				8B6E96D219013663006E6752 /* DataStartGallertyCell.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,
+				280F3E0619065567000217D7 /* LCYLoginResult.m in Sources */,
 				282B6806190527F0000DC945 /* LCYBuildCollectionViewCell.m in Sources */,
 				8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */,
 				8BBEE12419038DBF0067FE37 /* ZXYFileOperation.m in Sources */,

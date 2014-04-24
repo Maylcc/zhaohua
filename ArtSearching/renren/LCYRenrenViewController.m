@@ -12,6 +12,8 @@
 #import "LCYDataModels.h"
 #import "LCYRenrenTableViewCell.h"
 #import "LCYBuildExhibitionViewController.h"
+#import "LCYRegisterViewController.h"
+#import "LCYUserInformationViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
@@ -115,23 +117,14 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 }
 
 - (void)loadExData{
-    NSString *URLString = [NSString stringWithFormat:@"%@%@",hostURLPrefix,ActivityList];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
-    [manager POST:URLString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSXMLParser *XMLParser = (NSXMLParser *)responseObject;
-        XMLParser.delegate = self;
-        [XMLParser setShouldProcessNamespaces:NO];
-        [XMLParser parse];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+    [LCYCommon postRequestWithAPI:ActivityList parameters:nil successDelegate:self failedBlock:^{
+        // TODO:加载数据失败
     }];
 }
 
 #pragma mark -Actions
 - (IBAction)renrenLeftNaviButtonPressed:(id)sender{
-    // TODO: 跳转到数据凶猛
+    // 跳转到数据凶猛
     DataListViewController *dataList = [[DataListViewController alloc] initWithNibName:NSStringFromClass([DataListViewController class]) bundle:nil];
     [self.navigationController pushViewController:dataList animated:YES];
     
@@ -139,7 +132,20 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 
 - (IBAction)barButtonPressed:(id)sender {
     UIBarButtonItem *item = sender;
-    NSLog(@"%ld",(long)item.tag);
+    if (item.tag == 4) {
+        // 注册、登陆、显示用户收藏等
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
+        if (!isLogin) {
+            // 跳转到注册界面
+            LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
+            [self.navigationController pushViewController:registerVC animated:YES];
+        } else{
+            // TODO:跳转到个人信息界面
+            LCYUserInformationViewController *userVC = [[LCYUserInformationViewController alloc] init];
+            [self.navigationController pushViewController:userVC animated:YES];
+        }
+    }
 }
 
 /**
