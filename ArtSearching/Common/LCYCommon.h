@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LCYGlobalHeader.h"
 
 @interface LCYCommon : NSObject
 
@@ -26,6 +27,8 @@ CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
 //CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 */
 CA_EXTERN NSString *const Login;            /**< 登录 */
+CA_EXTERN NSString *const RegisterGetValidate;      /**< 获取验证码 */
+CA_EXTERN NSString *const RegisterOne;      /**< 注册第一步：发送手机号与验证码 */
 
 #pragma mark - UserDefaults
 CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */

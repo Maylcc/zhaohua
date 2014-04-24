@@ -66,6 +66,10 @@
     NSMutableAttributedString *labelTextString2 = [[NSMutableAttributedString alloc] initWithString:@"忘记密码"];
     [labelTextString2 addAttribute:(NSString *)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:kCTUnderlineStyleSingle] range:(NSRange){0,[labelTextString2 length]}];
     [self.forgetPWLabel setAttributedText:labelTextString2];
+    
+    // 设置光标颜色
+    self.userNameTextField.tintColor = [UIColor whiteColor];
+    self.passwordTextField.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning
