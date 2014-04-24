@@ -134,6 +134,24 @@ static ZXYFileOperation *fileOperation;
     return pathString;
 }
 
+- (NSString *)findArtOfStartByUrlBig:(NSString *)url
+{
+    ZXYProvider *provider = [ZXYProvider sharedInstance];
+    NSArray *artList = [provider readCoreDataFromDB:@"StartArtList" withContent:[NSString stringWithFormat:@"%@",url] andKey:@"url"];
+    StartArtList *startArt;
+    NSString *pathString;
+    if(artList.count)
+    {
+        startArt = [artList objectAtIndex:0];
+        NSNumber *id_art = startArt.id_Art;
+        NSString *lastComponent = [startArt.url componentsSeparatedByString:@"/"].lastObject;
+        NSString *contentDire = [[self tempPath] stringByAppendingPathComponent:@"startArt"];
+        [self createDirectoryAtPath:contentDire withBool:YES];
+        pathString = [contentDire stringByAppendingPathComponent:[NSString stringWithFormat:@"%d%@",id_art.intValue,lastComponent]];
+    }
+    return pathString;
+}
+
 - (NSString *)findArtistOfStartByUrl:(NSString *)url andID:(NSString *)userid withType:(NSString *)type
 {
     NSString *pathString;

@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ArtDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+#import "ImageViewForCellTableViewCell.h"
+@interface ArtDetailViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,showBigImage>
 {
     IBOutlet UITableView *contentTableView;
 }
+
+-(id)initWithWorkID:(NSString *)userid andWorkUrl:(NSString *)workUrl withBundleName:(NSString *)bundleName;
 @end

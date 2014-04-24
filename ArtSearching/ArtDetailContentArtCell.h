@@ -10,4 +10,10 @@
 
 @interface ArtDetailContentArtCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *authodLbl;
+@property (weak, nonatomic) IBOutlet UILabel *titleLbl;
+@property (weak, nonatomic) IBOutlet UILabel *typeLbl;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLbl;
+@property (weak, nonatomic) IBOutlet UILabel *concerdNum;
+@property (weak, nonatomic) IBOutlet UILabel *commentNum;
 @end

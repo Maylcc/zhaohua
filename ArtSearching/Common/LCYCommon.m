@@ -20,6 +20,8 @@ NSString *const UserDefaultsUserId      = @"userLoginID";
 NSString *const hostForXM     = @"http://115.29.41.251:88/webservice_art_base.asmx/";
 NSString *const startList     = @"StarList";
 NSString *const imageHost     = @"http://115.29.41.251/";
+NSString *const startArtDetail= @"WorkDetailByWorkId";
+NSString *const getArtistInfo = @"GetArtistInforById";
 @implementation LCYCommon
 
 + (void)postRequestWithAPI:(NSString *)api parameters:(NSDictionary *)parameters successDelegate:(id<NSXMLParserDelegate>)delegate failedBlock:(void (^)(void))failed{

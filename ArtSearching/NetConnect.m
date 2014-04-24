@@ -13,7 +13,9 @@
 @interface NetConnect()
 {
     BOOL isStringElement;
+    BOOL isStringElementForDetailWork;
     NSMutableString *stringForArtList;
+    NSString *workID;
 }
 @end
 @implementation NetConnect
@@ -131,6 +133,38 @@ static NSOperationQueue *queue;
     }
 }
 
+- (void)obtainStartArtDetailInfo:(NSString *)workIDs
+{
+    workID = workIDs;
+    NSString *urlString = [NSString stringWithFormat:@"%@%@",hostForXM,startArtDetail];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:workID forKey:@"workID"];
+    manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"成功了啊-------------------------------------,%@",[operation responseString]);
+        isStringElementForDetailWork = YES;
+        NSXMLParser *parserData = [[NSXMLParser alloc] initWithData:[operation responseData]];
+        parserData.delegate = self;
+        [parserData parse];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error is %@",error);
+    }];
+    
+}
+
+- (void)dataForProviderOfDetailWork:(NSString *)dataString
+{
+    fileManager = [ZXYFileOperation sharedSelf];
+    dataProvider = [ZXYProvider sharedInstance];
+    NSData *paseData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:paseData options:NSJSONReadingMutableLeaves error:nil];
+    [dataProvider saveArtDetailToCoreData:dic withID:workID];
+    NSNotification *noti = [NSNotification notificationWithName:@"artDetailNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:noti];
+    NSLog(@"artistID is %@",[dic objectForKey:@"artistId"]);
+}
+
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
     if([elementName isEqualToString:@"string"])
@@ -155,7 +189,15 @@ static NSOperationQueue *queue;
     {
         isStringElement = NO;
         // NSLog(@"string is %@",stringForArtList);
-        [self obTainDataForCoreData:stringForArtList];
+        if(isStringElementForDetailWork)
+        {
+            isStringElementForDetailWork = NO;
+            [self dataForProviderOfDetailWork:stringForArtList];
+        }
+        else
+        {
+            [self obTainDataForCoreData:stringForArtList];
+        }
     }
 }
 
