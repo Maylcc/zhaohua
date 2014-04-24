@@ -13,6 +13,10 @@ NSString *const hostURLPrefix = @"http://115.29.41.251:88/webservice_art_base.as
 NSString *const ActivityList  = @"ActivityList";
 //NSString *const ActivityOrganizationListSearchByKey     = @"ActivityOrganizationListSearchByKey";
 NSString *const Login         = @"Login";
+NSString *const RegisterGetValidate = @"RegisterGetValidate";
+NSString *const RegisterOne             = @"RegisterOne";
+
+
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
 NSString *const UserDefaultsUserId      = @"userLoginID";
 
