@@ -63,7 +63,7 @@
     [request setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         UIImage *downImg = (UIImage *)responseObject;
-        NSData *imageData = UIImageJPEGRepresentation(downImg, 0.9
+        NSData *imageData = UIImageJPEGRepresentation(downImg, 1
                                                       );
         [imageData writeToFile:[fileManager findArtOfStartByUrl:startArt.url_Small] atomically:YES];
         isDown = YES;

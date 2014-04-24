@@ -22,4 +22,20 @@
     // Configure the view for the selected state
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [super drawRect:rect];
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showBGImage:)];
+    [self.bigImageView setUserInteractionEnabled:YES];
+    [self.bigImageView addGestureRecognizer:tapGes];
+}
+
+- (void)showBGImage:(UIGestureRecognizer *)ges
+{
+    if([self.delegate respondsToSelector:@selector(showBigImageDelegate)])
+    {
+        [self.delegate showBigImageDelegate];
+    }
+}
+
 @end

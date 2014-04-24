@@ -42,5 +42,8 @@
  */
 - (NSString *)findArtistOfStartByUrl:(NSString *)url andID:(NSString *)userid withType:(NSString *)type;
 
-
+/*
+ 获得大图片  传入url
+ */
+- (NSString *)findArtOfStartByUrlBig:(NSString *)url;
 @end
