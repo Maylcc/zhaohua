@@ -44,7 +44,7 @@
 		28883792190DF5C100562EEC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28883791190DF5C100562EEC /* SystemConfiguration.framework */; };
 		28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883794190DF8B400562EEC /* MBProgressHUD.m */; };
 		28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883796190E02D800562EEC /* LCYRegisterOneResult.m */; };
-		2888379B190E361500562EEC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888379A190E361500562EEC /* Base64.m */; };
+		2888379C190E4E4C00562EEC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888379A190E361500562EEC /* Base64.m */; };
 		2897CD841908A14000D88FA7 /* nav_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2897CD831908A14000D88FA7 /* nav_setting@2x.png */; };
 		289BD34E1908F017000A8C4B /* LCYRegisterGetValidateResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BD34D1908F017000A8C4B /* LCYRegisterGetValidateResult.m */; };
 		289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BD3511909137C000A8C4B /* LCYRegisterGlobal.m */; };
@@ -1150,6 +1150,7 @@
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
+				2888379C190E4E4C00562EEC /* Base64.m in Sources */,
 				2888378D190DE8CB00562EEC /* LCYSimpleCodeResult.m in Sources */,
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */,

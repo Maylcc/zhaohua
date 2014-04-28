@@ -126,11 +126,12 @@
     NSData *data = [LCYCommon compressImage:image];
 //    NSString * postImage = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     NSString *postImage = [data base64EncodedString];
+    self.myImageView.image = [UIImage imageWithData:data];
     [LCYCommon hideHUDFrom:self.view];
     
     if ([LCYCommon networkAvailable]) {
         [LCYCommon showHUDTo:self.view withTips:@"正在上传头像"];
-        NSDictionary *parameter = @{@"fs":data,
+        NSDictionary *parameter = @{@"fs":postImage,
                                     @"FileName":[[LCYRegisterGlobal sharedInstance].uid stringByAppendingPathExtension:@"jpg"]};
         LCYLOG(@"para:%@",parameter);
         [LCYCommon postRequestWithAPI:UploadFile parameters:parameter successDelegate:self failedBlock:^{
