@@ -209,6 +209,10 @@ static NSOperationQueue *queue;
 
 - (NSDictionary *)stringToJSONData:(NSString *)jsonData
 {
+    if([jsonData isKindOfClass:[NSNull class]])
+    {
+        return nil;
+    }
     NSData *data = [jsonData dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dicData = [NSJSONSerialization JSONObjectWithData:data
                                                             options:NSJSONReadingMutableLeaves error:nil];

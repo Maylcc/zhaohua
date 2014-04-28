@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShowBigImageViewController : UIViewController<UIScrollViewDelegate>
+@interface ShowBigImageViewController : UIViewController<UIScrollViewDelegate,UITabBarDelegate>
+{
+    
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *bigImageScroll;
 @property (weak, nonatomic) IBOutlet UIImageView *bigImageView;
 - (id)initWithImageData:(NSData *)imageData;
