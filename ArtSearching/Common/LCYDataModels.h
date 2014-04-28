@@ -10,3 +10,5 @@
 #import "LCYActivityListBase.h"
 #import "LCYLoginResult.h"
 #import "LCYRegisterGetValidateResult.h"
+#import "LCYSimpleCodeResult.h"
+#import "LCYRegisterOneResult.h"

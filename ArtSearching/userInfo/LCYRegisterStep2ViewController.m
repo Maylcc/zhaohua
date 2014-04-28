@@ -7,8 +7,13 @@
 //
 
 #import "LCYRegisterStep2ViewController.h"
+#import "LCYDataModels.h"
+#import "LCYRegisterGlobal.h"
+#import "LCYCommon.h"
+#import "LCYAddProfileViewController.h"
 
 @interface LCYRegisterStep2ViewController ()
+<NSXMLParserDelegate>
 /**
  *  请输入密码
  */
@@ -21,6 +26,11 @@
  *  背景，用于上下移动
  */
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
+
+/**
+ *  xml解析结果
+ */
+@property (strong, nonatomic) NSMutableString *xmlTempString;
 
 @end
 
@@ -84,6 +94,19 @@
 - (IBAction)doneButtonPressed:(id)sender {
     if ([self checkPassword]){
         //TODO:发送验证码
+        NSString *uid = [LCYRegisterGlobal sharedInstance].uid;
+        NSString *phone = [LCYRegisterGlobal sharedInstance].phoneNumber;
+        NSDictionary *parameter = @{@"Uid": uid,
+                                    @"phone": phone,
+                                    @"pwd": self.passwordTextField.text};
+        if ([LCYCommon networkAvailable]) {
+            [LCYCommon postRequestWithAPI:RegisterTwo parameters:parameter successDelegate:self failedBlock:^{
+                LCYLOG(@"failed request");
+            }];
+        } else {
+            UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [networkUnabailableAlert show];
+        }
     }
 }
 - (IBAction)backgroundTouchDown:(id)sender {
@@ -98,6 +121,32 @@
         [self.checkPasswordTextField becomeFirstResponder];
     } else if (textField == self.checkPasswordTextField) {
         [self.checkPasswordTextField resignFirstResponder];
+    }
+}
+
+#pragma mark - NSXMLParserDelegate Methods
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    LCYSimpleCodeResult *result = [LCYSimpleCodeResult modelObjectWithDictionary:jsonResponse];
+    if (result.code == 0) {
+        // 验证成功
+        LCYAddProfileViewController *addVC = [[LCYAddProfileViewController alloc] init];
+        [self.navigationController pushViewController:addVC animated:YES];
+    } else {
+        // 验证失败
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"验证失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
     }
 }
 
