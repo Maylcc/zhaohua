@@ -12,14 +12,17 @@
 #import "NetConnect.h"
 #import "ZXYProvider.h"
 @class ZXYFileOperation;
+@class UIFolderTableView;
+@class DataAcquisitionViewController;
 @interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
-    IBOutlet UITableView *dataTableV;
+    IBOutlet UIFolderTableView *dataTableV;
     ZXYProvider *dataProvider;
     NetConnect *netConnect;
     NSArray *arrArtList;
     NSArray *arrArtistsList;
     NSArray *arrGalleryList;
     ZXYFileOperation *fileOperation;
+    DataAcquisitionViewController *dataAc;
 }
 @end

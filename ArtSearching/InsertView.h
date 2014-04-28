@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface InsertView : UIView
-
+- (id)initWithMessage:(NSString *)message andSuperV:(UIView *)superV withPoint:(CGFloat)positionY;
+- (void)showMessageViewWithTime:(NSTimeInterval)time;
+- (void)showMessageView;
+- (void)hideMessageView;
 @end
