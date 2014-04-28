@@ -9,3 +9,4 @@
 #import "LCYActivityList.h"
 #import "LCYActivityListBase.h"
 #import "LCYLoginResult.h"
+#import "LCYRegisterGetValidateResult.h"

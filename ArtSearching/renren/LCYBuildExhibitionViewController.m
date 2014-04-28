@@ -9,7 +9,7 @@
 #import "LCYBuildExhibitionViewController.h"
 #import "LCYBuildCollectionViewCell.h"
 #import "LCYMyCollectionViewController.h"
-
+#import "LCYCommon.h"
 @interface LCYBuildExhibitionViewController ()
 <UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 {
@@ -96,7 +96,7 @@
  *  @param sender 按钮
  */
 - (IBAction)confirmButtonPressed:(id)sender {
-    NSLog(@"确认发布");
+    LCYLOG(@"确认发布");
 }
 - (IBAction)backgroundTouched:(id)sender {
     if ([self.subjectTextView isFirstResponder]) {
