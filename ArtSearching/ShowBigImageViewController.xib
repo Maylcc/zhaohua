@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="bigImageScroll" destination="kOF-wf-kUF" id="h5f-ym-dgl"/>
                 <outlet property="bigImageView" destination="RLJ-jz-3xh" id="yWv-Ep-UTk"/>
+                <outlet property="circulProgress" destination="Nae-kw-L78" id="oKt-2u-Rf5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,12 +19,16 @@
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" canCancelContentTouches="NO" maximumZoomScale="3" bouncesZoom="NO" id="kOF-wf-kUF">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <subviews>
                         <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placehold_image.png" id="RLJ-jz-3xh">
                             <rect key="frame" x="0.0" y="-1" width="320" height="569"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                         </imageView>
+                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" id="Nae-kw-L78">
+                            <rect key="frame" x="151" y="273" width="20" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="color" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        </activityIndicatorView>
                     </subviews>
                 </scrollView>
             </subviews>
