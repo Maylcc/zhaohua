@@ -26,6 +26,7 @@
     NetConnect *netConnect;
     ZXYFileOperation *fileOperate;
     NSData *imageData;
+    UIImage *currentImage;
 }
 @property (nonatomic,strong)NSString *workID;
 @property (nonatomic,strong)NSString *imageURL;
@@ -68,6 +69,7 @@
     else
     {
         imageData = [NSData dataWithContentsOfFile:filePath];
+        currentImage = [UIImage imageWithData:imageData];
     }
     dataProvider = [ZXYProvider sharedInstance];
     netConnect = [NetConnect sharedSelf];
@@ -96,6 +98,7 @@
         UIImage *downImg = (UIImage *)responseObject;
         NSData *imageDatas = UIImageJPEGRepresentation(downImg, 1);
         imageData = imageDatas;
+        currentImage = [UIImage imageWithData:imageData];
         [imageData writeToFile:[fileOperate findArtOfStartByUrlBig:self.imageURL] atomically:YES];
         [self performSelectorOnMainThread:@selector(refreshCurrentTable:) withObject:nil waitUntilDone:YES];
         NSLog(@"success");
@@ -194,10 +197,11 @@
                     
                 }
             }
-            if(imageData)
-            {
-                imageCell.bigImageView.image = [UIImage imageWithData:imageData];
-            }
+            
+        }
+        if(imageData)
+        {
+            imageCell.bigImageView.image = currentImage;
         }
         imageCell.delegate = self;
         cell = imageCell;

@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DataListViewController">
             <connections>
-                <outlet property="dataTableV" destination="ljb-kz-qIU" id="Xc2-7c-dH4"/>
+                <outlet property="dataTableV" destination="ljb-kz-qIU" id="bG0-oE-fDw"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
         </placeholder>
@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ljb-kz-qIU">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ljb-kz-qIU" customClass="UIFolderTableView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,8 +24,9 @@
                         <constraint firstAttribute="width" constant="320" id="UhJ-M0-AZ0"/>
                     </constraints>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="T8G-z7-WPq"/>
-                        <outlet property="delegate" destination="-1" id="tl7-fD-9SU"/>
+                        <outlet property="dataSource" destination="-1" id="fUp-d1-t7i"/>
+                        <outlet property="delegate" destination="-1" id="gJQ-Rs-aZ2"/>
+                        <outlet property="folderDelegate" destination="-1" id="waD-Fd-tSh"/>
                     </connections>
                 </tableView>
             </subviews>

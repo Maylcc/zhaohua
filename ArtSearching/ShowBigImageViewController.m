@@ -7,12 +7,16 @@
 //
 
 #import "ShowBigImageViewController.h"
-
+#import "InsertView.h"
 @interface ShowBigImageViewController ()
 {
     CGFloat zs ;
     NSData *_imageData;
     BOOL isBarHidden;
+    UITabBar *tabBar;
+    InsertView *insert;
+    BOOL isSave;
+    __weak IBOutlet UIActivityIndicatorView *circulProgress;
 }
 @property (nonatomic,strong)NSData *imageData;
 @end
@@ -37,6 +41,8 @@
         self.imageData = imageData;
         zs = 2;
         isBarHidden = NO;
+        isSave = NO;
+
     }
     return self;
 }
@@ -59,14 +65,28 @@
     UITapGestureRecognizer *tapGesTwo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scaleTheImage)];
     tapGesTwo.numberOfTapsRequired = 2;
     [self.bigImageScroll addGestureRecognizer:tapGesTwo];
+    tabBar = [[UITabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-40, self.view.frame.size.width, 40)];
+    UITabBarItem *item = [[UITabBarItem alloc] init];
+    item.selectedImage = [UIImage imageNamed:@"download_icon"];
+    
+    item.image = [UIImage imageNamed:@"download_icon"];
+    //[self.navigationController setTabBarItem:item];
+    NSArray *items = [NSArray arrayWithObjects:item, nil];
+    [tabBar setItems:items];
+    [tabBar setDelegate:self];
+    [tabBar setTintColor:[UIColor grayColor]];
+    [self.view addSubview:tabBar];
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    insert = [[InsertView alloc] initWithMessage:@"保存成功" andSuperV:self.view withPoint:200];
     UIImage *imageForView = [UIImage imageWithData:self.imageData];
     float radio = imageForView.size.height/imageForView.size.width;
-    [self.bigImageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 320*radio)];
+    [self.bigImageView setFrame:CGRectMake(0, self.bigImageView.frame.origin.y, self.view.frame.size.width, 320*radio)];
     //self.bigImageScroll.frame = CGRectMake(0, 0, imageForView.size.width, imageForView.size.height);
     //self.bigImageScroll.contentSize = CGSizeMake(imageForView.size.width/2, imageForView.size.height/2);
     NSLog(@"size is %f   ,   %f",imageForView.size.width,imageForView.size.height);
@@ -111,9 +131,29 @@
 
 - (void)scaleTheImage
 {
+    if(self.navigationController.navigationBar.isHidden == YES)
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.3];
+        [tabBar setFrame:CGRectMake(0, self.view.frame.size.height-40, self.view.frame.size.width, 40)];
+        [UIView commitAnimations];
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+    }
+    else
+    {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        [UIView setAnimationDuration:0.3];
+        [tabBar setFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 40)];
+        [UIView commitAnimations];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    }
+
     CGFloat zoomSize = zs;
     zs = (zoomSize == 1)?3.0:1.0;
     [self.bigImageScroll setZoomScale:zoomSize animated:YES];
+    
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
@@ -131,4 +171,28 @@
         [self.bigImageScroll setZoomScale:zoomSize];
     }
 }
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+
+    [circulProgress setHidden:NO];
+    [circulProgress startAnimating];
+    [NSThread detachNewThreadSelector:@selector(saveThread) toTarget:self withObject:nil];
+}
+
+- (void)saveFinish
+{
+    [circulProgress setHidden:YES];
+    [circulProgress stopAnimating];
+    [insert showMessageViewWithTime:2];
+}
+
+- (void)saveThread
+{
+     UIImageWriteToSavedPhotosAlbum([self.bigImageView image], nil, nil,nil);
+    [self performSelectorOnMainThread:@selector(saveFinish) withObject:nil waitUntilDone:YES];
+}
+
+
+
 @end
