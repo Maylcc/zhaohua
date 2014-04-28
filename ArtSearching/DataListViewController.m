@@ -9,6 +9,9 @@
 #import "DataListViewController.h"
 #import "DataArtListCellTableViewCell.h"
 #import "DataStartGallertyCell.h"
+#import "DataAcquisitionViewController.h"
+#import "DataCMICTableViewCell.h"
+#import "UIFolderTableView.h"
 #import "ZXYFileOperation.h"
 #import "StartArtList.h"
 #import "StartArtistsList.h"
@@ -21,7 +24,7 @@
 green:((float)((0x3a3a3a & 0xFF00) >> 8))/255.0 \
 blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
-@interface DataListViewController ()
+@interface DataListViewController ()<UIFolderTableViewDelegate>
 
 @end
 
@@ -79,7 +82,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 #pragma mark - table代理以及数据源
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3 ;
+    return 4 ;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -96,9 +99,14 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         titleLbl.backgroundColor = [UIColor clearColor];
         if(section == 0)
         {
-            titleLbl.text = @"  明星作品 (10)";
+            titleLbl.text = @"信心指数";
+            //return nil;
         }
         else if(section == 1)
+        {
+            titleLbl.text = @"  明星作品 (10)";
+        }
+        else if(section == 2)
         {
             titleLbl.text = @"  明星艺术家 (10)";
         }
@@ -116,9 +124,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 {
     if(section == 0)
     {
-        return arrArtList.count;
+        return 1;
     }
     else if(section == 1)
+    {
+        return arrArtList.count;
+    }
+    else if(section == 2)
     {
         return arrArtistsList.count;
     }
@@ -132,6 +144,25 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 {
     UITableViewCell *cell ;
     if(indexPath.section == 0)
+    {
+        static NSString *cmicCellIdentifier = @"cmicCellIdentifier";
+        DataCMICTableViewCell *cmicCell = [tableView dequeueReusableCellWithIdentifier:cmicCellIdentifier];
+        if(cmicCell == nil)
+        {
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DataCMICTableViewCell" owner:self options:nil];
+            for(id oneObject in nib)
+            {
+                if([oneObject isKindOfClass:[DataCMICTableViewCell class]])
+                {
+                    cmicCell = (DataCMICTableViewCell *)oneObject;
+                }
+            }
+
+        }
+        cell = cmicCell;
+        return cell;
+    }
+    else if(indexPath.section == 1)
     {
         static NSString *artListCellIdentifier = @"artListCellIdentifier";
         DataArtListCellTableViewCell *cellArt = [tableView dequeueReusableCellWithIdentifier:artListCellIdentifier];
@@ -181,13 +212,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             }
             
         }
-        if(indexPath.section == 1)
+        if(indexPath.section == 2)
         {
             StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
             galleryCell.authordName.text = artist.author;
             galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])
@@ -199,13 +230,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                 galleryCell.authordImage.image = [UIImage imageNamed:@"personal_setting.png"];
             }
         }
-        else
+        else 
         {
             StartGalleryList *artist = [arrGalleryList objectAtIndex:indexPath.row];
             galleryCell.authordName.text = artist.name;
             galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%d",indexPath.row+1];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])
@@ -227,9 +258,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     return cell;
 }
 //
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+- (CGFloat)tableView:(UIFolderTableView *)tableView xForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)
+    {
+        return 44;
+    }
+    else if(indexPath.section == 1)
     {
         return 210;
     }
@@ -238,15 +273,57 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         return 51;
     }
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        return 44;
+    }
+    else if(indexPath.section == 1)
+    {
+        return 210;
+    }
+    else
+    {
+        return 51;
+    }
+
+}
 //
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(section == 0)
+    {
+        return 0;
+    }
     return 22;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)
+    {
+        dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
+        dataTableV.scrollEnabled = NO;
+        
+        UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
+        [folderTableView openFolderAtIndexPath:indexPath WithContentView:dataAc.view
+                                     openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
+                                         // opening actions
+                                     }
+                                    closeBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
+                                        // closing actions
+                                    }
+                               completionBlock:^{
+                                   // completed actions
+                                   dataTableV.scrollEnabled = YES;
+                               }];
+
+    }
+    
+    if(indexPath.section == 1)
     {
         StartArtList *art = [arrArtList objectAtIndex:indexPath.row];
         ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:art.id_Art.stringValue andWorkUrl:art.url withBundleName:@"ArtDetailViewController"];

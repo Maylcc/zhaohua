@@ -15,6 +15,7 @@
     BOOL isBarHidden;
     UITabBar *tabBar;
     InsertView *insert;
+    BOOL isSave;
     __weak IBOutlet UIActivityIndicatorView *circulProgress;
 }
 @property (nonatomic,strong)NSData *imageData;
@@ -40,7 +41,7 @@
         self.imageData = imageData;
         zs = 2;
         isBarHidden = NO;
-        
+        isSave = NO;
 
     }
     return self;
@@ -82,9 +83,10 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    insert = [[InsertView alloc] initWithMessage:@"保存成功" andSuperV:self.view withPoint:200];
     UIImage *imageForView = [UIImage imageWithData:self.imageData];
     float radio = imageForView.size.height/imageForView.size.width;
-    [self.bigImageView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 320*radio)];
+    [self.bigImageView setFrame:CGRectMake(0, self.bigImageView.frame.origin.y, self.view.frame.size.width, 320*radio)];
     //self.bigImageScroll.frame = CGRectMake(0, 0, imageForView.size.width, imageForView.size.height);
     //self.bigImageScroll.contentSize = CGSizeMake(imageForView.size.width/2, imageForView.size.height/2);
     NSLog(@"size is %f   ,   %f",imageForView.size.width,imageForView.size.height);
@@ -172,30 +174,25 @@
 
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
-    if(insert == nil)
-    {
-        [circulProgress setHidden:NO];
-        [circulProgress startAnimating];
-        insert = [[InsertView alloc] initWithMessage:@"正在保存..." andTimeInterval:1 withRect:CGPointMake(20,200)];
-        [insert showInsertView:self.view];
-        UIImageWriteToSavedPhotosAlbum([self.bigImageView image], nil, nil,nil);
-        [self saveFinish];
-        
-        
-    }
-    else
-    {
-        return;
-    }
 
+    [circulProgress setHidden:NO];
+    [circulProgress startAnimating];
+    [NSThread detachNewThreadSelector:@selector(saveThread) toTarget:self withObject:nil];
 }
 
 - (void)saveFinish
 {
-   
-    [insert setIsTimer:YES];
     [circulProgress setHidden:YES];
     [circulProgress stopAnimating];
+    [insert showMessageViewWithTime:2];
 }
+
+- (void)saveThread
+{
+     UIImageWriteToSavedPhotosAlbum([self.bigImageView image], nil, nil,nil);
+    [self performSelectorOnMainThread:@selector(saveFinish) withObject:nil waitUntilDone:YES];
+}
+
+
 
 @end
