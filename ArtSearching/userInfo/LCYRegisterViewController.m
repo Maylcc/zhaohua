@@ -81,9 +81,15 @@
 - (void)getLaunchData{
     NSDictionary *parameters = @{@"phone": self.userNameTextField.text,
                                  @"password": self.passwordTextField.text};
-    [LCYCommon postRequestWithAPI:Login parameters:parameters successDelegate:self failedBlock:^{
-        // TODO:处理网络错误
-    }];
+    if ([LCYCommon networkAvailable]) {
+        [LCYCommon postRequestWithAPI:Login parameters:parameters successDelegate:self failedBlock:^{
+            // TODO:处理网络错误
+        }];
+    } else {
+        UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [networkUnabailableAlert show];
+    }
+    
 }
 
 #pragma mark - Actions

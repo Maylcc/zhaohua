@@ -39,6 +39,12 @@
 		28730D7119063F32005EA7DE /* LCYRegisterStep2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D6F19063F32005EA7DE /* LCYRegisterStep2ViewController.xib */; };
 		28730D751906410B005EA7DE /* LCYAddProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28730D731906410B005EA7DE /* LCYAddProfileViewController.m */; };
 		28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */; };
+		2888378D190DE8CB00562EEC /* LCYSimpleCodeResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888378C190DE8CB00562EEC /* LCYSimpleCodeResult.m */; };
+		28883790190DF46400562EEC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888378F190DF46400562EEC /* Reachability.m */; };
+		28883792190DF5C100562EEC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28883791190DF5C100562EEC /* SystemConfiguration.framework */; };
+		28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883794190DF8B400562EEC /* MBProgressHUD.m */; };
+		28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883796190E02D800562EEC /* LCYRegisterOneResult.m */; };
+		2888379B190E361500562EEC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888379A190E361500562EEC /* Base64.m */; };
 		2897CD841908A14000D88FA7 /* nav_setting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2897CD831908A14000D88FA7 /* nav_setting@2x.png */; };
 		289BD34E1908F017000A8C4B /* LCYRegisterGetValidateResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BD34D1908F017000A8C4B /* LCYRegisterGetValidateResult.m */; };
 		289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 289BD3511909137C000A8C4B /* LCYRegisterGlobal.m */; };
@@ -187,6 +193,17 @@
 		28730D721906410B005EA7DE /* LCYAddProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYAddProfileViewController.h; sourceTree = "<group>"; };
 		28730D731906410B005EA7DE /* LCYAddProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYAddProfileViewController.m; sourceTree = "<group>"; };
 		28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYAddProfileViewController.xib; sourceTree = "<group>"; };
+		2888378B190DE8CB00562EEC /* LCYSimpleCodeResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYSimpleCodeResult.h; sourceTree = "<group>"; };
+		2888378C190DE8CB00562EEC /* LCYSimpleCodeResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYSimpleCodeResult.m; sourceTree = "<group>"; };
+		2888378E190DF46400562EEC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		2888378F190DF46400562EEC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		28883791190DF5C100562EEC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		28883793190DF8B300562EEC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		28883794190DF8B400562EEC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		28883796190E02D800562EEC /* LCYRegisterOneResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterOneResult.m; sourceTree = "<group>"; };
+		28883797190E02D800562EEC /* LCYRegisterOneResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterOneResult.h; sourceTree = "<group>"; };
+		28883799190E361500562EEC /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		2888379A190E361500562EEC /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		2897CD831908A14000D88FA7 /* nav_setting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_setting@2x.png"; sourceTree = "<group>"; };
 		289BD34C1908F017000A8C4B /* LCYRegisterGetValidateResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterGetValidateResult.h; sourceTree = "<group>"; };
 		289BD34D1908F017000A8C4B /* LCYRegisterGetValidateResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterGetValidateResult.m; sourceTree = "<group>"; };
@@ -409,6 +426,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28883792190DF5C100562EEC /* SystemConfiguration.framework in Frameworks */,
 				8BBEE10E190354F80067FE37 /* libPods.a in Frameworks */,
 				2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */,
 				2FB88F2E18FE4723006880E7 /* CoreData.framework in Frameworks */,
@@ -435,6 +453,10 @@
 		282B680C190527FB000DC945 /* userInfo */ = {
 			isa = PBXGroup;
 			children = (
+				2888378B190DE8CB00562EEC /* LCYSimpleCodeResult.h */,
+				2888378C190DE8CB00562EEC /* LCYSimpleCodeResult.m */,
+				28883797190E02D800562EEC /* LCYRegisterOneResult.h */,
+				28883796190E02D800562EEC /* LCYRegisterOneResult.m */,
 				280F3E0419065567000217D7 /* LCYLoginResult.h */,
 				280F3E0519065567000217D7 /* LCYLoginResult.m */,
 				289BD34C1908F017000A8C4B /* LCYRegisterGetValidateResult.h */,
@@ -483,6 +505,7 @@
 		2FB88F2618FE4723006880E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				28883791190DF5C100562EEC /* SystemConfiguration.framework */,
 				8BBEE10D190354F80067FE37 /* libPods.a */,
 				2FB88F2718FE4723006880E7 /* Foundation.framework */,
 				2FB88F2918FE4723006880E7 /* CoreGraphics.framework */,
@@ -598,6 +621,12 @@
 		2FB88F6818FE93AC006880E7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				28883799190E361500562EEC /* Base64.h */,
+				2888379A190E361500562EEC /* Base64.m */,
+				28883793190DF8B300562EEC /* MBProgressHUD.h */,
+				28883794190DF8B400562EEC /* MBProgressHUD.m */,
+				2888378E190DF46400562EEC /* Reachability.h */,
+				2888378F190DF46400562EEC /* Reachability.m */,
 				2FB88F6918FE93E2006880E7 /* LCYCommon.h */,
 				2FB88F6A18FE93E2006880E7 /* LCYCommon.m */,
 				28A997D3190122D600A09E17 /* LCYDataModels.h */,
@@ -1121,6 +1150,7 @@
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
+				2888378D190DE8CB00562EEC /* LCYSimpleCodeResult.m in Sources */,
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */,
 				8BBEE13719051BD70067FE37 /* ArtDetailContentArtCell.m in Sources */,
@@ -1129,7 +1159,9 @@
 				8BBEE143190524E80067FE37 /* UserCommentCell.m in Sources */,
 				8B49BA18190DF7E800F7725D /* FolderCoverView.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
+				28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
+				28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
@@ -1162,6 +1194,7 @@
 				8B49BA19190DF7E800F7725D /* UIFolderTableView.m in Sources */,
 				282B6806190527F0000DC945 /* LCYBuildCollectionViewCell.m in Sources */,
 				8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */,
+				28883790190DF46400562EEC /* Reachability.m in Sources */,
 				8BBEE12419038DBF0067FE37 /* ZXYFileOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

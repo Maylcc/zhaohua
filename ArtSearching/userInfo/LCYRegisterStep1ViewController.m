@@ -153,10 +153,14 @@ typedef NS_ENUM(NSInteger, StepOneStatus){
             // 发送验证请求
             NSDictionary *parameter = @{@"phone": self.phoneNumber.text,
                                         @"validate":self.validationCodeTextField.text};
-            [LCYCommon postRequestWithAPI:RegisterOne parameters:parameter successDelegate:self failedBlock:^{
-                LCYLOG(@"failed request");
-            }];
-            
+            if ([LCYCommon networkAvailable]) {
+                [LCYCommon postRequestWithAPI:RegisterOne parameters:parameter successDelegate:self failedBlock:^{
+                    LCYLOG(@"failed request");
+                }];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
         } else {
             UIAlertView *wrongValidation = [[UIAlertView alloc] initWithTitle:@"" message:@"请输入正确的验证码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [wrongValidation show];
@@ -177,10 +181,15 @@ typedef NS_ENUM(NSInteger, StepOneStatus){
         if ([self checkPhoneIsNum:self.phoneNumber.text]) {
             currentStatus = StepOneGetValidationNumber;
             NSDictionary *parameter = @{@"telno": self.phoneNumber.text};
-            [LCYCommon postRequestWithAPI:RegisterGetValidate parameters:parameter successDelegate:self failedBlock:^{
-                LCYLOG(@"request failed");
-                self.validationGetButton.enabled = YES;
-            }];
+            if ([LCYCommon networkAvailable]) {
+                [LCYCommon postRequestWithAPI:RegisterGetValidate parameters:parameter successDelegate:self failedBlock:^{
+                    LCYLOG(@"request failed");
+                    self.validationGetButton.enabled = YES;
+                }];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
         } else {
             UIAlertView *faultPhoneNumber = [[UIAlertView alloc] initWithTitle:@"" message:@"请您输入正确的手机号码。" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [faultPhoneNumber show];
@@ -234,9 +243,10 @@ typedef NS_ENUM(NSInteger, StepOneStatus){
         }
         self.validationGetButton.enabled = YES;
     } else if (currentStatus == StepOneSendValidationNumber){
-        LCYLoginResult *loginResult = [LCYLoginResult modelObjectWithDictionary:jsonResponse];
-        if (loginResult.code == 0) {
-            [LCYRegisterGlobal sharedInstance].uid = [NSString stringWithFormat:@"%.f",loginResult.uid];
+        LCYRegisterOneResult *stepOneResult = [LCYRegisterOneResult modelObjectWithDictionary:jsonResponse];
+//        LCYLoginResult *loginResult = [LCYLoginResult modelObjectWithDictionary:jsonResponse];
+        if (stepOneResult.code == 0) {
+            [LCYRegisterGlobal sharedInstance].uid = [NSString stringWithFormat:@"%.f",stepOneResult.uid];
             [LCYRegisterGlobal sharedInstance].phoneNumber = self.phoneNumber.text;
             LCYRegisterStep2ViewController *step2VC = [[LCYRegisterStep2ViewController alloc] init];
             [self.navigationController pushViewController:step2VC animated:YES];

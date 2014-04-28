@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LCYGlobalHeader.h"
 
 @interface LCYCommon : NSObject
 
@@ -22,6 +21,34 @@
                 parameters:(NSDictionary *)parameters
            successDelegate:(id<NSXMLParserDelegate>)delegate
                failedBlock:(void (^)(void))failed;
+/**
+ *  检查是否有网络连接
+ *
+ *  @return 是或否
+ */
++ (BOOL)networkAvailable;
+/**
+ *  显示透明指示层
+ *
+ *  @param view 用于显示的界面
+ *  @param tips 指示层的提示信息
+ */
++ (void)showHUDTo:(UIView *)view
+         withTips:(NSString *)tips;
+/**
+ *  隐藏特定界面的透明指示层
+ *
+ *  @param view 特定的界面
+ */
++ (void)hideHUDFrom:(UIView *)view;
+/**
+ *  将图片压缩为NSdata，用于上传头像
+ *
+ *  @param comImage 原始图片
+ *
+ *  @return 压缩后的数据
+ */
++ (NSData*)compressImage:(UIImage*)comImage;
 
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
@@ -29,6 +56,9 @@ CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
 CA_EXTERN NSString *const Login;            /**< 登录 */
 CA_EXTERN NSString *const RegisterGetValidate;      /**< 获取验证码 */
 CA_EXTERN NSString *const RegisterOne;      /**< 注册第一步：发送手机号与验证码 */
+CA_EXTERN NSString *const RegisterTwo;      /**< 注册第二步：发送密码 */
+CA_EXTERN NSString *const UploadFile;       /**< 注册第三步：上传头像图片 */
+CA_EXTERN NSString *const RegisterThree;    /**< 注册第三步：上传姓名，头像信息 */
 
 #pragma mark - UserDefaults
 CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */
