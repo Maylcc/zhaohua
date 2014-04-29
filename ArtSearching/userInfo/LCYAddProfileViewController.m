@@ -10,15 +10,25 @@
 #import "LCYCommon.h"
 #import "LCYRegisterGlobal.h"
 #import "Base64.h"
+#import "ASIFormDataRequest.h"
+#import "LCYXDTools.h"
+#import "SoapXmlParseHelper.h"
+#import <AFNetworking/AFNetworking.h>
+#import "LCYDataModels.h"
 
 @interface LCYAddProfileViewController ()
 <UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,NSXMLParserDelegate>
-
+{
+    BOOL isAvatarUploaded;
+}
 @property (strong, nonatomic) UIImagePickerController *imagePicker;
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 
 @property (strong ,nonatomic) NSMutableString *xmlTempString;
+
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+
 
 @end
 
@@ -36,6 +46,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isAvatarUploaded = NO;
+    
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 40, 40)];
@@ -43,6 +55,9 @@
     [backBtn addTarget:self action:@selector(step3Back) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
+    
+    // 设置光标颜色
+    self.nameTextField.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,6 +76,32 @@
  *  @param sender 按钮
  */
 - (IBAction)startUsingAppButtonPressed:(id)sender {
+    if (!self.nameTextField.text ||
+        self.nameTextField.text.length == 0) {
+        UIAlertView *emptyTextAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"请输入您的用户名" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [emptyTextAlert show];
+    } else {
+        if ([LCYCommon networkAvailable]) {
+            LCYLOG(@"uid:%@",[LCYRegisterGlobal sharedInstance].uid);
+            LCYLOG(@"pwd:%@",[LCYRegisterGlobal sharedInstance].password);
+            LCYLOG(@"phoneNumber:%@",[LCYRegisterGlobal sharedInstance].phoneNumber);
+            NSMutableDictionary *tparameter = [NSMutableDictionary dictionaryWithDictionary:@{@"Uid":[LCYRegisterGlobal sharedInstance].uid,
+                                                                                              @"pwd":[LCYRegisterGlobal sharedInstance].password,
+                                                                                              @"phone":[LCYRegisterGlobal sharedInstance].phoneNumber,
+                                                                                              @"username":self.nameTextField.text}];
+            if (isAvatarUploaded) {
+                [tparameter setObject:[LCYRegisterGlobal sharedInstance].avatarURL forKey:@"portal"];
+            }
+            NSDictionary *parameter = [NSDictionary dictionaryWithDictionary:tparameter];
+            LCYLOG(@"%@",parameter);
+            [LCYCommon postRequestWithAPI:RegisterThree parameters:parameter successDelegate:self failedBlock:^{
+                LCYLOG(@"failed request");
+            }];
+        } else {
+            UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [networkUnabailableAlert show];
+        }
+    }
 }
 /**
  *  添加头像
@@ -70,6 +111,14 @@
 - (IBAction)avatarButtonPressed:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"上传照片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"照片",@"拍摄", nil];
     [actionSheet showInView:self.view];
+}
+
+/**
+ *  显示头像上传失败提示框
+ */
+- (void)showFaultAlert{
+    UIAlertView *faultAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"头像上传失败，请检查网络连接后重试" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [faultAlert show];
 }
 
 #pragma mark - UIActionSheet Delegate Methods
@@ -117,31 +166,50 @@
 
 - (void)uploadAvatar:(UIImage *)image{
     [LCYCommon showHUDTo:self.view withTips:@"正在压缩头像"];
-    NSDate * date = [NSDate date];
-    LCYLOG(@"date:%@",date);
-    double time = [date timeIntervalSince1970];
-    int timex = time/1;
-    NSString * postTime = [NSString stringWithFormat:@"%d",timex];
-    LCYLOG(@"postTime:%@",postTime);
     NSData *data = [LCYCommon compressImage:image];
-//    NSString * postImage = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     NSString *postImage = [data base64EncodedString];
-    self.myImageView.image = [UIImage imageWithData:data];
-//    Byte *byte = (Byte *)[data bytes];
-    
     
     [LCYCommon hideHUDFrom:self.view];
     
     if ([LCYCommon networkAvailable]) {
         [LCYCommon showHUDTo:self.view withTips:@"正在上传头像"];
-        NSDictionary *parameter = @{@"fs":data,
-                                    @"FileName":[[LCYRegisterGlobal sharedInstance].uid stringByAppendingPathExtension:@"jpg"]};
-        LCYLOG(@"para:%@",parameter);
-        [LCYCommon postRequestWithAPI:UploadFile parameters:parameter successDelegate:self failedBlock:^{
-            LCYLOG(@"request failed!");
+        
+        NSString *body = [NSString stringWithFormat:@" <UploadFile xmlns=\"http://tempuri.org/\">"
+                          "<fs>%@</fs>"
+                          "<FileName>%@</FileName>"
+                          "</UploadFile>",postImage,[NSString stringWithFormat:@"%@.jpg",[LCYRegisterGlobal sharedInstance].uid]];
+        __weak ASIFormDataRequest *request = [LCYXDTools postRequestWithDict:body API:UploadFile];
+        [request setCompletionBlock:^{
             [LCYCommon hideHUDFrom:self.view];
+            NSString *responseString = [request responseString];
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            int statusCode = [request responseStatusCode];
+            NSString *soapAction = [[request requestHeaders] objectForKey:@"SOAPAction"];
+            
+            NSArray *arraySOAP =[soapAction componentsSeparatedByString:@"/"];
+            int count = [arraySOAP count] - 1;
+            NSString *methodName = [arraySOAP objectAtIndex:count];
+            NSString *result = nil;
+            if (statusCode == 200) {
+                result = [SoapXmlParseHelper SoapMessageResultXml:responseString ServiceMethodName:methodName];
+                NSDictionary  *responseDict = [LCYXDTools JSonFromString:result];
+                if ([[responseDict objectForKey:@"code"] intValue]==0){
+                    NSString *portal = [responseDict objectForKey:@"url"];
+                    [LCYRegisterGlobal sharedInstance].avatarURL = portal;
+                    isAvatarUploaded = YES;
+                }else{
+                    [self showFaultAlert];
+                }
+            }
         }];
         
+        [request setFailedBlock:^{
+            [LCYCommon hideHUDFrom:self.view];
+            [self showFaultAlert];
+        }];
+        
+        [request startAsynchronous];
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接不可用" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [networkUnabailableAlert show];
@@ -163,16 +231,18 @@
                                                                    error:&error];
     LCYLOG(@"json:%@",jsonResponse);
     [LCYCommon hideHUDFrom:self.view];
-//    LCYSimpleCodeResult *result = [LCYSimpleCodeResult modelObjectWithDictionary:jsonResponse];
-//    if (result.code == 0) {
-//        // 验证成功
-//        LCYAddProfileViewController *addVC = [[LCYAddProfileViewController alloc] init];
-//        [self.navigationController pushViewController:addVC animated:YES];
-//    } else {
-//        // 验证失败
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"验证失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//        [alert show];
-//    }
+    LCYRegisterOneResult *result_t = [LCYRegisterOneResult modelObjectWithDictionary:jsonResponse];
+    if (result_t.code == 0) {
+        // 验证成功
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:YES forKey:UserDefaultsIsLogin];
+        [userDefaults setObject:[NSString stringWithFormat:@"%.f",result_t.uid] forKey:UserDefaultsUserId];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+        // 验证失败
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"用户名已经被其他人注册，请您更换" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+    }
 }
 
 @end

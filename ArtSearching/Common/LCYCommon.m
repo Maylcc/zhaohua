@@ -15,7 +15,7 @@ NSString *const hostURLPrefix = @"http://115.29.41.251:88/webservice_art_base.as
 NSString *const ActivityList  = @"ActivityList";
 //NSString *const ActivityOrganizationListSearchByKey     = @"ActivityOrganizationListSearchByKey";
 NSString *const Login         = @"Login";
-NSString *const RegisterGetValidate = @"RegisterGetValidate";
+NSString *const RegisterGetValidate     = @"RegisterGetValidate";
 NSString *const RegisterOne             = @"RegisterOne";
 NSString *const RegisterTwo             = @"RegisterTwo";
 NSString *const UploadFile              = @"UploadFile";
@@ -37,6 +37,7 @@ NSString *const getArtistInfo = @"GetArtistInforById";
     NSString *URLString = [NSString stringWithFormat:@"%@%@",hostURLPrefix,api];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"text/xml", nil];
     [manager POST:URLString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSXMLParser *XMLParser = (NSXMLParser *)responseObject;
         XMLParser.delegate = delegate;
@@ -44,7 +45,9 @@ NSString *const getArtistInfo = @"GetArtistInforById";
         [XMLParser parse];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        dispatch_async(dispatch_get_main_queue(), failed);
+        if (failed) {
+            dispatch_async(dispatch_get_main_queue(), failed);
+        }
     }];
 }
 

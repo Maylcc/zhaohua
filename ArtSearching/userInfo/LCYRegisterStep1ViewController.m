@@ -234,7 +234,7 @@ typedef NS_ENUM(NSInteger, StepOneStatus){
         LCYRegisterGetValidateResult *result = [LCYRegisterGetValidateResult modelObjectWithDictionary:jsonResponse];
         if (result.code!=0) {
             // 验证失败
-            UIAlertView *faultAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"验证失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            UIAlertView *faultAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"该手机号已经注册过" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [faultAlert show];
         } else {
             isValidated = YES;

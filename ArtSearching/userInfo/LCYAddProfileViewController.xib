@@ -7,7 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYAddProfileViewController">
             <connections>
                 <outlet property="avatarImageView" destination="bzs-Mu-UVF" id="rjj-rn-jmi"/>
-                <outlet property="myImageView" destination="AM4-WX-jqG" id="8oq-X2-mlz"/>
+                <outlet property="nameTextField" destination="uO0-6N-ohs" id="ISX-xL-eY8"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -76,10 +76,6 @@
                         <action selector="avatarButtonPressed:" destination="-1" eventType="touchUpInside" id="3nT-az-sxr"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AM4-WX-jqG">
-                    <rect key="frame" x="40" y="342" width="115" height="115"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
