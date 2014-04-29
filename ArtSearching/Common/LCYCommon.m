@@ -20,6 +20,7 @@ NSString *const RegisterOne             = @"RegisterOne";
 NSString *const RegisterTwo             = @"RegisterTwo";
 NSString *const UploadFile              = @"UploadFile";
 NSString *const RegisterThree           = @"RegisterThree";
+NSString *const GetAllExhibition        = @"GetAllExhibition";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
