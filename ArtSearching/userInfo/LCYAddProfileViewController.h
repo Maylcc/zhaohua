@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LCYAddProfileViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIImageView *myImageView;
 
 @end

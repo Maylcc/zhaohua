@@ -31,6 +31,11 @@
 		282B681B19052815000DC945 /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681519052815000DC945 /* renren_admire@2x.png */; };
 		282B681C19052815000DC945 /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681619052815000DC945 /* renren_comment@2x.png */; };
 		282B681D19052815000DC945 /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681719052815000DC945 /* renren_share@2x.png */; };
+		286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233F9190F4B6100747E26 /* LCYXDTools.m */; };
+		28623400190F4F2800747E26 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233FD190F4F2800747E26 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233FF190F4F2800747E26 /* SoapXmlParseHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		28623405190F4F9300747E26 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 28623404190F4F9300747E26 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2862340E190F54A700747E26 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2862340D190F54A700747E26 /* libxml2.dylib */; };
 		28730D651906139F005EA7DE /* launh_sure@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28730D641906139F005EA7DE /* launh_sure@2x.png */; };
 		28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28730D6719061882005EA7DE /* LCYRegisterStep1ViewController.m */; };
 		28730D6A19061882005EA7DE /* LCYRegisterStep1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28730D6819061882005EA7DE /* LCYRegisterStep1ViewController.xib */; };
@@ -193,6 +198,15 @@
 		282B681519052815000DC945 /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
 		282B681619052815000DC945 /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
 		282B681719052815000DC945 /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		286233F8190F4B6100747E26 /* LCYXDTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYXDTools.h; sourceTree = "<group>"; };
+		286233F9190F4B6100747E26 /* LCYXDTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYXDTools.m; sourceTree = "<group>"; };
+		286233FC190F4F2800747E26 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		286233FD190F4F2800747E26 /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
+		286233FE190F4F2800747E26 /* SoapXmlParseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoapXmlParseHelper.h; sourceTree = "<group>"; };
+		286233FF190F4F2800747E26 /* SoapXmlParseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoapXmlParseHelper.m; sourceTree = "<group>"; };
+		28623403190F4F9300747E26 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		28623404190F4F9300747E26 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		2862340D190F54A700747E26 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		28730D641906139F005EA7DE /* launh_sure@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launh_sure@2x.png"; sourceTree = "<group>"; };
 		28730D6619061882005EA7DE /* LCYRegisterStep1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterStep1ViewController.h; sourceTree = "<group>"; };
 		28730D6719061882005EA7DE /* LCYRegisterStep1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterStep1ViewController.m; sourceTree = "<group>"; };
@@ -460,6 +474,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2862340E190F54A700747E26 /* libxml2.dylib in Frameworks */,
 				288837BF190E618600562EEC /* libz.dylib in Frameworks */,
 				2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */,
 				288837BD190E617600562EEC /* MobileCoreServices.framework in Frameworks */,
@@ -519,6 +534,26 @@
 			path = userInfo;
 			sourceTree = "<group>";
 		};
+		286233FB190F4F2800747E26 /* SoapXml */ = {
+			isa = PBXGroup;
+			children = (
+				286233FC190F4F2800747E26 /* GDataXMLNode.h */,
+				286233FD190F4F2800747E26 /* GDataXMLNode.m */,
+				286233FE190F4F2800747E26 /* SoapXmlParseHelper.h */,
+				286233FF190F4F2800747E26 /* SoapXmlParseHelper.m */,
+			);
+			path = SoapXml;
+			sourceTree = "<group>";
+		};
+		28623402190F4F9300747E26 /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				28623403190F4F9300747E26 /* JSONKit.h */,
+				28623404190F4F9300747E26 /* JSONKit.m */,
+			);
+			path = JSONKit;
+			sourceTree = "<group>";
+		};
 		2888379D190E607600562EEC /* ASIHttpRequest */ = {
 			isa = PBXGroup;
 			children = (
@@ -569,6 +604,7 @@
 		2FB88F2618FE4723006880E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2862340D190F54A700747E26 /* libxml2.dylib */,
 				288837BE190E618600562EEC /* libz.dylib */,
 				288837BC190E617600562EEC /* MobileCoreServices.framework */,
 				288837BA190E615900562EEC /* CFNetwork.framework */,
@@ -688,6 +724,8 @@
 		2FB88F6818FE93AC006880E7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				28623402190F4F9300747E26 /* JSONKit */,
+				286233FB190F4F2800747E26 /* SoapXml */,
 				2888379D190E607600562EEC /* ASIHttpRequest */,
 				28883799190E361500562EEC /* Base64.h */,
 				2888379A190E361500562EEC /* Base64.m */,
@@ -699,6 +737,8 @@
 				2FB88F6A18FE93E2006880E7 /* LCYCommon.m */,
 				28A997D3190122D600A09E17 /* LCYDataModels.h */,
 				289BD34F1908F4B6000A8C4B /* LCYGlobalHeader.h */,
+				286233F8190F4B6100747E26 /* LCYXDTools.h */,
+				286233F9190F4B6100747E26 /* LCYXDTools.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1221,6 +1261,7 @@
 				2888379C190E4E4C00562EEC /* Base64.m in Sources */,
 				288837B4190E608500562EEC /* ASIDataDecompressor.m in Sources */,
 				2888378D190DE8CB00562EEC /* LCYSimpleCodeResult.m in Sources */,
+				28623400190F4F2800747E26 /* GDataXMLNode.m in Sources */,
 				288837B5190E608500562EEC /* ASIDownloadCache.m in Sources */,
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */,
@@ -1234,6 +1275,7 @@
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
 				28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
+				286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
@@ -1258,6 +1300,8 @@
 				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
 				28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */,
+				28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */,
+				28623405190F4F9300747E26 /* JSONKit.m in Sources */,
 				8B927A111908ACC700B0EF21 /* InsertView.m in Sources */,
 				28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
@@ -1395,6 +1439,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArtSearching/ArtSearching-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"/usr/include/libxml2\"",
+				);
 				INFOPLIST_FILE = "ArtSearching/ArtSearching-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1413,6 +1462,7 @@
 					Security,
 					"-framework",
 					SystemConfiguration,
+					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -1428,6 +1478,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArtSearching/ArtSearching-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"/usr/include/libxml2\"",
+				);
 				INFOPLIST_FILE = "ArtSearching/ArtSearching-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1446,6 +1501,7 @@
 					Security,
 					"-framework",
 					SystemConfiguration,
+					"-lxml2",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

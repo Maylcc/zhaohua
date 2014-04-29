@@ -13,6 +13,8 @@
 @property (strong, nonatomic) NSString *uid;
 @property (strong, nonatomic) NSString *phoneNumber;
 @property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString *avatarURL;
+@property (strong, nonatomic) NSString *userName;
 
 + (LCYRegisterGlobal *)sharedInstance;
 

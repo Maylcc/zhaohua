@@ -31,6 +31,10 @@
  *  xml解析结果
  */
 @property (strong, nonatomic) NSMutableString *xmlTempString;
+/**
+ *  密码
+ */
+@property (strong, nonatomic) NSString *password;
 
 @end
 
@@ -93,7 +97,8 @@
  */
 - (IBAction)doneButtonPressed:(id)sender {
     if ([self checkPassword]){
-        //TODO:发送验证码
+        self.password = self.passwordTextField.text;
+        // 发送验证码
         NSString *uid = [LCYRegisterGlobal sharedInstance].uid;
         NSString *phone = [LCYRegisterGlobal sharedInstance].phoneNumber;
         NSDictionary *parameter = @{@"Uid": uid,
@@ -141,6 +146,7 @@
     LCYSimpleCodeResult *result = [LCYSimpleCodeResult modelObjectWithDictionary:jsonResponse];
     if (result.code == 0) {
         // 验证成功
+        [LCYRegisterGlobal sharedInstance].password = self.password;
         LCYAddProfileViewController *addVC = [[LCYAddProfileViewController alloc] init];
         [self.navigationController pushViewController:addVC animated:YES];
     } else {
