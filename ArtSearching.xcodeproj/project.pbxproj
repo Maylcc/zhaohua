@@ -31,6 +31,9 @@
 		282B681B19052815000DC945 /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681519052815000DC945 /* renren_admire@2x.png */; };
 		282B681C19052815000DC945 /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681619052815000DC945 /* renren_comment@2x.png */; };
 		282B681D19052815000DC945 /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681719052815000DC945 /* renren_share@2x.png */; };
+		2845B6F4190F8D2100388DA3 /* LCYExhibitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6EF190F8D2100388DA3 /* LCYExhibitions.m */; };
+		2845B6F5190F8D2100388DA3 /* LCYGetAllExhibitionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6F1190F8D2100388DA3 /* LCYGetAllExhibitionResult.m */; };
+		2845B6F6190F8D2100388DA3 /* LCYImgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6F3190F8D2100388DA3 /* LCYImgs.m */; };
 		286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233F9190F4B6100747E26 /* LCYXDTools.m */; };
 		28623400190F4F2800747E26 /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233FD190F4F2800747E26 /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 286233FF190F4F2800747E26 /* SoapXmlParseHelper.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -198,6 +201,12 @@
 		282B681519052815000DC945 /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
 		282B681619052815000DC945 /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
 		282B681719052815000DC945 /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		2845B6EE190F8D2100388DA3 /* LCYExhibitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYExhibitions.h; sourceTree = "<group>"; };
+		2845B6EF190F8D2100388DA3 /* LCYExhibitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYExhibitions.m; sourceTree = "<group>"; };
+		2845B6F0190F8D2100388DA3 /* LCYGetAllExhibitionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetAllExhibitionResult.h; sourceTree = "<group>"; };
+		2845B6F1190F8D2100388DA3 /* LCYGetAllExhibitionResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetAllExhibitionResult.m; sourceTree = "<group>"; };
+		2845B6F2190F8D2100388DA3 /* LCYImgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYImgs.h; sourceTree = "<group>"; };
+		2845B6F3190F8D2100388DA3 /* LCYImgs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYImgs.m; sourceTree = "<group>"; };
 		286233F8190F4B6100747E26 /* LCYXDTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYXDTools.h; sourceTree = "<group>"; };
 		286233F9190F4B6100747E26 /* LCYXDTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYXDTools.m; sourceTree = "<group>"; };
 		286233FC190F4F2800747E26 /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
@@ -534,6 +543,27 @@
 			path = userInfo;
 			sourceTree = "<group>";
 		};
+		2845B6EC190F8CEB00388DA3 /* RequestResultModel */ = {
+			isa = PBXGroup;
+			children = (
+				2845B6ED190F8D0800388DA3 /* renrenView */,
+			);
+			path = RequestResultModel;
+			sourceTree = "<group>";
+		};
+		2845B6ED190F8D0800388DA3 /* renrenView */ = {
+			isa = PBXGroup;
+			children = (
+				2845B6EE190F8D2100388DA3 /* LCYExhibitions.h */,
+				2845B6EF190F8D2100388DA3 /* LCYExhibitions.m */,
+				2845B6F0190F8D2100388DA3 /* LCYGetAllExhibitionResult.h */,
+				2845B6F1190F8D2100388DA3 /* LCYGetAllExhibitionResult.m */,
+				2845B6F2190F8D2100388DA3 /* LCYImgs.h */,
+				2845B6F3190F8D2100388DA3 /* LCYImgs.m */,
+			);
+			path = renrenView;
+			sourceTree = "<group>";
+		};
 		286233FB190F4F2800747E26 /* SoapXml */ = {
 			isa = PBXGroup;
 			children = (
@@ -668,6 +698,7 @@
 		2FB88F5C18FE7CFA006880E7 /* renren */ = {
 			isa = PBXGroup;
 			children = (
+				2845B6EC190F8CEB00388DA3 /* RequestResultModel */,
 				282B67FD190527F0000DC945 /* LCYBuildCollectionViewCell.h */,
 				282B67FE190527F0000DC945 /* LCYBuildCollectionViewCell.m */,
 				282B67FF190527F0000DC945 /* LCYBuildCollectionViewCell.xib */,
@@ -1279,6 +1310,7 @@
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
+				2845B6F4190F8D2100388DA3 /* LCYExhibitions.m in Sources */,
 				28730D7019063F32005EA7DE /* LCYRegisterStep2ViewController.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
@@ -1293,6 +1325,7 @@
 				28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */,
 				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				288837B7190E608500562EEC /* ASIHTTPRequest.m in Sources */,
+				2845B6F6190F8D2100388DA3 /* LCYImgs.m in Sources */,
 				288837B6190E608500562EEC /* ASIFormDataRequest.m in Sources */,
 				282B680A190527F0000DC945 /* LCYMyCollectionViewController.m in Sources */,
 				288837B2190E608500562EEC /* ASIAuthenticationDialog.m in Sources */,
@@ -1310,6 +1343,7 @@
 				288837B8190E608500562EEC /* ASIInputStream.m in Sources */,
 				8B49BA7A190E1EE800F7725D /* PlotViewViewController.m in Sources */,
 				8B6E96D219013663006E6752 /* DataStartGallertyCell.m in Sources */,
+				2845B6F5190F8D2100388DA3 /* LCYGetAllExhibitionResult.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,
 				280F3E0619065567000217D7 /* LCYLoginResult.m in Sources */,
 				8B49BA19190DF7E800F7725D /* UIFolderTableView.m in Sources */,

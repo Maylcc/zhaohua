@@ -12,3 +12,6 @@
 #import "LCYRegisterGetValidateResult.h"
 #import "LCYSimpleCodeResult.h"
 #import "LCYRegisterOneResult.h"
+#import "LCYExhibitions.h"
+#import "LCYGetAllExhibitionResult.h"
+#import "LCYImgs.h"

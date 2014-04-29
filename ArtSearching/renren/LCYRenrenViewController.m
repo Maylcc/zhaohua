@@ -34,6 +34,8 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
  */
 @property (strong, nonatomic) LCYActivityListBase *activityListBase;
 
+@property (strong, nonatomic) LCYGetAllExhibitionResult *allExhibitionResult;
+
 @end
 
 @interface LCYRenrenViewController ()
@@ -117,9 +119,16 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 }
 
 - (void)loadExData{
-    [LCYCommon postRequestWithAPI:ActivityList parameters:nil successDelegate:self failedBlock:^{
-        // TODO:加载数据失败
-    }];
+    if ([LCYCommon networkAvailable]) {
+        NSDictionary *parameter = @{@"NowDate":@"12/21/2012 18:00:00",
+                                    @"PageNo":@"1",
+                                    @"PageNum":@"1"};
+        [LCYCommon postRequestWithAPI:GetAllExhibition parameters:parameter successDelegate:self failedBlock:nil];
+    } else {
+        UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [networkUnabailableAlert show];
+    }
+    
 }
 
 #pragma mark -Actions
@@ -210,17 +219,19 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&error];
-    self.activityListBase = [LCYActivityListBase modelObjectWithDictionary:jsonResponse];
+    self.allExhibitionResult = [LCYGetAllExhibitionResult modelObjectWithDictionary:jsonResponse];
+//    self.activityListBase = [LCYActivityListBase modelObjectWithDictionary:jsonResponse];
     [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - UITableView Data Source and Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (currentStatus == LCYRenrenSegStatusAll) {
-        if (!self.activityListBase) {
+        if (!self.allExhibitionResult) {
             return 0;
+        } else {
+            return [self.allExhibitionResult.exhibitions count];
         }
-        return [self.activityListBase.activityList count];
     } else{
         return 1+0;
     }
