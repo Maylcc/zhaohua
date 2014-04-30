@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define IS_IPHONE5 (([[UIScreen mainScreen] bounds].size.height - 568) ? NO : YES)
+
 @interface LCYCommon : NSObject
 
 /**
@@ -49,6 +51,12 @@
  *  @return 压缩后的数据
  */
 + (NSData*)compressImage:(UIImage*)comImage;
+/**
+ *  人人策画
+ *
+ *  @return 所有图片的下载路径文件夹
+ */
++ (NSString *)renrenMainImagePath;
 
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */

@@ -87,4 +87,19 @@ NSString *const getArtistInfo = @"GetArtistInforById";
     return imageData;
 }
 
++ (NSString *)renrenMainImagePath{
+    static NSString *string;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *cache = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *cachePath = [cache objectAtIndex:0];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:[cachePath stringByAppendingPathComponent:@"renrenMainImages"]]) {
+            [fileManager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"renrenMainImages"] withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        string = [cachePath stringByAppendingString:@"renrenMainImages"];
+    });
+    return string;
+}
+
 @end

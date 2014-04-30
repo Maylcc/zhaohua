@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -183,6 +183,19 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="admireCount" destination="41V-2u-Ks9" id="dRW-ZY-agR"/>
+                <outlet property="commentCount" destination="qrR-MH-xvi" id="J50-iR-S9U"/>
+                <outlet property="descriptionLabel" destination="HI3-rQ-PX7" id="QRt-Fc-fhC"/>
+                <outlet property="exhibitionImageOne" destination="sbF-4Q-LMc" id="kuo-le-Bok"/>
+                <outlet property="exhibitionImageThree" destination="mdh-xQ-UPl" id="Jc7-qK-b9n"/>
+                <outlet property="exhibitionImageTwo" destination="vZ6-WJ-93k" id="hi1-2o-1wp"/>
+                <outlet property="host" destination="LnU-Db-Tpu" id="yUe-2p-1l4"/>
+                <outlet property="hostAvatarImageView" destination="isQ-VX-Qm4" id="x8B-GR-3kP"/>
+                <outlet property="participant" destination="2s6-7X-TOR" id="fqd-31-4He"/>
+                <outlet property="timeLabel" destination="d3B-wC-fgh" id="ynX-uZ-CMv"/>
+                <outlet property="titleLabel" destination="zda-5f-edI" id="Y26-uF-pIA"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>
