@@ -14,6 +14,16 @@
 #import "LCYRenrenViewController.h"
 
 @interface LCYArtistsAndShowsViewController ()
+typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
+    LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
+    LCYArtistsAndShowsStatusShows       /**< 画廊 */
+};
+@end
+
+@interface LCYArtistsAndShowsViewController ()
+{
+    LCYArtistsAndShowsStatus currentStatus;
+}
 
 /**
  *  艺术家按钮
@@ -41,9 +51,17 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    currentStatus = LCYArtistsAndShowsStatusArtists;
+    
     // 添加导航栏按钮（艺术家、画廊）
+    UIBarButtonItem *ph1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ph1.width = 20;
+    UIBarButtonItem *ph2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    ph2.width = 20;
     UIBarButtonItem *leftNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.artistNavigationButton];
     UIBarButtonItem *rightNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.showsNavigationButton];
+    [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:ph1,leftNaviButton, nil]];
+    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:ph2,rightNaviButton, nil]];
 }
 
 - (void)didReceiveMemoryWarning
