@@ -78,6 +78,9 @@
     [self.icyScrollView setContentSize:self.mainView.frame.size];
     [self.icyScrollView addSubview:self.mainView];
     
+    // 设置文本框光标颜色
+    self.subjectTextView.tintColor = [UIColor whiteColor];
+    self.descriptionTextView.tintColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,6 +113,19 @@
 }
 
 #pragma mark - UITextView Delegate Methods
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    if (textView == self.descriptionTextView) {
+        if (!IS_IPHONE5) {
+            [self.icyScrollView setContentOffset:CGPointMake(0, 40) animated:YES];
+        }
+    }
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if (textView == self.descriptionTextView) {
+        [self.icyScrollView setContentOffset:CGPointZero animated:YES];
+    }
+}
 - (void)textViewDidChange:(UITextView *)textView{
     if (textView == self.subjectTextView) {
         if (textView.text.length <= 90) {

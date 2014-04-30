@@ -14,6 +14,8 @@
 #import "LCYBuildExhibitionViewController.h"
 #import "LCYRegisterViewController.h"
 #import "LCYUserInformationViewController.h"
+#import "LCYAppDelegate.h"
+#import "LCYArtistsAndShowsViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
@@ -155,6 +157,13 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
             [self.navigationController pushViewController:userVC animated:YES];
         }
     }
+    if (item.tag == 2) {
+        // 艺术家、画廊
+        LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        LCYArtistsAndShowsViewController *twoVC = [[LCYArtistsAndShowsViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:twoVC];
+        [appDelegate.window setRootViewController:nav];
+    }
 }
 
 /**
@@ -219,8 +228,9 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&error];
-    self.allExhibitionResult = [LCYGetAllExhibitionResult modelObjectWithDictionary:jsonResponse];
-//    self.activityListBase = [LCYActivityListBase modelObjectWithDictionary:jsonResponse];
+    if (currentStatus == LCYRenrenSegStatusAll) {
+        self.allExhibitionResult = [LCYGetAllExhibitionResult modelObjectWithDictionary:jsonResponse];
+    }
     [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
 }
 
@@ -249,6 +259,28 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
             isRenrenTableViewCellRegistered = YES;
         }
         LCYRenrenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        LCYExhibitions *exhibition = [self.allExhibitionResult.exhibitions objectAtIndex:indexPath.row];
+        cell.titleLabel.text = exhibition.title;
+        cell.host.text = exhibition.organizerName;
+        cell.participant.text = exhibition.attenderNames;
+        cell.timeLabel.text = exhibition.createTime;
+        cell.descriptionLabel.text = exhibition.describinfo;
+        cell.commentCount.text = [NSString stringWithFormat:@"%@次评论",exhibition.commentNums];
+        cell.admireCount.text = [NSString stringWithFormat:@"被欣赏%@次",exhibition.viewNum];
+        
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        
+        if ([exhibition.imgs count]>=1) {
+            LCYImgs *img = [exhibition.imgs objectAtIndex:0];
+            NSString *imageName = [img.url lastPathComponent];
+            if (![fileManager fileExistsAtPath:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageName]]) {
+                // TODO:启动多线程下载
+            } else {
+                
+            }
+        }
+        
         return cell;
     } else {
         if (indexPath.row == 0) {

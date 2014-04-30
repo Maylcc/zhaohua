@@ -31,6 +31,13 @@
 		282B681B19052815000DC945 /* renren_admire@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681519052815000DC945 /* renren_admire@2x.png */; };
 		282B681C19052815000DC945 /* renren_comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681619052815000DC945 /* renren_comment@2x.png */; };
 		282B681D19052815000DC945 /* renren_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 282B681719052815000DC945 /* renren_share@2x.png */; };
+		2836BB0B1910DE5800F70140 /* LCYArtistsAndShowsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836BB091910DE5800F70140 /* LCYArtistsAndShowsViewController.m */; };
+		2836BB0C1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2836BB0A1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib */; };
+		2836BBC41910FD8800F70140 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2836BBBA1910FD8800F70140 /* MJRefresh.bundle */; };
+		2836BBC51910FD8800F70140 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836BBBD1910FD8800F70140 /* MJRefreshBaseView.m */; };
+		2836BBC61910FD8800F70140 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836BBBF1910FD8800F70140 /* MJRefreshConst.m */; };
+		2836BBC71910FD8800F70140 /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836BBC11910FD8800F70140 /* MJRefreshFooterView.m */; };
+		2836BBC81910FD8800F70140 /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2836BBC31910FD8800F70140 /* MJRefreshHeaderView.m */; };
 		2845B6F4190F8D2100388DA3 /* LCYExhibitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6EF190F8D2100388DA3 /* LCYExhibitions.m */; };
 		2845B6F5190F8D2100388DA3 /* LCYGetAllExhibitionResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6F1190F8D2100388DA3 /* LCYGetAllExhibitionResult.m */; };
 		2845B6F6190F8D2100388DA3 /* LCYImgs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2845B6F3190F8D2100388DA3 /* LCYImgs.m */; };
@@ -201,6 +208,19 @@
 		282B681519052815000DC945 /* renren_admire@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_admire@2x.png"; sourceTree = "<group>"; };
 		282B681619052815000DC945 /* renren_comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_comment@2x.png"; sourceTree = "<group>"; };
 		282B681719052815000DC945 /* renren_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renren_share@2x.png"; sourceTree = "<group>"; };
+		2836BB081910DE5800F70140 /* LCYArtistsAndShowsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYArtistsAndShowsViewController.h; sourceTree = "<group>"; };
+		2836BB091910DE5800F70140 /* LCYArtistsAndShowsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYArtistsAndShowsViewController.m; sourceTree = "<group>"; };
+		2836BB0A1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYArtistsAndShowsViewController.xib; sourceTree = "<group>"; };
+		2836BBBA1910FD8800F70140 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		2836BBBB1910FD8800F70140 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		2836BBBC1910FD8800F70140 /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		2836BBBD1910FD8800F70140 /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		2836BBBE1910FD8800F70140 /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		2836BBBF1910FD8800F70140 /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		2836BBC01910FD8800F70140 /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		2836BBC11910FD8800F70140 /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		2836BBC21910FD8800F70140 /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		2836BBC31910FD8800F70140 /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		2845B6EE190F8D2100388DA3 /* LCYExhibitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYExhibitions.h; sourceTree = "<group>"; };
 		2845B6EF190F8D2100388DA3 /* LCYExhibitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYExhibitions.m; sourceTree = "<group>"; };
 		2845B6F0190F8D2100388DA3 /* LCYGetAllExhibitionResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetAllExhibitionResult.h; sourceTree = "<group>"; };
@@ -543,6 +563,49 @@
 			path = userInfo;
 			sourceTree = "<group>";
 		};
+		2836BB051910DE0C00F70140 /* ArtistsAndShows */ = {
+			isa = PBXGroup;
+			children = (
+				2836BB061910DE0C00F70140 /* Artists */,
+				2836BB071910DE0C00F70140 /* Shows */,
+				2836BB081910DE5800F70140 /* LCYArtistsAndShowsViewController.h */,
+				2836BB091910DE5800F70140 /* LCYArtistsAndShowsViewController.m */,
+				2836BB0A1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib */,
+			);
+			path = ArtistsAndShows;
+			sourceTree = "<group>";
+		};
+		2836BB061910DE0C00F70140 /* Artists */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Artists;
+			sourceTree = "<group>";
+		};
+		2836BB071910DE0C00F70140 /* Shows */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shows;
+			sourceTree = "<group>";
+		};
+		2836BBB91910FD8800F70140 /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				2836BBBA1910FD8800F70140 /* MJRefresh.bundle */,
+				2836BBBB1910FD8800F70140 /* MJRefresh.h */,
+				2836BBBC1910FD8800F70140 /* MJRefreshBaseView.h */,
+				2836BBBD1910FD8800F70140 /* MJRefreshBaseView.m */,
+				2836BBBE1910FD8800F70140 /* MJRefreshConst.h */,
+				2836BBBF1910FD8800F70140 /* MJRefreshConst.m */,
+				2836BBC01910FD8800F70140 /* MJRefreshFooterView.h */,
+				2836BBC11910FD8800F70140 /* MJRefreshFooterView.m */,
+				2836BBC21910FD8800F70140 /* MJRefreshHeaderView.h */,
+				2836BBC31910FD8800F70140 /* MJRefreshHeaderView.m */,
+			);
+			path = MJRefresh;
+			sourceTree = "<group>";
+		};
 		2845B6EC190F8CEB00388DA3 /* RequestResultModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -652,6 +715,7 @@
 		2FB88F2F18FE4723006880E7 /* ArtSearching */ = {
 			isa = PBXGroup;
 			children = (
+				2836BB051910DE0C00F70140 /* ArtistsAndShows */,
 				282B680C190527FB000DC945 /* userInfo */,
 				8B565BA518FFA0A2002520D3 /* DataXM */,
 				2FB88F6818FE93AC006880E7 /* Common */,
@@ -755,6 +819,7 @@
 		2FB88F6818FE93AC006880E7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				2836BBB91910FD8800F70140 /* MJRefresh */,
 				28623402190F4F9300747E26 /* JSONKit */,
 				286233FB190F4F2800747E26 /* SoapXml */,
 				2888379D190E607600562EEC /* ASIHttpRequest */,
@@ -1197,6 +1262,7 @@
 				2FB88F3418FE4723006880E7 /* InfoPlist.strings in Resources */,
 				8B565BB418FFA497002520D3 /* Default@2x.png in Resources */,
 				8BBEE13B19051C6D0067FE37 /* work_detail_right_gray.png in Resources */,
+				2836BB0C1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib in Resources */,
 				282B681919052815000DC945 /* build_dot@2x.png in Resources */,
 				8B49BA7B190E1EE800F7725D /* PlotViewViewController.xib in Resources */,
 				282B681B19052815000DC945 /* renren_admire@2x.png in Resources */,
@@ -1223,6 +1289,7 @@
 				2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */,
 				2897CD841908A14000D88FA7 /* nav_setting@2x.png in Resources */,
 				282B681C19052815000DC945 /* renren_comment@2x.png in Resources */,
+				2836BBC41910FD8800F70140 /* MJRefresh.bundle in Resources */,
 				2820EA611900F0C30053B15D /* all_ex_right_blank@2x.png in Resources */,
 				2820EA641900F1200053B15D /* all_ex_right_badge@2x.png in Resources */,
 				282B681A19052815000DC945 /* build_plus@2x.png in Resources */,
@@ -1316,6 +1383,7 @@
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
 				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
 				8B49BA1E190DF90000F7725D /* DataCMICTableViewCell.m in Sources */,
+				2836BBC81910FD8800F70140 /* MJRefreshHeaderView.m in Sources */,
 				8B49BA1A190DF7E800F7725D /* UIView+screenshot.m in Sources */,
 				8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
@@ -1338,14 +1406,18 @@
 				8B927A111908ACC700B0EF21 /* InsertView.m in Sources */,
 				28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */,
 				2FB88F6018FE7D16006880E7 /* LCYRenrenViewController.m in Sources */,
+				2836BBC61910FD8800F70140 /* MJRefreshConst.m in Sources */,
 				2FB88F3618FE4723006880E7 /* main.m in Sources */,
 				28730D751906410B005EA7DE /* LCYAddProfileViewController.m in Sources */,
 				288837B8190E608500562EEC /* ASIInputStream.m in Sources */,
+				2836BB0B1910DE5800F70140 /* LCYArtistsAndShowsViewController.m in Sources */,
 				8B49BA7A190E1EE800F7725D /* PlotViewViewController.m in Sources */,
 				8B6E96D219013663006E6752 /* DataStartGallertyCell.m in Sources */,
 				2845B6F5190F8D2100388DA3 /* LCYGetAllExhibitionResult.m in Sources */,
 				2FB88F3A18FE4723006880E7 /* LCYAppDelegate.m in Sources */,
+				2836BBC71910FD8800F70140 /* MJRefreshFooterView.m in Sources */,
 				280F3E0619065567000217D7 /* LCYLoginResult.m in Sources */,
+				2836BBC51910FD8800F70140 /* MJRefreshBaseView.m in Sources */,
 				8B49BA19190DF7E800F7725D /* UIFolderTableView.m in Sources */,
 				282B6806190527F0000DC945 /* LCYBuildCollectionViewCell.m in Sources */,
 				8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */,
