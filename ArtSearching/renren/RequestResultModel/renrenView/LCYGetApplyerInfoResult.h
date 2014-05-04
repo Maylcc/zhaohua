@@ -12,7 +12,7 @@
 @interface LCYGetApplyerInfoResult : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *applyers;
-@property (nonatomic, strong) NSString *internalBaseClassIdentifier;
+@property (nonatomic, strong) NSString *internalBaseClassIdentifier; /**< 申请id */
 @property (nonatomic, strong) NSString *comment;
 @property (nonatomic, strong) NSString *imgs;
 @property (nonatomic, strong) NSString *date;
