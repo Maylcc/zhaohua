@@ -7,7 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LCYDataModels.h"
 
 @interface LCYRenrenViewController : UIViewController
 
+@end
+
+
+
+@class LCYApplyersResultParser;
+@protocol LCYApplyerResultParserDelegate <NSObject>
+@optional
+- (void)resultParserDidFinish:(LCYApplyersResultParser *)parser;
+@end
+@interface LCYApplyersResultParser : NSObject<NSXMLParserDelegate>
+
+@property (strong, nonatomic) NSArray *result;
+@property (weak, nonatomic) id<LCYApplyerResultParserDelegate>delegate;
 @end

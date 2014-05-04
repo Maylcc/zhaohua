@@ -17,7 +17,7 @@
 
 NSInteger numberOfArtistsPerPage = 12;
 
-@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
     LCYArtistsAndShowsStatusShows       /**< 画廊 */
@@ -39,9 +39,19 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
  */
 @property (strong, nonatomic) IBOutlet UIControl *artistNavigationButton;
 /**
+ *  艺术家按钮
+ */
+@property (weak, nonatomic) IBOutlet UILabel *artistNavigationLabel;
+
+/**
  *  画廊按钮
  */
 @property (strong, nonatomic) IBOutlet UIControl *showsNavigationButton;
+/**
+ *  画廊按钮
+ */
+@property (weak, nonatomic) IBOutlet UILabel *showsNabigatinLabel;
+
 
 @property (strong, nonatomic) NSMutableString *xmlTempString;
 /**
@@ -111,6 +121,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     }
 }
 
+
 - (void)reloadTableView{
 //    self.
 }
@@ -120,8 +131,8 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     UIBarButtonItem *item = sender;
     if (item.tag == 4) {
         // 注册、登陆、显示用户收藏等
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
+        
+        BOOL isLogin = [LCYCommon isUserLogin];
         if (!isLogin) {
             // 跳转到注册界面
             LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
@@ -139,6 +150,24 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         oneVC.title = @"人人策画";
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:oneVC];
         [appDelegate.window setRootViewController:nav];
+    }
+}
+
+- (IBAction)artistsButtonTouchDown:(id)sender {
+    if (currentStatus!=LCYArtistsAndShowsStatusArtists) {
+        self.artistNavigationLabel.textColor = [UIColor blackColor];
+        self.showsNabigatinLabel.textColor = [UIColor lightGrayColor];
+        currentStatus = LCYArtistsAndShowsStatusArtists;
+        [self reloadTableView];
+    }
+}
+
+- (IBAction)showsButtonTouchDown:(id)sender {
+    if (currentStatus!=LCYArtistsAndShowsStatusShows) {
+        self.artistNavigationLabel.textColor = [UIColor lightGrayColor];
+        self.showsNabigatinLabel.textColor = [UIColor blackColor];
+        currentStatus = LCYArtistsAndShowsStatusShows;
+        [self reloadTableView];
     }
 }
 
@@ -172,8 +201,14 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 #pragma mark - UITableView DataSource And Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        if (!self.showsArray) {
+            return 0;
+        }
         return [self.artistsArray count];
     } else if( currentStatus == LCYArtistsAndShowsStatusShows){
+        if (!self.showsArray) {
+            return 0;
+        }
         return [self.showsArray count];
     }
     return 0;
@@ -188,11 +223,15 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             isArtistNibRegistered = YES;
         }
         LCYArtistsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:artistIdentifier];
+        cell.artistNameLabel.text = @"123123";
         return cell;
     }
     
     return nil;
 }
-
+#pragma mark - UISearchBar Delegate Methods
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    [searchBar resignFirstResponder];
+}
 
 @end

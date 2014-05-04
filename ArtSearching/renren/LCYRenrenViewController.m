@@ -9,22 +9,28 @@
 #import "LCYRenrenViewController.h"
 #import "LCYCommon.h"
 #import "DataListViewController.h"
-#import "LCYDataModels.h"
 #import "LCYRenrenTableViewCell.h"
 #import "LCYBuildExhibitionViewController.h"
 #import "LCYRegisterViewController.h"
 #import "LCYUserInformationViewController.h"
 #import "LCYAppDelegate.h"
 #import "LCYArtistsAndShowsViewController.h"
+#import "LCYRenrenMineApplyTableViewCell.h"
+#import "LCYApplyAccAndRejViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
 @interface LCYRenrenViewController ()
-<NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
+<NSXMLParserDelegate, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate,LCYApplyerResultParserDelegate>
 
 typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     LCYRenrenSegStatusAll,      /**< 所有展览 */
     LCYRenrenSegStatusMine      /**< 我的展览 */
+};
+
+typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
+    LCYRenrenDownloadingAll,    /**< 下载的数据是所有展览 */
+    LCYRenrenDownloadingMine    /**< 下载的数据是我的展览 */
 };
 /**
  *  用于解析XML时的缓存
@@ -37,13 +43,19 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 @property (strong, nonatomic) LCYActivityListBase *activityListBase;
 
 @property (strong, nonatomic) LCYGetAllExhibitionResult *allExhibitionResult;
+@property (strong, nonatomic) LCYGetOwnExhibitionResult *mineExhibitionResult;
+@property (strong, nonatomic) NSArray *applyerInfoResult;
 
 @end
 
 @interface LCYRenrenViewController ()
 {
     LCYRenrenSegStatus currentStatus;
+    LCYRenrenDownloadStatus currentDownloadingStatus;
     BOOL isRenrenTableViewCellRegistered;
+    BOOL isRenrenMineApplyCellRegistered;
+    BOOL isAllDownloading;      /**< 所有展览的数据正在下载中 */
+    BOOL isMineDownloading;     /**< 我的展览的数据正在下载中 */
 }
 
 /**
@@ -102,6 +114,8 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isAllDownloading = NO;
+    isMineDownloading = NO;
     // Do any additional setup after loading the view from its nib.
     // 添加数据凶猛按钮
     UIBarButtonItem *leftNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.dataFerocious];
@@ -109,6 +123,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     
     currentStatus = LCYRenrenSegStatusAll;
     isRenrenTableViewCellRegistered = NO;
+    isRenrenMineApplyCellRegistered = NO;
     
     [self loadExData];
 }
@@ -122,15 +137,25 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 
 - (void)loadExData{
     if ([LCYCommon networkAvailable]) {
+        currentDownloadingStatus = LCYRenrenDownloadingAll;
+        isAllDownloading = YES;
         NSDictionary *parameter = @{@"NowDate":@"12/21/2012 18:00:00",
                                     @"PageNo":@"1",
                                     @"PageNum":@"1"};
         [LCYCommon postRequestWithAPI:GetAllExhibition parameters:parameter successDelegate:self failedBlock:nil];
+        
+        // 开启下载我的展览申请者信息
+        if ([LCYCommon isUserLogin]) {
+            NSDictionary *parameter2 = @{@"UserId": @"123"};
+            LCYApplyersResultParser *parser = [[LCYApplyersResultParser alloc] init];
+            parser.delegate = self;
+            [LCYCommon postRequestWithAPI:GetApplyerInfo parameters:parameter2 successDelegate:parser failedBlock:nil];
+        }
+        
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [networkUnabailableAlert show];
     }
-    
 }
 
 #pragma mark -Actions
@@ -200,7 +225,26 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
  */
 - (IBAction)myExButtonPressed:(id)sender {
     NSLog(@"我的展览");
+    if (![LCYCommon isUserLogin]) {
+        UIAlertView *noneLoginAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"请您先登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [noneLoginAlert show];
+        return;
+    }
     if (currentStatus == LCYRenrenSegStatusAll) {
+        if (!self.mineExhibitionResult) {
+            if (!isMineDownloading) {
+                // 如果用户已经登录，则开启我的展览数据读取
+                if ([LCYCommon isUserLogin]) {
+                    currentDownloadingStatus = LCYRenrenDownloadingMine;
+                    isMineDownloading = YES;
+                    NSDictionary *parameter = @{@"NowDate": @"12/21/2012 18:00:00",
+                                                @"PageNo": @"1",
+                                                @"PageNum": @"2",
+                                                @"UserID": @"3333"};
+                    [LCYCommon postRequestWithAPI:GetOwnExhibition parameters:parameter successDelegate:self failedBlock:nil];
+                }
+            }
+        }
         self.leftImageView.image = [UIImage imageNamed:@"all_ex_left_blank.png"];
         [self.leftLabel setTextColor:[UIColor RenrenGreen]];
         self.rightImageView.image = [UIImage imageNamed:@"all_ex_right_filled.png"];
@@ -228,10 +272,16 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&error];
-    if (currentStatus == LCYRenrenSegStatusAll) {
+    // 根据下载的数据不同，进行不同种类的解析
+    if (currentDownloadingStatus == LCYRenrenDownloadingAll) {
         self.allExhibitionResult = [LCYGetAllExhibitionResult modelObjectWithDictionary:jsonResponse];
+        [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
+        isAllDownloading = NO;
+    } else if (currentDownloadingStatus == LCYRenrenDownloadingMine) {
+        self.mineExhibitionResult = [LCYGetOwnExhibitionResult modelObjectWithDictionary:jsonResponse];
+        [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
+        isMineDownloading = NO;
     }
-    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - UITableView Data Source and Delegate Methods
@@ -242,15 +292,26 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
         } else {
             return [self.allExhibitionResult.exhibitions count];
         }
-    } else{
-        return 1+0;
+    } else if( currentStatus == LCYRenrenSegStatusMine ){
+        if (!self.mineExhibitionResult) {
+            return 0;
+        } else {
+            if (self.applyerInfoResult &&
+                self.applyerInfoResult.count!=0) {
+                return 1+[self.mineExhibitionResult.exhibitions count];
+            } else {
+                return [self.mineExhibitionResult.exhibitions count];
+            }
+            
+        }
     }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *identifier = @"renrenTableViewIdentifier";         /**< 所有展览 */
     static NSString *identifier2 = @"renrenTableViewIdentifier2";       /**< 我的展览请求 */
-    static NSString *identifier3 = @"renrenTableViewIdentifier3";       /**< 我的展览 */
+    //    static NSString *identifier3 = @"renrenTableViewIdentifier3";       /**< 我的展览 */
     
     if (currentStatus == LCYRenrenSegStatusAll) {
         if (!isRenrenTableViewCellRegistered) {
@@ -283,9 +344,62 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
         
         return cell;
     } else {
-        if (indexPath.row == 0) {
-            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier2];
-            cell.textLabel.text = @"1231";
+        if (self.applyerInfoResult &&
+            self.applyerInfoResult.count!=0){
+            if (indexPath.row == 0) {
+                if (!isRenrenMineApplyCellRegistered) {
+                    UINib *nib = [UINib nibWithNibName:@"LCYRenrenMineApplyTableViewCell" bundle:nil];
+                    [tableView registerNib:nib forCellReuseIdentifier:identifier2];
+                    isRenrenMineApplyCellRegistered = YES;
+                }
+                LCYRenrenMineApplyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+                if (self.applyerInfoResult.count==1) {
+                    LCYGetApplyerInfoResult *result = [self.applyerInfoResult firstObject];
+                    NSString *icyLabelString = [NSString stringWithFormat:@"%@提交了参展请求",result.applyers];
+                    cell.icyLabel.text = icyLabelString;
+                } else {
+                    LCYGetApplyerInfoResult *result = [self.applyerInfoResult firstObject];
+                    NSString *icyLabelString = [NSString stringWithFormat:@"%@等人提交了参展请求",result.applyers];
+                    cell.icyLabel.text = icyLabelString;
+                }
+                cell.icyBadgeLabel.text = [NSString stringWithFormat:@"%ld",(long)self.applyerInfoResult.count];
+                return cell;
+            } else {
+                if (!isRenrenTableViewCellRegistered) {
+                    UINib *nib = [UINib nibWithNibName:@"LCYRenrenTableViewCell" bundle:nil];
+                    [tableView registerNib:nib forCellReuseIdentifier:identifier];
+                    isRenrenTableViewCellRegistered = YES;
+                }
+                LCYRenrenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+                
+                LCYMineExhibitions *exhibition = [self.mineExhibitionResult.exhibitions objectAtIndex:(indexPath.row-1)];
+                cell.titleLabel.text = exhibition.title;
+                cell.host.text = exhibition.organizerName;
+                cell.participant.text = exhibition.attenderNames;
+                cell.timeLabel.text = exhibition.createTime;
+                cell.descriptionLabel.text = exhibition.describinfo;
+                cell.commentCount.text = [NSString stringWithFormat:@"%@次评论",exhibition.commentNums];
+                cell.admireCount.text = [NSString stringWithFormat:@"被欣赏%@次",exhibition.viewNum];
+                
+                return cell;
+            }
+        } else {
+            if (!isRenrenTableViewCellRegistered) {
+                UINib *nib = [UINib nibWithNibName:@"LCYRenrenTableViewCell" bundle:nil];
+                [tableView registerNib:nib forCellReuseIdentifier:identifier];
+                isRenrenTableViewCellRegistered = YES;
+            }
+            LCYRenrenTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+            
+            LCYMineExhibitions *exhibition = [self.mineExhibitionResult.exhibitions objectAtIndex:indexPath.row];
+            cell.titleLabel.text = exhibition.title;
+            cell.host.text = exhibition.organizerName;
+            cell.participant.text = exhibition.attenderNames;
+            cell.timeLabel.text = exhibition.createTime;
+            cell.descriptionLabel.text = exhibition.describinfo;
+            cell.commentCount.text = [NSString stringWithFormat:@"%@次评论",exhibition.commentNums];
+            cell.admireCount.text = [NSString stringWithFormat:@"被欣赏%@次",exhibition.viewNum];
+            
             return cell;
         }
         return nil;
@@ -296,7 +410,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (currentStatus == LCYRenrenSegStatusMine) {
         if (indexPath.row == 0) {
-            return 44;
+            return 50;
         }
     }
     return 420.0;
@@ -304,6 +418,18 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"select row at row: %ld",(long)indexPath.row);
+    if (currentStatus == LCYRenrenSegStatusMine) {
+        if (self.applyerInfoResult &&
+            self.applyerInfoResult.count!=0) {
+            if (indexPath.row==0) {
+                // 进入我的展览，申请批准、拒绝页
+                LCYApplyAccAndRejViewController *aarvc = [[LCYApplyAccAndRejViewController alloc] init];
+                aarvc.title = [NSString stringWithFormat:@"%ld个参展申请",(long)self.applyerInfoResult.count];
+                aarvc.applyArray = self.applyerInfoResult;
+                [self.navigationController pushViewController:aarvc animated:YES];
+            }
+        }
+    }
 }
 
 #pragma mark - UISearchBar Delegate Methods
@@ -311,4 +437,49 @@ typedef NS_ENUM(NSInteger, LCYRenrenSegStatus){
     [searchBar resignFirstResponder];
 }
 
+#pragma mark - LCYApplyerResultParserDelegate Methods
+- (void)resultParserDidFinish:(LCYApplyersResultParser *)parser{
+    self.applyerInfoResult = parser.result;
+    if (self.applyerInfoResult.count!=0) {
+        self.badgeImageView.image = [UIImage imageNamed:@"all_ex_right_badge.png"];
+        self.badgeLabel.text = [NSString stringWithFormat:@"%ld",(long)self.applyerInfoResult.count];
+        [self.badgeImageView setHidden:NO];
+        [self.badgeLabel setHidden:NO];
+        [self reloadTableView];
+    }
+}
+
+@end
+
+
+@interface LCYApplyersResultParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYApplyersResultParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSArray *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:kNilOptions
+                                                              error:&error];
+    NSMutableArray *tempArray = [NSMutableArray array];
+    for (id tDic in jsonResponse) {
+        LCYGetApplyerInfoResult *oneResult = [LCYGetApplyerInfoResult modelObjectWithDictionary:tDic];
+        [tempArray addObject:oneResult];
+    }
+    self.result = [NSArray arrayWithArray:tempArray];
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(resultParserDidFinish:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate resultParserDidFinish:self];
+        });
+    }
+}
 @end

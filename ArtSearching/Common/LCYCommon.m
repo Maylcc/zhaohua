@@ -22,6 +22,8 @@ NSString *const UploadFile              = @"UploadFile";
 NSString *const RegisterThree           = @"RegisterThree";
 NSString *const GetAllExhibition        = @"GetAllExhibition";
 NSString *const GetArtistList           = @"GetArtistList";
+NSString *const GetOwnExhibition        = @"GetOwnExhibition";
+NSString *const GetApplyerInfo          = @"GetApplyerInfo";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
@@ -101,6 +103,12 @@ NSString *const getArtistInfo = @"GetArtistInforById";
         string = [cachePath stringByAppendingString:@"renrenMainImages"];
     });
     return string;
+}
+
++ (BOOL)isUserLogin{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
+    return isLogin;
 }
 
 @end

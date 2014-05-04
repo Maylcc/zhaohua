@@ -58,6 +58,13 @@
  */
 + (NSString *)renrenMainImagePath;
 
+/**
+ *  用户是否已经登录
+ *
+ *  @return 是或否
+ */
++ (BOOL)isUserLogin;
+
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
 //CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 */
@@ -69,6 +76,8 @@ CA_EXTERN NSString *const UploadFile;       /**< 注册第三步：上传头像�
 CA_EXTERN NSString *const RegisterThree;    /**< 注册第三步：上传姓名，头像信息 */
 CA_EXTERN NSString *const GetAllExhibition; /**< 主页：获得所有展览 */
 CA_EXTERN NSString *const GetArtistList;    /**< 所有艺术家 */
+CA_EXTERN NSString *const GetOwnExhibition; /**< 我的展览 */
+CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
 
 #pragma mark - UserDefaults
 CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */
