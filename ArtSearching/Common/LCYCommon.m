@@ -21,6 +21,7 @@ NSString *const RegisterTwo             = @"RegisterTwo";
 NSString *const UploadFile              = @"UploadFile";
 NSString *const RegisterThree           = @"RegisterThree";
 NSString *const GetAllExhibition        = @"GetAllExhibition";
+NSString *const GetArtistList           = @"GetArtistList";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";

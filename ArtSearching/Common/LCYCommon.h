@@ -68,6 +68,7 @@ CA_EXTERN NSString *const RegisterTwo;      /**< 注册第二步：发送密码 
 CA_EXTERN NSString *const UploadFile;       /**< 注册第三步：上传头像图片 */
 CA_EXTERN NSString *const RegisterThree;    /**< 注册第三步：上传姓名，头像信息 */
 CA_EXTERN NSString *const GetAllExhibition; /**< 主页：获得所有展览 */
+CA_EXTERN NSString *const GetArtistList;    /**< 所有艺术家 */
 
 #pragma mark - UserDefaults
 CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */

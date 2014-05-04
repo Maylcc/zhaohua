@@ -15,3 +15,5 @@
 #import "LCYExhibitions.h"
 #import "LCYGetAllExhibitionResult.h"
 #import "LCYImgs.h"
+#import "LCYArtists.h"
+#import "LCYGetArtistListResult.h"

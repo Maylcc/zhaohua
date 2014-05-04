@@ -12,8 +12,12 @@
 #import "LCYUserInformationViewController.h"
 #import "LCYAppDelegate.h"
 #import "LCYRenrenViewController.h"
+#import "LCYDataModels.h"
+#import "LCYArtistsTableViewCell.h"
 
-@interface LCYArtistsAndShowsViewController ()
+NSInteger numberOfArtistsPerPage = 12;
+
+@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
 typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
     LCYArtistsAndShowsStatusShows       /**< 画廊 */
@@ -23,6 +27,11 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 @interface LCYArtistsAndShowsViewController ()
 {
     LCYArtistsAndShowsStatus currentStatus;
+    NSInteger artistPageNumber;
+    NSInteger showsPageNumber;
+    BOOL isArtistLoading;
+    BOOL isShowsLoading;
+    BOOL isArtistNibRegistered;
 }
 
 /**
@@ -33,6 +42,21 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
  *  画廊按钮
  */
 @property (strong, nonatomic) IBOutlet UIControl *showsNavigationButton;
+
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+/**
+ *  艺术家和画廊的列表
+ */
+@property (weak, nonatomic) IBOutlet UITableView *icyTableView;
+
+/**
+ *  所有艺术家
+ */
+@property (strong, nonatomic) NSArray *artistsArray;
+/**
+ *  所有画廊
+ */
+@property (strong, nonatomic) NSArray *showsArray;
 
 @end
 
@@ -52,6 +76,9 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     currentStatus = LCYArtistsAndShowsStatusArtists;
+    artistPageNumber = 0;
+    showsPageNumber = 0;
+    isArtistNibRegistered = NO;
     
     // 添加导航栏按钮（艺术家、画廊）
     UIBarButtonItem *ph1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -62,12 +89,30 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     UIBarButtonItem *rightNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.showsNavigationButton];
     [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:ph1,leftNaviButton, nil]];
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:ph2,rightNaviButton, nil]];
+    
+    [self loadArtist];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)loadArtist{
+    isArtistLoading = YES;
+    NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
+                                 @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
+    if ([LCYCommon networkAvailable]) {
+        [LCYCommon postRequestWithAPI:GetArtistList parameters:parameter successDelegate:self failedBlock:nil];
+    } else {
+        UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [networkUnabailableAlert show];
+    }
+}
+
+- (void)reloadTableView{
+//    self.
 }
 
 #pragma mark - Actions
@@ -96,5 +141,58 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         [appDelegate.window setRootViewController:nav];
     }
 }
+
+#pragma mark - NSXMLParserDelegate Methods
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSLog(@"json:%@",jsonResponse);
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        NSLog(@"get %ld artists",(long)[result.artists count]);
+        numberOfArtistsPerPage++;
+        isArtistLoading = NO;
+    } else {
+        
+    }
+    
+//    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
+}
+
+#pragma mark - UITableView DataSource And Delegate Methods
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        return [self.artistsArray count];
+    } else if( currentStatus == LCYArtistsAndShowsStatusShows){
+        return [self.showsArray count];
+    }
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *artistIdentifier = @"LCYArtistsTableViewCellIdentifier";
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        if (!isArtistNibRegistered) {
+            UINib *nib = [UINib nibWithNibName:@"LCYArtistsTableViewCell" bundle:nil];
+            [tableView registerNib:nib forCellReuseIdentifier:artistIdentifier];
+            isArtistNibRegistered = YES;
+        }
+        LCYArtistsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:artistIdentifier];
+        return cell;
+    }
+    
+    return nil;
+}
+
 
 @end

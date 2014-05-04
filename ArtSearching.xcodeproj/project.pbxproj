@@ -78,6 +78,10 @@
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
 		28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */; };
+		2F8C2C761912418D00C12F4E /* LCYArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C721912418D00C12F4E /* LCYArtists.m */; };
+		2F8C2C771912418D00C12F4E /* LCYGetArtistListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */; };
+		2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */; };
+		2F8C2C7C1912463600C12F4E /* LCYArtistsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8C2C7A1912463600C12F4E /* LCYArtistsTableViewCell.xib */; };
 		2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2718FE4723006880E7 /* Foundation.framework */; };
 		2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2918FE4723006880E7 /* CoreGraphics.framework */; };
 		2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2B18FE4723006880E7 /* UIKit.framework */; };
@@ -295,6 +299,13 @@
 		28A997D4190125C000A09E17 /* LCYRenrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRenrenTableViewCell.h; sourceTree = "<group>"; };
 		28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenTableViewCell.m; sourceTree = "<group>"; };
 		28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenTableViewCell.xib; sourceTree = "<group>"; };
+		2F8C2C721912418D00C12F4E /* LCYArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYArtists.m; sourceTree = "<group>"; };
+		2F8C2C731912418D00C12F4E /* LCYArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYArtists.h; sourceTree = "<group>"; };
+		2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetArtistListResult.m; sourceTree = "<group>"; };
+		2F8C2C751912418D00C12F4E /* LCYGetArtistListResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetArtistListResult.h; sourceTree = "<group>"; };
+		2F8C2C781912463600C12F4E /* LCYArtistsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYArtistsTableViewCell.h; sourceTree = "<group>"; };
+		2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYArtistsTableViewCell.m; sourceTree = "<group>"; };
+		2F8C2C7A1912463600C12F4E /* LCYArtistsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYArtistsTableViewCell.xib; sourceTree = "<group>"; };
 		2FB88F2418FE4723006880E7 /* ArtSearching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSearching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB88F2718FE4723006880E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FB88F2918FE4723006880E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -568,9 +579,16 @@
 			children = (
 				2836BB061910DE0C00F70140 /* Artists */,
 				2836BB071910DE0C00F70140 /* Shows */,
+				2F8C2C731912418D00C12F4E /* LCYArtists.h */,
+				2F8C2C721912418D00C12F4E /* LCYArtists.m */,
+				2F8C2C751912418D00C12F4E /* LCYGetArtistListResult.h */,
+				2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */,
 				2836BB081910DE5800F70140 /* LCYArtistsAndShowsViewController.h */,
 				2836BB091910DE5800F70140 /* LCYArtistsAndShowsViewController.m */,
 				2836BB0A1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib */,
+				2F8C2C781912463600C12F4E /* LCYArtistsTableViewCell.h */,
+				2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */,
+				2F8C2C7A1912463600C12F4E /* LCYArtistsTableViewCell.xib */,
 			);
 			path = ArtistsAndShows;
 			sourceTree = "<group>";
@@ -1301,6 +1319,7 @@
 				2820EA621900F0C30053B15D /* all_ex_right_filled@2x.png in Resources */,
 				8B49BA23190E150F00F7725D /* everyButton@2x.png in Resources */,
 				8BBEE112190361A60067FE37 /* search_artist_portal@2x.png in Resources */,
+				2F8C2C7C1912463600C12F4E /* LCYArtistsTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1377,11 +1396,13 @@
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
 				8BBEE1201903874B0067FE37 /* DownLoadPictureOperation.m in Sources */,
+				2F8C2C761912418D00C12F4E /* LCYArtists.m in Sources */,
 				2845B6F4190F8D2100388DA3 /* LCYExhibitions.m in Sources */,
 				28730D7019063F32005EA7DE /* LCYRegisterStep2ViewController.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
 				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
+				2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */,
 				8B49BA1E190DF90000F7725D /* DataCMICTableViewCell.m in Sources */,
 				2836BBC81910FD8800F70140 /* MJRefreshHeaderView.m in Sources */,
 				8B49BA1A190DF7E800F7725D /* UIView+screenshot.m in Sources */,
@@ -1394,6 +1415,7 @@
 				2FB88F6B18FE93E2006880E7 /* LCYCommon.m in Sources */,
 				288837B7190E608500562EEC /* ASIHTTPRequest.m in Sources */,
 				2845B6F6190F8D2100388DA3 /* LCYImgs.m in Sources */,
+				2F8C2C771912418D00C12F4E /* LCYGetArtistListResult.m in Sources */,
 				288837B6190E608500562EEC /* ASIFormDataRequest.m in Sources */,
 				282B680A190527F0000DC945 /* LCYMyCollectionViewController.m in Sources */,
 				288837B2190E608500562EEC /* ASIAuthenticationDialog.m in Sources */,
