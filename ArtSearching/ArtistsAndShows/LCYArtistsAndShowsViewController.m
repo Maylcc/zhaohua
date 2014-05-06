@@ -320,6 +320,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             NSString *avatarURL = [self.urlArray lastObject];
             [self.urlArray removeObject:avatarURL];
             LCYLOG(@"pop object:%@",avatarURL);
+            LCYLOG(@"current object count = %ld",(long)self.urlArray.count);
             [self.arrayCondition unlock];
             // 开启异步下载，完成后发送signal
             NSString *urlString = [[NSString stringWithFormat:@"%@",avatarURL] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
