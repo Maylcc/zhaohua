@@ -17,7 +17,7 @@
 
 NSInteger numberOfArtistsPerPage = 12;
 
-@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
+@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate>
 typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
     LCYArtistsAndShowsStatusShows       /**< 画廊 */
@@ -68,6 +68,20 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
  */
 @property (strong, nonatomic) NSArray *showsArray;
 
+/**
+ *  头像下载线程
+ */
+@property (strong, nonatomic) LCYArtistsAvatarDownloadOperation *operation;
+/**
+ *  下载队列
+ */
+@property (strong, nonatomic) NSOperationQueue *queue;
+
+/**
+ *  保证艺术家头像只被下载一次
+ */
+@property (strong, nonatomic) NSMutableArray *artistAvatarAddedToQueue;
+
 @end
 
 @implementation LCYArtistsAndShowsViewController
@@ -89,6 +103,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     artistPageNumber = 0;
     showsPageNumber = 0;
     isArtistNibRegistered = NO;
+    self.artistAvatarAddedToQueue = [NSMutableArray array];
     
     // 添加导航栏按钮（艺术家、画廊）
     UIBarButtonItem *ph1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -123,7 +138,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 
 
 - (void)reloadTableView{
-//    self.
+    [self.icyTableView reloadData];
 }
 
 #pragma mark - Actions
@@ -185,23 +200,26 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:kNilOptions
                                                                    error:&error];
-    NSLog(@"json:%@",jsonResponse);
-    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
-        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
-        NSLog(@"get %ld artists",(long)[result.artists count]);
-        numberOfArtistsPerPage++;
-        isArtistLoading = NO;
-    } else {
-        
+//    NSLog(@"json:%@",jsonResponse);
+    LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+//    NSLog(@"get %ld artists",(long)[result.artists count]);
+    NSMutableArray *tempArray;
+    if (self.artistsArray) {
+        tempArray = [NSMutableArray arrayWithArray:self.artistsArray];
+    }else{
+        tempArray = [NSMutableArray array];
     }
-    
-//    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
+    [tempArray addObjectsFromArray:result.artists];
+    self.artistsArray = [NSArray arrayWithArray:tempArray];
+    numberOfArtistsPerPage++;
+    isArtistLoading = NO;
+    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
 }
 
 #pragma mark - UITableView DataSource And Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
-        if (!self.showsArray) {
+        if (!self.artistsArray) {
             return 0;
         }
         return [self.artistsArray count];
@@ -223,15 +241,128 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             isArtistNibRegistered = YES;
         }
         LCYArtistsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:artistIdentifier];
-        cell.artistNameLabel.text = @"123123";
+        LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
+        cell.artistNameLabel.text = artist.artistName;
+        cell.artistWorksLabel.text = [NSString stringWithFormat:@"(%.f件作品)",artist.artistWorkCount];
+        // 检查图片是否已经存在
+        NSString *originalPath = artist.artistPortalS;
+        NSString *replaceSlash = [originalPath stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+        NSString *fileName = [replaceSlash lastPathComponent];
+        if ([LCYCommon isFileExistsAt:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]]) {
+            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]];
+            cell.icyImage.image = avatarImage;
+        } else {
+            cell.icyImage.image = nil;
+            NSString *fileURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,replaceSlash];
+            // 检查是否已经下载过一次，避免重复下载不存在的文件
+            BOOL hasDownloaded = NO;
+            for (NSString *oneFileName in self.artistAvatarAddedToQueue) {
+                if ([oneFileName isEqualToString:fileURL]) {
+                    hasDownloaded = YES;
+                    break;
+                }
+            }
+            if (!hasDownloaded) {
+                // 启动下载线程
+                [self.artistAvatarAddedToQueue addObject:fileURL];
+                if (!self.queue) {
+                    self.queue = [[NSOperationQueue alloc] init];
+                }
+                if (!self.operation) {
+                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
+                    self.operation.delegate = self;
+                    [self.queue addOperation:self.operation];
+                }
+                if (self.operation.isCancelled) {
+                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
+                    self.operation.delegate = self;
+                    [self.queue addOperation:self.operation];
+                }
+                [self.operation addAvartarURL:fileURL];
+                LCYLOG(@"add:%@",fileURL);
+            }
+        }
         return cell;
     }
-    
     return nil;
 }
 #pragma mark - UISearchBar Delegate Methods
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
     [searchBar resignFirstResponder];
 }
+#pragma mark - LCYArtistsAvatarDownloadOperation Delegate
+- (void)avatarDownloadDidFinished{
+    [self reloadTableView];
+}
 
+@end
+
+@interface LCYArtistsAvatarDownloadOperation ()
+@property (strong, atomic) NSMutableArray *urlArray;
+@property (strong, nonatomic) NSCondition *arrayCondition;
+@end
+@implementation LCYArtistsAvatarDownloadOperation
+- (void)main{
+    self.arrayCondition = [[NSCondition alloc] init];
+    self.urlArray = [NSMutableArray array];
+    while (YES) {
+        // 检查线程是否已经结束
+        if (self.isCancelled) {
+            break;
+        }
+        // 检查需要下载的列表
+        [self.arrayCondition lock];
+        if (self.urlArray.count == 0) {
+            [self.arrayCondition wait];
+            [self.arrayCondition unlock];
+        } else {
+            dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+            NSString *avatarURL = [self.urlArray lastObject];
+            [self.urlArray removeObject:avatarURL];
+            LCYLOG(@"pop object:%@",avatarURL);
+            [self.arrayCondition unlock];
+            // 开启异步下载，完成后发送signal
+            NSString *urlString = [[NSString stringWithFormat:@"%@",avatarURL] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *imageFileName = [urlString lastPathComponent];
+            NSURL *url = [NSURL URLWithString:urlString];
+            NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
+            AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+            requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+            [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                UIImage *downImg = (UIImage *)responseObject;
+                NSData *imageData = UIImageJPEGRepresentation(downImg, 1.0);
+                LCYLOG(@"success");
+                [imageData writeToFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+                LCYLOG(@"write to file:%@",[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName]);
+                if (self.delegate &&
+                    [self.delegate respondsToSelector:@selector(avatarDownloadDidFinished)]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.delegate avatarDownloadDidFinished];
+                    });
+                }
+                dispatch_semaphore_signal(sema);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                LCYLOG(@"下载图片失败 error is %@",error);
+                dispatch_semaphore_signal(sema);
+            }];
+            [requestOperation start];
+            dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        }
+    }
+}
+- (void)addAvartarURL:(NSString *)URL{
+    [self.arrayCondition lock];
+    BOOL gotOne = NO;
+    for (NSString *oneURL in self.urlArray) {
+        if ([oneURL isEqualToString:URL]) {
+            gotOne = YES;
+            break;
+        }
+    }
+    if (!gotOne) {
+        [self.urlArray addObject:URL];
+        [self.arrayCondition signal];
+    }
+    [self.arrayCondition unlock];
+}
 @end

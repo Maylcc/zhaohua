@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 
 NSString *const hostURLPrefix = @"http://115.29.41.251:88/webservice_art_base.asmx/";
+NSString *const hostIMGPrefix = @"http://115.29.41.251";
 NSString *const ActivityList  = @"ActivityList";
 //NSString *const ActivityOrganizationListSearchByKey     = @"ActivityOrganizationListSearchByKey";
 NSString *const Login         = @"Login";
@@ -100,7 +101,21 @@ NSString *const getArtistInfo = @"GetArtistInforById";
         if (![fileManager fileExistsAtPath:[cachePath stringByAppendingPathComponent:@"renrenMainImages"]]) {
             [fileManager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"renrenMainImages"] withIntermediateDirectories:YES attributes:nil error:nil];
         }
-        string = [cachePath stringByAppendingString:@"renrenMainImages"];
+        string = [cachePath stringByAppendingPathComponent:@"renrenMainImages"];
+    });
+    return string;
+}
++ (NSString *)artistAvatarImagePath{
+    static NSString *string;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *cache = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *cachePath = [cache objectAtIndex:0];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:[cachePath stringByAppendingPathComponent:@"artistAvatarImages"]]) {
+            [fileManager createDirectoryAtPath:[cachePath stringByAppendingPathComponent:@"artistAvatarImages"] withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        string = [cachePath stringByAppendingPathComponent:@"artistAvatarImages"];
     });
     return string;
 }
@@ -109,6 +124,15 @@ NSString *const getArtistInfo = @"GetArtistInforById";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
     return isLogin;
+}
+
++ (BOOL)isFileExistsAt:(NSString *)path{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:path]) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 @end

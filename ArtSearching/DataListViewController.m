@@ -183,7 +183,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         cellArt.cellIndex = [NSString stringWithFormat:@"%d",artList.id_Art.intValue ];
         cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
         cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
-        cellArt.indexLbl.text   = [NSString stringWithFormat:@"%d",indexPath.row+1];
+        cellArt.indexLbl.text   = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
         NSString *pathString = [fileOperation findArtOfStartByUrl:artList.url_Small];
         if([fileOperation fileExistsAtPath:pathString])
         {
@@ -218,7 +218,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             galleryCell.authordName.text = artist.author;
             galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])
@@ -236,7 +236,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             galleryCell.authordName.text = artist.name;
             galleryCell.lookNums.text    = [NSString stringWithFormat:@"%d", artist.beScanTime.intValue ];
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
-            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",indexPath.row+1];
+            galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])

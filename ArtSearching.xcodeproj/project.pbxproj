@@ -94,6 +94,7 @@
 		2F8C2C8D19161EB300C12F4E /* LCYGetApplyerInfoResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C8C19161EB300C12F4E /* LCYGetApplyerInfoResult.m */; };
 		2F8C2C911916334300C12F4E /* LCYApplyAccAndRejViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C8F1916334300C12F4E /* LCYApplyAccAndRejViewController.m */; };
 		2F8C2C921916334300C12F4E /* LCYApplyAccAndRejViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F8C2C901916334300C12F4E /* LCYApplyAccAndRejViewController.xib */; };
+		2F98634A1918C60000912891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9863491918C60000912891 /* QuartzCore.framework */; };
 		2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2718FE4723006880E7 /* Foundation.framework */; };
 		2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2918FE4723006880E7 /* CoreGraphics.framework */; };
 		2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FB88F2B18FE4723006880E7 /* UIKit.framework */; };
@@ -337,6 +338,7 @@
 		2F8C2C8E1916334300C12F4E /* LCYApplyAccAndRejViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYApplyAccAndRejViewController.h; sourceTree = "<group>"; };
 		2F8C2C8F1916334300C12F4E /* LCYApplyAccAndRejViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYApplyAccAndRejViewController.m; sourceTree = "<group>"; };
 		2F8C2C901916334300C12F4E /* LCYApplyAccAndRejViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYApplyAccAndRejViewController.xib; sourceTree = "<group>"; };
+		2F9863491918C60000912891 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2FB88F2418FE4723006880E7 /* ArtSearching.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArtSearching.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FB88F2718FE4723006880E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2FB88F2918FE4723006880E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -545,6 +547,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F98634A1918C60000912891 /* QuartzCore.framework in Frameworks */,
 				2862340E190F54A700747E26 /* libxml2.dylib in Frameworks */,
 				288837BF190E618600562EEC /* libz.dylib in Frameworks */,
 				2FB88F2A18FE4723006880E7 /* CoreGraphics.framework in Frameworks */,
@@ -754,6 +757,7 @@
 		2FB88F2618FE4723006880E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F9863491918C60000912891 /* QuartzCore.framework */,
 				2862340D190F54A700747E26 /* libxml2.dylib */,
 				288837BE190E618600562EEC /* libz.dylib */,
 				288837BC190E617600562EEC /* MobileCoreServices.framework */,

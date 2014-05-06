@@ -59,6 +59,22 @@
 + (NSString *)renrenMainImagePath;
 
 /**
+ *  艺术家头像
+ *
+ *  @return 头像文件夹地址
+ */
++ (NSString *)artistAvatarImagePath;
+
+/**
+ *  文件是否存在
+ *
+ *  @param path 文件地址
+ *
+ *  @return 是否存在
+ */
++ (BOOL)isFileExistsAt:(NSString *)path;
+
+/**
  *  用户是否已经登录
  *
  *  @return 是或否
@@ -66,6 +82,7 @@
 + (BOOL)isUserLogin;
 
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
+CA_EXTERN NSString *const hostIMGPrefix;    /**< 图片地址前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
 //CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 */
 CA_EXTERN NSString *const Login;            /**< 登录 */
