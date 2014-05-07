@@ -57,7 +57,6 @@
 		2888378D190DE8CB00562EEC /* LCYSimpleCodeResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888378C190DE8CB00562EEC /* LCYSimpleCodeResult.m */; };
 		28883790190DF46400562EEC /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888378F190DF46400562EEC /* Reachability.m */; };
 		28883792190DF5C100562EEC /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28883791190DF5C100562EEC /* SystemConfiguration.framework */; };
-		28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883794190DF8B400562EEC /* MBProgressHUD.m */; };
 		28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 28883796190E02D800562EEC /* LCYRegisterOneResult.m */; };
 		2888379C190E4E4C00562EEC /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888379A190E361500562EEC /* Base64.m */; };
 		288837B2190E608500562EEC /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2888379F190E608500562EEC /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -270,8 +269,6 @@
 		2888378E190DF46400562EEC /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		2888378F190DF46400562EEC /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		28883791190DF5C100562EEC /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		28883793190DF8B300562EEC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		28883794190DF8B400562EEC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		28883796190E02D800562EEC /* LCYRegisterOneResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRegisterOneResult.m; sourceTree = "<group>"; };
 		28883797190E02D800562EEC /* LCYRegisterOneResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRegisterOneResult.h; sourceTree = "<group>"; };
 		28883799190E361500562EEC /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
@@ -908,8 +905,6 @@
 				2888379D190E607600562EEC /* ASIHttpRequest */,
 				28883799190E361500562EEC /* Base64.h */,
 				2888379A190E361500562EEC /* Base64.m */,
-				28883793190DF8B300562EEC /* MBProgressHUD.h */,
-				28883794190DF8B400562EEC /* MBProgressHUD.m */,
 				2888378E190DF46400562EEC /* Reachability.h */,
 				2888378F190DF46400562EEC /* Reachability.m */,
 				2FB88F6918FE93E2006880E7 /* LCYCommon.h */,
@@ -1463,7 +1458,6 @@
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
-				28883795190DF8B400562EEC /* MBProgressHUD.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
 				286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
