@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LCYMyCollectionViewController : UIViewController
+@protocol LCYMyCollectionViewControllerDelegate <NSObject>
+@optional
+- (void)didGetImageInfoArray:(NSArray *)infoArray;
+@end
 
+@interface LCYMyCollectionViewController : UIViewController
+@property (weak, nonatomic) id<LCYMyCollectionViewControllerDelegate>delegate;
+@end
+
+@interface ImageInfo : NSObject
+@property (strong, nonatomic) NSString *imageURL;
+@property (strong, nonatomic) NSString *imageName;
++ (id)infoWithURL:(NSString *)URL name:(NSString *)name;
 @end

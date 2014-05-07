@@ -11,7 +11,7 @@
 #import "LCYMyCollectionViewController.h"
 #import "LCYCommon.h"
 @interface LCYBuildExhibitionViewController ()
-<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+<UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource,LCYMyCollectionViewControllerDelegate>
 {
     BOOL isNibRegistered;
 }
@@ -46,6 +46,11 @@
  *  记录选中状态
  */
 @property (strong, nonatomic) LCYMyCollectionViewController *myCollectionVC;
+/**
+ *  用于显示图片的Collection View
+ */
+@property (weak, nonatomic) IBOutlet UICollectionView *icyCollectionView;
+
 
 @end
 
@@ -100,6 +105,7 @@
  */
 - (IBAction)confirmButtonPressed:(id)sender {
     LCYLOG(@"确认发布");
+    // TODO:提交网络请求，发布策展
 }
 - (IBAction)backgroundTouched:(id)sender {
     if ([self.subjectTextView isFirstResponder]) {
@@ -110,6 +116,10 @@
     if ([self.descriptionTextView isFirstResponder]) {
         [self.descriptionTextView resignFirstResponder];
     }
+}
+
+- (void)reloadCollectionView{
+    [self.icyCollectionView reloadData];
 }
 
 #pragma mark - UITextView Delegate Methods
@@ -123,7 +133,8 @@
 
 - (void)textViewDidEndEditing:(UITextView *)textView{
     if (textView == self.descriptionTextView) {
-        [self.icyScrollView setContentOffset:CGPointZero animated:YES];
+        CGPoint point = CGPointMake(0, -64);
+        [self.icyScrollView setContentOffset:point animated:YES];
     }
 }
 - (void)textViewDidChange:(UITextView *)textView{
@@ -163,10 +174,26 @@
         isNibRegistered = YES;
     }
     LCYBuildCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    // 初始状态
     if (!self.worksArray) {
         if (indexPath.row == 0) {
             cell.icyImage.image = [UIImage imageNamed:@"build_plus.png"];
         } else {
+            cell.icyImage.image = [UIImage imageNamed:@"build_dot.png"];
+        }
+    }
+    // 加载图片以后
+    else {
+        NSUInteger arrayCount = self.worksArray.count;
+        if (indexPath.row<arrayCount) {
+            ImageInfo *info = [self.worksArray objectAtIndex:indexPath.row];
+            cell.icyImage.contentMode = UIViewContentModeScaleToFill;
+            cell.icyImage.image = [UIImage imageNamed:info.imageName];
+        } else if (indexPath.row == arrayCount){
+            cell.icyImage.contentMode = UIViewContentModeCenter;
+            cell.icyImage.image = [UIImage imageNamed:@"build_plus.png"];
+        } else {
+            cell.icyImage.contentMode = UIViewContentModeCenter;
             cell.icyImage.image = [UIImage imageNamed:@"build_dot.png"];
         }
     }
@@ -175,16 +202,29 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (!self.worksArray) {
-        if (indexPath.row == 0) {
-            // 添加我收藏的作品
-            if (!self.myCollectionVC) {
-                self.myCollectionVC = [[LCYMyCollectionViewController alloc] init];
-                self.myCollectionVC.title = @"我的收藏";
-            }
-            [self.navigationController pushViewController:self.myCollectionVC animated:YES];
-        }
+//    if (!self.worksArray) {
+//        if (indexPath.row == 0) {
+//            // 添加我收藏的作品
+//            if (!self.myCollectionVC) {
+//                self.myCollectionVC = [[LCYMyCollectionViewController alloc] init];
+//                self.myCollectionVC.delegate = self;
+//                self.myCollectionVC.title = @"我的收藏";
+//            }
+//            [self.navigationController pushViewController:self.myCollectionVC animated:YES];
+//        }
+//    }
+    if (!self.myCollectionVC) {
+        self.myCollectionVC = [[LCYMyCollectionViewController alloc] init];
+        self.myCollectionVC.delegate = self;
+        self.myCollectionVC.title = @"我的收藏";
     }
+    [self.navigationController pushViewController:self.myCollectionVC animated:YES];
+}
+
+#pragma mark - LCYMyCollectionViewController Delegate
+- (void)didGetImageInfoArray:(NSArray *)infoArray{
+    self.worksArray = infoArray;
+    [self.icyCollectionView reloadData];
 }
 
 @end
