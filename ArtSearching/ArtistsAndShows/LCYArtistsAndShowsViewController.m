@@ -252,7 +252,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]];
             cell.icyImage.image = avatarImage;
         } else {
-            cell.icyImage.image = nil;
+            cell.icyImage.image = [UIImage imageNamed:@"akalin.jpg"];
             NSString *fileURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,replaceSlash];
             // 检查是否已经下载过一次，避免重复下载不存在的文件
             BOOL hasDownloaded = NO;
@@ -271,6 +271,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
                 if (!self.operation) {
                     self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
                     self.operation.delegate = self;
+                    [self.operation initConfigure];
                     [self.queue addOperation:self.operation];
                 }
                 if (self.operation.isCancelled) {
@@ -299,12 +300,14 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 
 @interface LCYArtistsAvatarDownloadOperation ()
 @property (strong, atomic) NSMutableArray *urlArray;
-@property (strong, nonatomic) NSCondition *arrayCondition;
+@property (strong, atomic) NSCondition *arrayCondition;
 @end
 @implementation LCYArtistsAvatarDownloadOperation
-- (void)main{
-    self.arrayCondition = [[NSCondition alloc] init];
+- (void)initConfigure{
     self.urlArray = [NSMutableArray array];
+    self.arrayCondition = [[NSCondition alloc] init];
+}
+- (void)main{
     while (YES) {
         // 检查线程是否已经结束
         if (self.isCancelled) {

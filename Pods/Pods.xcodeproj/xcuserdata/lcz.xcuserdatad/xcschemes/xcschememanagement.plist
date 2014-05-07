@@ -9,6 +9,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-CHTCollectionViewWaterfallLayout.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1992D6AC6FA9495297D6A71E</key>
+		<key>841EE68D4ECA4802A3F7A371</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6518FE11BFED49E1B5761E80</key>
+		<key>A7580B38B139413F9EE1CEB5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BAEC8DFFE9354F2CA0040862</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F83847565AAF4B2FB18AF199</key>
 		<dict>
 			<key>primary</key>
 			<true/>

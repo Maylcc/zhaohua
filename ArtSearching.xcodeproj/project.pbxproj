@@ -78,6 +78,7 @@
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
 		28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */; };
+		2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F10E5DB1919F53700AB9715 /* akalin.jpg */; };
 		2F3836F71916389200C020ED /* LCYApplyAccAndRegTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F3836F51916389200C020ED /* LCYApplyAccAndRegTableViewCell.m */; };
 		2F3836F81916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3836F61916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib */; };
 		2F3836FB19163B1200C020ED /* applyAccepted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F3836F919163B1200C020ED /* applyAccepted@2x.png */; };
@@ -312,6 +313,7 @@
 		28A997D4190125C000A09E17 /* LCYRenrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRenrenTableViewCell.h; sourceTree = "<group>"; };
 		28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenTableViewCell.m; sourceTree = "<group>"; };
 		28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenTableViewCell.xib; sourceTree = "<group>"; };
+		2F10E5DB1919F53700AB9715 /* akalin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = akalin.jpg; sourceTree = "<group>"; };
 		2F3836F41916389200C020ED /* LCYApplyAccAndRegTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYApplyAccAndRegTableViewCell.h; sourceTree = "<group>"; };
 		2F3836F51916389200C020ED /* LCYApplyAccAndRegTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYApplyAccAndRegTableViewCell.m; sourceTree = "<group>"; };
 		2F3836F61916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYApplyAccAndRegTableViewCell.xib; sourceTree = "<group>"; };
@@ -734,6 +736,14 @@
 			path = ASIHttpRequest;
 			sourceTree = "<group>";
 		};
+		2F10E5DA1919F53700AB9715 /* ArtistsAndShows */ = {
+			isa = PBXGroup;
+			children = (
+				2F10E5DB1919F53700AB9715 /* akalin.jpg */,
+			);
+			path = ArtistsAndShows;
+			sourceTree = "<group>";
+		};
 		2FB88F1B18FE4723006880E7 = {
 			isa = PBXGroup;
 			children = (
@@ -859,6 +869,7 @@
 		2FB88F6418FE85E9006880E7 /* LCYAssets */ = {
 			isa = PBXGroup;
 			children = (
+				2F10E5DA1919F53700AB9715 /* ArtistsAndShows */,
 				2FB88F6C18FE9D9A006880E7 /* global */,
 				2FB88F6518FE8603006880E7 /* renren */,
 			);
@@ -1350,6 +1361,7 @@
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2F3836FC19163B1200C020ED /* applyRejected@2x.png in Resources */,
 				28730D6C19063E47005EA7DE /* service_line_on@2x.png in Resources */,
+				2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */,
 				2820EA601900F0C30053B15D /* all_ex_left_filled@2x.png in Resources */,
 				8B6E96D319013663006E6752 /* DataStartGallertyCell.xib in Resources */,
 				282B6809190527F0000DC945 /* LCYBuildExhibitionViewController.xib in Resources */,

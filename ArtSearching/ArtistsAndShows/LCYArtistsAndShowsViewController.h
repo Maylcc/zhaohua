@@ -22,4 +22,5 @@
 @interface LCYArtistsAvatarDownloadOperation : NSOperation
 @property (weak, nonatomic) id<LCYArtistsAvatarDownloadOperationDelegate>delegate;
 - (void)addAvartarURL:(NSString *)URL;
+- (void)initConfigure;
 @end

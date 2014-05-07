@@ -198,6 +198,12 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
  */
 - (IBAction)iWantButtonPressed:(id)sender {
     NSLog(@"我要策展");
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (![[userDefaults objectForKey:UserDefaultsIsLogin] boolValue]) {
+        UIAlertView *notLoginAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"请您先登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [notLoginAlert show];
+        return;
+    }
     LCYBuildExhibitionViewController *buildVC = [[LCYBuildExhibitionViewController alloc] init];
     buildVC.title = @"我要策展";
     [self.navigationController pushViewController:buildVC animated:YES];
