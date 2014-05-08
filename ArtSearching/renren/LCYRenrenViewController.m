@@ -17,6 +17,7 @@
 #import "LCYArtistsAndShowsViewController.h"
 #import "LCYRenrenMineApplyTableViewCell.h"
 #import "LCYApplyAccAndRejViewController.h"
+#import "LCYRenrenDetailViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
@@ -435,6 +436,11 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
                 [self.navigationController pushViewController:aarvc animated:YES];
             }
         }
+    } else if (currentStatus == LCYRenrenSegStatusAll){
+        LCYRenrenDetailViewController *dvc = [[LCYRenrenDetailViewController alloc] init];
+        dvc.exhibitionInfo = [self.allExhibitionResult.exhibitions objectAtIndex:indexPath.row];
+        dvc.title = dvc.exhibitionInfo.title;
+        [self.navigationController pushViewController:dvc animated:YES];
     }
 }
 
