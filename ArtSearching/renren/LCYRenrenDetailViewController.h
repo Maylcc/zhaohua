@@ -26,3 +26,7 @@
 @interface LCYRenrenDetailSecondLineCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UITextView *icyTextView;
 @end
+
+@interface LCYRenrenDetailFirstHeader : UICollectionReusableView
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@end

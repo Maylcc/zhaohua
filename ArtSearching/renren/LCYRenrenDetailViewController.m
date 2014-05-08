@@ -13,11 +13,20 @@
 #define CELL_COUNT 15
 @interface LCYRenrenDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,LCYWaterFlowLayoutDelegate>
 {
-    BOOL isNibRegistered;
-    BOOL isNib2Registered;
-    BOOL isNib3Registered;
+    BOOL isNibRegistered;   /**< 策展人，参展人 */
+    BOOL isNib2Registered;  /**< 展览介绍 */
+    BOOL isNib3Registered;  /**< 画——瀑布流 */
+    BOOL isNib4Registered;  /**< Collection View Header */
+    CGFloat lastOffset;     /**< 上次滑动位置 */
 }
 @property (strong, nonatomic) NSMutableArray *cellSizes;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *icyCollectionView;
+/**
+ *  参展菜单（底部菜单，包括参展、评论、分享）
+ */
+@property (strong, nonatomic) IBOutlet UIView *footerToolBarView;
+
 @end
 
 @implementation LCYRenrenDetailViewController
@@ -38,6 +47,7 @@
     isNibRegistered = NO;
     isNib2Registered = NO;
     isNib3Registered = NO;
+    lastOffset = 0;
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 40, 40)];
@@ -77,6 +87,24 @@
     } else {
         return CELL_COUNT;
     }
+}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier4 = @"LCYRenrenDetailFirstHeaderIdentifier";
+    if (!isNib4Registered) {
+        UINib *nib = [UINib nibWithNibName:@"LCYRenrenDetailFirstHeader" bundle:nil];
+        [collectionView registerNib:nib forSupplementaryViewOfKind:LCYCollectionElementKindSectionHeader withReuseIdentifier:identifier4];
+        isNib4Registered = YES;
+    }
+    if ([kind isEqualToString:LCYCollectionElementKindSectionHeader]) {
+        LCYRenrenDetailFirstHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:LCYCollectionElementKindSectionHeader withReuseIdentifier:identifier4 forIndexPath:indexPath];
+        if (indexPath.section==1) {
+            header.titleLabel.text = @"展览介绍";
+        } else if (indexPath.section==2){
+            header.titleLabel.text = @"参展作品(15)";
+        }
+        return header;
+    }
+    return nil;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -134,6 +162,27 @@
         return 20;
     }
 }
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+    if (section == 2) {
+        return UIEdgeInsetsMake(10, 10, 10, 10);
+    }
+    return UIEdgeInsetsZero;
+}
+
+#pragma mark - UIScrollView Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == self.icyCollectionView) {
+        CGFloat currentY = scrollView.contentOffset.y;
+        if (currentY - lastOffset >= 25) {
+            LCYLOG(@"up");
+        } else if (lastOffset - currentY >= 25){
+            LCYLOG(@"down");
+        }
+        lastOffset = currentY;
+    }
+}
+
 @end
 
 @implementation LCYRenrenDetailFirstLineCell
@@ -153,6 +202,14 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+    }
+    return self;
+}
+@end
+
+@implementation LCYRenrenDetailFirstHeader
+- (id)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
     }
     return self;
 }

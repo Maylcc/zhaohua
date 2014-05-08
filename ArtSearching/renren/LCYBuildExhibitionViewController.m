@@ -139,14 +139,30 @@
 }
 - (void)textViewDidChange:(UITextView *)textView{
     if (textView == self.subjectTextView) {
-        if (textView.text.length <= 90) {
+        if ((45-[self convertToInt:textView.text]) >= 0) {
             self.charactorLeft.textColor = [UIColor blackColor];
-            self.charactorLeft.text = [NSString stringWithFormat:@"还可以输入%ld个字",(long)(45-(textView.text.length+1)/2)];
+            self.charactorLeft.text = [NSString stringWithFormat:@"还可以输入%ld个字",(long)(45-[self convertToInt:textView.text])];
         } else {
             self.charactorLeft.textColor = [UIColor redColor];
             self.charactorLeft.text = @"超出字数限制";
         }
     }
+}
+-  (int)convertToInt:(NSString*)strtemp {
+    
+    int strlength = 0;
+    char* p = (char*)[strtemp cStringUsingEncoding:NSUnicodeStringEncoding];
+    for (int i=0 ; i<[strtemp lengthOfBytesUsingEncoding:NSUnicodeStringEncoding] ;i++) {
+        if (*p) {
+            p++;
+            strlength++;
+        }
+        else {
+            p++;
+        }
+    }
+    return (strlength+1)/2;
+    
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
@@ -216,6 +232,8 @@
     if (!self.myCollectionVC) {
         self.myCollectionVC = [[LCYMyCollectionViewController alloc] init];
         self.myCollectionVC.delegate = self;
+        self.myCollectionVC.maxImageCount = 15;
+        self.myCollectionVC.minImageCount = 10;
         self.myCollectionVC.title = @"我的收藏";
     }
     [self.navigationController pushViewController:self.myCollectionVC animated:YES];

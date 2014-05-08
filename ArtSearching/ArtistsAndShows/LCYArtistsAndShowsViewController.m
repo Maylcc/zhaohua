@@ -15,7 +15,6 @@
 #import "LCYDataModels.h"
 #import "LCYArtistsTableViewCell.h"
 
-NSInteger numberOfArtistsPerPage = 12;
 
 @interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate>
 typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
@@ -32,6 +31,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     BOOL isArtistLoading;
     BOOL isShowsLoading;
     BOOL isArtistNibRegistered;
+    NSInteger numberOfArtistsPerPage;
 }
 
 /**
@@ -103,6 +103,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     artistPageNumber = 0;
     showsPageNumber = 0;
     isArtistNibRegistered = NO;
+    numberOfArtistsPerPage = 12;
     self.artistAvatarAddedToQueue = [NSMutableArray array];
     
     // 添加导航栏按钮（艺术家、画廊）

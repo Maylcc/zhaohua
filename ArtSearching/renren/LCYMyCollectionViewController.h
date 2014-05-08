@@ -15,6 +15,8 @@
 
 @interface LCYMyCollectionViewController : UIViewController
 @property (weak, nonatomic) id<LCYMyCollectionViewControllerDelegate>delegate;
+@property NSInteger maxImageCount;
+@property NSInteger minImageCount;
 @end
 
 @interface ImageInfo : NSObject

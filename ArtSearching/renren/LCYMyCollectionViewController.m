@@ -136,12 +136,12 @@
         [self.cellStatus replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:NO]];
         [cell checkOff];
         checkCount--;
-        if (checkCount<10) {
+        if (checkCount<self.minImageCount) {
             self.doneButtonItem.enabled = NO;
         }
     } else {
         // 检查是否超出15个选择的限制
-        if (checkCount>=15) {
+        if (checkCount>=self.maxImageCount) {
             UIAlertView *outOfRangeAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"您不能选择超过15张图片参展" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [outOfRangeAlert show];
             return;
@@ -149,11 +149,11 @@
         [self.cellStatus replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithBool:YES]];
         [cell checkOn];
         checkCount++;
-        if (checkCount>=10) {
+        if (checkCount>=self.minImageCount) {
             self.doneButtonItem.enabled = YES;
         }
     }
-    self.checkCountButtonItem.title = [NSString stringWithFormat:@"还可选%ld件作品",15-(long)checkCount];
+    self.checkCountButtonItem.title = [NSString stringWithFormat:@"还可选%ld件作品",self.maxImageCount-(long)checkCount];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout

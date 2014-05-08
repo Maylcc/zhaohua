@@ -92,6 +92,7 @@
 		2F527C72191B1B570040879F /* LCYWaterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F527C71191B1B570040879F /* LCYWaterFlowLayout.m */; };
 		2F527C74191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */; };
 		2F527C76191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */; };
+		2F527C7A191B5C590040879F /* LCYRenrenDetailFirstHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */; };
 		2F8C2C761912418D00C12F4E /* LCYArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C721912418D00C12F4E /* LCYArtists.m */; };
 		2F8C2C771912418D00C12F4E /* LCYGetArtistListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */; };
 		2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */; };
@@ -339,6 +340,7 @@
 		2F527C71191B1B570040879F /* LCYWaterFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYWaterFlowLayout.m; sourceTree = "<group>"; };
 		2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailFirstLineCell.xib; sourceTree = "<group>"; };
 		2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailSecondLineCell.xib; sourceTree = "<group>"; };
+		2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailFirstHeader.xib; sourceTree = "<group>"; };
 		2F8C2C721912418D00C12F4E /* LCYArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYArtists.m; sourceTree = "<group>"; };
 		2F8C2C731912418D00C12F4E /* LCYArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYArtists.h; sourceTree = "<group>"; };
 		2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetArtistListResult.m; sourceTree = "<group>"; };
@@ -891,6 +893,7 @@
 				2F527C6D191B1AF70040879F /* LCYRenrenDetailViewController.xib */,
 				2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */,
 				2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */,
+				2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */,
 				2F527C70191B1B570040879F /* LCYWaterFlowLayout.h */,
 				2F527C71191B1B570040879F /* LCYWaterFlowLayout.m */,
 			);
@@ -1402,6 +1405,7 @@
 				282B6809190527F0000DC945 /* LCYBuildExhibitionViewController.xib in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
 				8B565BB318FFA497002520D3 /* Default.png in Resources */,
+				2F527C7A191B5C590040879F /* LCYRenrenDetailFirstHeader.xib in Resources */,
 				28730D651906139F005EA7DE /* launh_sure@2x.png in Resources */,
 				2820EA591900D1B50053B15D /* i_want_build_bg1@2x.png in Resources */,
 				8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */,
