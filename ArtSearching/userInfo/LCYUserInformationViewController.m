@@ -7,6 +7,7 @@
 //
 
 #import "LCYUserInformationViewController.h"
+#import "LCYUserDetailInfoViewController.h"
 
 @interface LCYUserInformationViewController ()
 
@@ -33,6 +34,13 @@
     [backBtn addTarget:self action:@selector(userInfoBack) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
+    // 设置右侧“设置”键
+    UIButton *settingButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [settingButton setFrame:CGRectMake(0, 0, 40, 40)];
+    [settingButton setImage:[UIImage imageNamed:@"nav_setting.png"] forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(userInfoSetting) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightSettingItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
+    self.navigationItem.rightBarButtonItem = rightSettingItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,5 +53,9 @@
 - (void)userInfoBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
+- (void)userInfoSetting{
+    LCYUserDetailInfoViewController *udiVC = [[LCYUserDetailInfoViewController alloc] init];
+    udiVC.title = @"个人设置";
+    [self.navigationController pushViewController:udiVC animated:YES];
+}
 @end

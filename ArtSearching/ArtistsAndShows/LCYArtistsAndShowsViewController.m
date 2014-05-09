@@ -14,6 +14,7 @@
 #import "LCYRenrenViewController.h"
 #import "LCYDataModels.h"
 #import "LCYArtistsTableViewCell.h"
+#import "LCYSearchingListViewController.h"
 
 
 @interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate>
@@ -147,7 +148,6 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     UIBarButtonItem *item = sender;
     if (item.tag == 4) {
         // 注册、登陆、显示用户收藏等
-        
         BOOL isLogin = [LCYCommon isUserLogin];
         if (!isLogin) {
             // 跳转到注册界面
@@ -156,6 +156,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         } else{
             // TODO:跳转到个人信息界面
             LCYUserInformationViewController *userVC = [[LCYUserInformationViewController alloc] init];
+            userVC.title = @"个人信息";
             [self.navigationController pushViewController:userVC animated:YES];
         }
     }
@@ -165,6 +166,13 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         LCYRenrenViewController *oneVC = [[LCYRenrenViewController alloc] init];
         oneVC.title = @"人人策画";
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:oneVC];
+        [appDelegate.window setRootViewController:nav];
+    }
+    if (item.tag == 3) {
+        // 列表
+        LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        LCYSearchingListViewController *searchVC = [[LCYSearchingListViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchVC];
         [appDelegate.window setRootViewController:nav];
     }
 }

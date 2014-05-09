@@ -18,6 +18,7 @@
 #import "LCYRenrenMineApplyTableViewCell.h"
 #import "LCYApplyAccAndRejViewController.h"
 #import "LCYRenrenDetailViewController.h"
+#import "LCYSearchingListViewController.h"
 
 #define RenrenGreen colorWithRed:101.0/255 green:151.0/255 blue:49.0/255 alpha:1
 
@@ -180,6 +181,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
         } else{
             // TODO:跳转到个人信息界面
             LCYUserInformationViewController *userVC = [[LCYUserInformationViewController alloc] init];
+            userVC.title = @"个人信息";
             [self.navigationController pushViewController:userVC animated:YES];
         }
     }
@@ -188,6 +190,13 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
         LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
         LCYArtistsAndShowsViewController *twoVC = [[LCYArtistsAndShowsViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:twoVC];
+        [appDelegate.window setRootViewController:nav];
+    }
+    if (item.tag == 3) {
+        // 列表
+        LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        LCYSearchingListViewController *searchVC = [[LCYSearchingListViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchVC];
         [appDelegate.window setRootViewController:nav];
     }
 }
