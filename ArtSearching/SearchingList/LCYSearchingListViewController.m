@@ -16,7 +16,7 @@
 
 @interface LCYSearchingListViewController ()<UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *icySearchBar;
-
+@property (strong, nonatomic) NSArray *dataForTest;
 @end
 
 @implementation LCYSearchingListViewController
@@ -34,6 +34,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.dataForTest = @[@"水墨",@"油画",@"素描",@"版画",@"雕塑",@"摄影",@"新媒体",@"水彩",@"水粉",@"其他"];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -89,7 +90,19 @@
 
 #pragma mark - UITableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 0;
+    return [self.dataForTest count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"SearchingListViewCellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    cell.textLabel.text = [self.dataForTest objectAtIndex:indexPath.row];
+    return cell;
 }
 
 @end
