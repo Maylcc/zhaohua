@@ -34,6 +34,9 @@
                         <state key="normal" image="work_detail_right_gray.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="toAuthodDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="l6h-cX-h9T"/>
+                        </connections>
                     </button>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pAF-Ni-bud">
                         <rect key="frame" x="20" y="66" width="195" height="21"/>
@@ -135,6 +138,7 @@
                 <outlet property="concerdNum" destination="gTk-Mp-uuH" id="lfq-RF-SEQ"/>
                 <outlet property="sizeLbl" destination="h82-EI-RqC" id="0Mj-Sx-v7R"/>
                 <outlet property="titleLbl" destination="O4Q-DS-ofw" id="HwO-Du-VC5"/>
+                <outlet property="toAuthodView" destination="g20-lx-xd8" id="896-1b-f8T"/>
                 <outlet property="typeLbl" destination="pAF-Ni-bud" id="XyL-22-dLP"/>
             </connections>
         </tableViewCell>

@@ -18,6 +18,9 @@
 #import "StartGalleryList.h"
 #import "ArtDetailViewController.h"
 #import "ZXYUserDefaultSettings.h"
+#import "XMLParserHelper.h"
+#import "NetHelper.h"
+#import "LCYRegisterViewController.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -39,6 +42,9 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     if (self) {
         // Custom initialization
         netConnect = [NetConnect sharedSelf];
+        netHelper  = [NetHelper sharedSelf];
+        netHelper.netHelperDelegate = self;
+        xmlParser  = [XMLParserHelper sharedSelf];
         dataProvider = [ZXYProvider sharedInstance];
         arrArtistsList = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO]];
         arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" isDes:NO orderByKey:@"beScanTime",@"beStoreTime",nil]];
@@ -315,8 +321,22 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             return;
         }
         [ZXYUserDefaultSettings zxyUserUpdateTime];
+        
         dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
         dataTableV.scrollEnabled = NO;
+        if([LCYCommon isUserLogin])
+        {
+//            NSString *stringUrl = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestionStatus];
+//            NSDictionary *dic   = [NSDictionary dictionaryWithObjectsAndKeys:[ZXYUserDefaultSettings zxyUserUpdateTime],@"Date",, nil]
+//            [netHelper requestStart:stringUrl withParams:<#(NSDictionary *)#> bySerialize:<#(AFHTTPResponseSerializer *)#>]
+        }
+        else
+        {
+            LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
+            [self.navigationController pushViewController:registerVC animated:YES];
+            return;
+        }
+       
         
         UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
         [folderTableView openFolderAtIndexPath:indexPath WithContentView:dataAc.view

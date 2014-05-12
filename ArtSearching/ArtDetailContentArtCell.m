@@ -7,7 +7,7 @@
 //
 
 #import "ArtDetailContentArtCell.h"
-
+#import "LCYArtistDetailViewController.h"
 @implementation ArtDetailContentArtCell
 
 - (void)awakeFromNib
@@ -22,4 +22,11 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)toAuthodDetail:(id)sender
+{
+    LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
+//    artistDVC.artistID = artistID;
+//    artistDVC.title = artistName;
+//    [self.navigationController pushViewController:artistDVC animated:YES];
+}
 @end
