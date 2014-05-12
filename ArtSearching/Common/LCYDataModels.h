@@ -23,3 +23,4 @@
 #import "LCYGetApplyerInfoResult.h"
 #import "LCYSearchingListMainCategoryList.h"
 #import "LCYSearchingListMainWorkListCategory.h"
+#import "LCYArtistDetailVCArtist.h"

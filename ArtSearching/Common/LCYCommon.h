@@ -93,10 +93,12 @@ CA_EXTERN NSString *const UploadFile;       /**< 注册第三步：上传头像�
 CA_EXTERN NSString *const RegisterThree;    /**< 注册第三步：上传姓名，头像信息 */
 CA_EXTERN NSString *const GetAllExhibition; /**< 主页：获得所有展览 */
 CA_EXTERN NSString *const GetArtistList;    /**< 所有艺术家 */
+CA_EXTERN NSString *const GetArtistInforById;       /**< 根据ID获取艺术家详细信息 */
 CA_EXTERN NSString *const GetOwnExhibition; /**< 我的展览 */
 CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
 CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */
 CA_EXTERN NSString *const WorkListCategoryById;     /**< 获取分类信息（二级分类） */
+
 
 
 #pragma mark - UserDefaults

@@ -15,6 +15,7 @@
 #import "LCYDataModels.h"
 #import "LCYArtistsTableViewCell.h"
 #import "LCYSearchingListViewController.h"
+#import "LCYArtistDetailViewController.h"
 
 
 @interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate>
@@ -154,7 +155,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
             [self.navigationController pushViewController:registerVC animated:YES];
         } else{
-            // TODO:跳转到个人信息界面
+            // 跳转到个人信息界面
             LCYUserInformationViewController *userVC = [[LCYUserInformationViewController alloc] init];
             userVC.title = @"个人信息";
             [self.navigationController pushViewController:userVC animated:YES];
@@ -295,6 +296,17 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         return cell;
     }
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
+    NSString *artistID = [NSString stringWithFormat:@"%.f",artist.artistId];
+    NSString *artistName = artist.artistName;
+    //TODO:跳转到作者详细
+    LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
+    artistDVC.artistID = artistID;
+    artistDVC.title = artistName;
+    [self.navigationController pushViewController:artistDVC animated:YES];
 }
 #pragma mark - UISearchBar Delegate Methods
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{

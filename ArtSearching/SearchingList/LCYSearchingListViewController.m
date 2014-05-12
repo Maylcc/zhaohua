@@ -66,6 +66,7 @@
         if (!isLogin) {
             // 跳转到注册界面
             LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
+            [self.navigationController setNavigationBarHidden:NO];
             [self.navigationController pushViewController:registerVC animated:YES];
         } else{
             // TODO:跳转到个人信息界面
