@@ -53,7 +53,6 @@
     {
         if([self.delegate respondsToSelector:@selector(completeDownCMICData:)])
         {
-            NSLog(@"response is %@",opertation.responseString);
             NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[opertation responseData]];
             parser.delegate = self;
             [parser parse];

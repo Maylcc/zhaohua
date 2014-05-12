@@ -66,11 +66,13 @@
 }
 - (void)showMessageView
 {
+    [_superV setUserInteractionEnabled:NO];
     [_superV addSubview:self];
 }
 
 - (void)hideMessageView
 {
+    [_superV setUserInteractionEnabled:YES];
     [self removeFromSuperview];
 }
 

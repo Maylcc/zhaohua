@@ -24,9 +24,9 @@
 
 - (IBAction)toAuthodDetail:(id)sender
 {
-    LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
-//    artistDVC.artistID = artistID;
-//    artistDVC.title = artistName;
-//    [self.navigationController pushViewController:artistDVC animated:YES];
+    if([self.delegate respondsToSelector:@selector(artToAuthorDelegateWithID:)])
+    {
+        [self.delegate artToAuthorDelegateWithID:self.indexNum];
+    }
 }
 @end

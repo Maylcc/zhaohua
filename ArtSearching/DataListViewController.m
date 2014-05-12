@@ -20,6 +20,7 @@
 #import "ZXYUserDefaultSettings.h"
 #import "XMLParserHelper.h"
 #import "NetHelper.h"
+#import "InsertView.h"
 #import "LCYRegisterViewController.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
@@ -31,6 +32,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 @interface DataListViewController ()<UIFolderTableViewDelegate,isCMICDown>
 {
     BOOL isCMICDown;
+    InsertView *insertViewL;
 }
 @end
 
@@ -42,8 +44,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     if (self) {
         // Custom initialization
         netConnect = [NetConnect sharedSelf];
-        netHelper  = [NetHelper sharedSelf];
-        netHelper.netHelperDelegate = self;
+        
         xmlParser  = [XMLParserHelper sharedSelf];
         dataProvider = [ZXYProvider sharedInstance];
         arrArtistsList = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO]];
@@ -51,6 +52,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
         fileOperation = [ZXYFileOperation sharedSelf];
         isCMICDown = NO;
+        insertViewL = [[InsertView alloc] initWithMessage:@"请稍后..." andSuperV:self.view withPoint:150];
     }
     return self;
 }
@@ -320,15 +322,17 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         {
             return;
         }
-        [ZXYUserDefaultSettings zxyUserUpdateTime];
-        
-        dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
-        dataTableV.scrollEnabled = NO;
         if([LCYCommon isUserLogin])
         {
-//            NSString *stringUrl = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestionStatus];
-//            NSDictionary *dic   = [NSDictionary dictionaryWithObjectsAndKeys:[ZXYUserDefaultSettings zxyUserUpdateTime],@"Date",, nil]
-//            [netHelper requestStart:stringUrl withParams:<#(NSDictionary *)#> bySerialize:<#(AFHTTPResponseSerializer *)#>]
+            [insertViewL showMessageView];
+            netHelper  = [NetHelper sharedSelf];
+            netHelper.netHelperDelegate = self;
+            NSString *userID = [LCYCommon currentUserID];
+            NSDate *date = [ZXYUserDefaultSettings zxyUserUpdateTime];
+            NSString *stringURL = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestionStatus];
+            NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:date,@"Date",userID,@"UserID",nil];
+            AFXMLParserResponseSerializer *xmlSerializer = [AFXMLParserResponseSerializer serializer];
+            [netHelper requestStart:stringURL withParams:dic bySerialize:xmlSerializer];
         }
         else
         {
@@ -336,21 +340,9 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             [self.navigationController pushViewController:registerVC animated:YES];
             return;
         }
-       
         
-        UIFolderTableView *folderTableView = (UIFolderTableView *)tableView;
-        [folderTableView openFolderAtIndexPath:indexPath WithContentView:dataAc.view
-                                     openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
-                                         // opening actions
-                                     }
-                                    closeBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
-                                        // closing actions
-                                    }
-                               completionBlock:^{
-                                   // completed actions
-                                   dataTableV.scrollEnabled = YES;
-                               }];
-
+       // [self tableViewOpenGl];
+        
     }
     
     if(indexPath.section == 1)
@@ -361,6 +353,25 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     }
 }
 
+- (void)tableViewOpenGl
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
+    dataTableV.scrollEnabled = NO;
+    UIFolderTableView *folderTableView = (UIFolderTableView *)dataTableV;
+    [folderTableView openFolderAtIndexPath:indexPath WithContentView:dataAc.view
+                                 openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
+                                     // opening actions
+                                 }
+                                closeBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
+                                    // closing actions
+                                }
+                           completionBlock:^{
+                               // completed actions
+                               dataTableV.scrollEnabled = YES;
+                           }];
+
+}
 #pragma mark - 返回函数
 - (void)backView
 {
@@ -380,6 +391,24 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
     [dataTableV reloadData];
 
+}
+
+- (void)requestCompleteDelegateWithFlag:(requestCompleteFlag)flag withOperation:(AFHTTPRequestOperation *)opertation withObject:(id)object
+{
+    [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
+    if(flag == requestCompleteSuccess)
+    {
+        NSLog(@"response is %@",[opertation responseString]);
+    }
+    else
+    {
+        
+    }
+}
+
+- (void)hideMessage
+{
+    [insertViewL hideMessageView];
 }
 
 - (void)completeDownCMICData:(BOOL)isSuccess
