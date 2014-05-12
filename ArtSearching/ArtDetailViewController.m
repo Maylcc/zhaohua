@@ -11,12 +11,14 @@
 #import "ArtDetail.h"
 #import "CommentDetail.h"
 #import "ArtDetailContentArtCell.h"
-
+#import "InsertView.h"
 #import "UserCommentCell.h"
 #import "NetConnect.h"
 #import "ZXYFileOperation.h"
 #import "ShowBigImageViewController.h"
-@interface ArtDetailViewController ()
+#import "LCYArtistDetailViewController.h"
+
+@interface ArtDetailViewController ()<ArtToAuthorDelegate>
 {
     NSString *_workID;
     NSString *_imageURL;
@@ -209,6 +211,7 @@
     else if(indexPath.section == 1)
     {
         ArtDetailContentArtCell *imageCell = [tableView dequeueReusableCellWithIdentifier:artDetailCellIdentifier];
+        
         if(imageCell == nil)
         {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([ArtDetailContentArtCell class]) owner:self options:nil];
@@ -228,7 +231,9 @@
             imageCell.typeLbl.text   = artDetail.workCategory;
             imageCell.concerdNum.text = [NSString stringWithFormat:@"%d次关注",artDetail.beStoreTime.intValue];
             imageCell.commentNum.text = [NSString stringWithFormat:@"这张画已经被说了%d次",artDetail.beCommentTime.intValue];
+            imageCell.indexNum = artDetail.artistID;
         }
+        imageCell.delegate = self;
         cell = imageCell;
     }
     else
@@ -285,6 +290,13 @@
     {
         return;
     }
+}
+
+- (void)artToAuthorDelegateWithID:(NSNumber *)artistID
+{
+    LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
+    artistDVC.artistID = [artistID stringValue];
+    [self.navigationController pushViewController:artistDVC animated:YES];
 }
 
 - (void)backViewBtn:(id)sender
