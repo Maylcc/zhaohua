@@ -81,6 +81,13 @@
  */
 + (BOOL)isUserLogin;
 
+/**
+ *  返回当前用户ID，需要自己先判断是否已经登录
+ *
+ *  @return 用户ID字符串
+ */
++ (NSString *)currentUserID;
+
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const hostIMGPrefix;    /**< 图片地址前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */

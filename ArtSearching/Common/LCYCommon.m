@@ -133,6 +133,12 @@ NSString *const getQuestionStatus   = @"GetQuestionStatus";
     return isLogin;
 }
 
++ (NSString *)currentUserID{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userID = [userDefaults objectForKey:UserDefaultsUserId];
+    return userID;
+}
+
 + (BOOL)isFileExistsAt:(NSString *)path{
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:path]) {

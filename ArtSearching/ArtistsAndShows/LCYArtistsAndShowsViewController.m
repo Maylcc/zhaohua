@@ -301,11 +301,9 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
     NSString *artistID = [NSString stringWithFormat:@"%.f",artist.artistId];
-    NSString *artistName = artist.artistName;
     //TODO:跳转到作者详细
     LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
     artistDVC.artistID = artistID;
-    artistDVC.title = artistName;
     [self.navigationController pushViewController:artistDVC animated:YES];
 }
 #pragma mark - UISearchBar Delegate Methods
