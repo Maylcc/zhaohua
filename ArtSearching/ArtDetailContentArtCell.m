@@ -7,7 +7,7 @@
 //
 
 #import "ArtDetailContentArtCell.h"
-
+#import "LCYArtistDetailViewController.h"
 @implementation ArtDetailContentArtCell
 
 - (void)awakeFromNib
@@ -22,4 +22,11 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)toAuthodDetail:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(artToAuthorDelegateWithID:)])
+    {
+        [self.delegate artToAuthorDelegateWithID:self.indexNum];
+    }
+}
 @end

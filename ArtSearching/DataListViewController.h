@@ -11,20 +11,23 @@
 #import "LCYCommon.h"
 #import "NetConnect.h"
 #import "ZXYProvider.h"
+#import "NetHelperDelegate.h"
 @class ZXYFileOperation;
 @class UIFolderTableView;
 @class DataAcquisitionViewController;
 @class XMLParserHelper;
-@interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@class NetHelper ;
+@interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NetHelperDelegate>
 {
     IBOutlet UIFolderTableView *dataTableV;
     ZXYProvider *dataProvider;
+    XMLParserHelper *xmlParser;
     NetConnect *netConnect;
     NSArray *arrArtList;
     NSArray *arrArtistsList;
     NSArray *arrGalleryList;
     ZXYFileOperation *fileOperation;
     DataAcquisitionViewController *dataAc;
-    
+    NetHelper *netHelper;
 }
 @end
