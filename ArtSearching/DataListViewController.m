@@ -17,6 +17,7 @@
 #import "StartArtistsList.h"
 #import "StartGalleryList.h"
 #import "ArtDetailViewController.h"
+#import "ZXYUserDefaultSettings.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -24,8 +25,10 @@
 green:((float)((0x3a3a3a & 0xFF00) >> 8))/255.0 \
 blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
-@interface DataListViewController ()<UIFolderTableViewDelegate>
-
+@interface DataListViewController ()<UIFolderTableViewDelegate,isCMICDown>
+{
+    BOOL isCMICDown;
+}
 @end
 
 @implementation DataListViewController
@@ -41,6 +44,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" isDes:NO orderByKey:@"beScanTime",@"beStoreTime",nil]];
         arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
         fileOperation = [ZXYFileOperation sharedSelf];
+        isCMICDown = NO;
     }
     return self;
 }
@@ -155,6 +159,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                 if([oneObject isKindOfClass:[DataCMICTableViewCell class]])
                 {
                     cmicCell = (DataCMICTableViewCell *)oneObject;
+                    cmicCell.delegate = self;
                 }
             }
 
@@ -305,6 +310,11 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 {
     if(indexPath.section == 0)
     {
+        if(!isCMICDown)
+        {
+            return;
+        }
+        [ZXYUserDefaultSettings zxyUserUpdateTime];
         dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
         dataTableV.scrollEnabled = NO;
         
@@ -352,4 +362,16 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
 }
 
+- (void)completeDownCMICData:(BOOL)isSuccess
+{
+    if(isSuccess)
+    {
+        isCMICDown = YES;
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"信息提示" message:@"下载CAMIC指数失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+    }
+}
 @end

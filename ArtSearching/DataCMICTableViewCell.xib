@@ -27,7 +27,7 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="+ 38.5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcU-ad-v6o">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vcU-ad-v6o">
                         <rect key="frame" x="216" y="6" width="95" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
@@ -38,12 +38,17 @@
                         <rect key="frame" x="294" y="17" width="10" height="9"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="l1A-Tv-xh5">
+                        <rect key="frame" x="253" y="12" width="20" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </activityIndicatorView>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.74934231505102034" green="0.0" blue="0.0081311182093193254" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="arrowPic" destination="HV6-bA-IoS" id="zkn-N1-nUT"/>
                 <outlet property="indexNum" destination="vcU-ad-v6o" id="Fkm-ur-I7S"/>
+                <outlet property="waitProgress" destination="l1A-Tv-xh5" id="cMr-RT-5oy"/>
             </connections>
         </tableViewCell>
     </objects>
