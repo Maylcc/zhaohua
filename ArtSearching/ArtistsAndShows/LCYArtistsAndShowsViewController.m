@@ -16,9 +16,10 @@
 #import "LCYArtistsTableViewCell.h"
 #import "LCYSearchingListViewController.h"
 #import "LCYArtistDetailViewController.h"
+#import "MJRefresh.h"
 
 
-@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate>
+@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate>
 typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
     LCYArtistsAndShowsStatusShows       /**< 画廊 */
@@ -35,6 +36,9 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     BOOL isArtistNibRegistered;
     NSInteger numberOfArtistsPerPage;
 }
+
+@property (strong, nonatomic) MJRefreshHeaderView *headerView;
+@property (strong, nonatomic) MJRefreshFooterView *footerView;
 
 /**
  *  艺术家按钮
@@ -117,6 +121,15 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     UIBarButtonItem *rightNaviButton = [[UIBarButtonItem alloc] initWithCustomView:self.showsNavigationButton];
     [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:ph1,leftNaviButton, nil]];
     [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:ph2,rightNaviButton, nil]];
+    
+    
+    // 添加上拉刷新与下拉刷新
+    self.headerView = [[MJRefreshHeaderView alloc] init];
+    self.headerView.delegate = self;
+    self.headerView.scrollView = self.icyTableView;
+    self.footerView = [[MJRefreshFooterView alloc] init];
+    self.footerView.delegate = self;
+    self.footerView.scrollView = self.icyTableView;
     
     [self loadArtist];
 }
@@ -313,6 +326,19 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 #pragma mark - LCYArtistsAvatarDownloadOperation Delegate
 - (void)avatarDownloadDidFinished{
     [self reloadTableView];
+}
+
+#pragma mark - MJRefreshBase
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"HH : mm : ss.SSS";
+    if (self.headerView == refreshView) {
+        LCYLOG(@"下拉刷新");
+    } else {
+        LCYLOG(@"上拉刷新");
+    }
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self.icyTableView selector:@selector(reloadData) userInfo:nil repeats:NO];
 }
 
 @end
