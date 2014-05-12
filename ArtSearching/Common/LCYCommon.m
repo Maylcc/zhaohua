@@ -25,6 +25,8 @@ NSString *const GetAllExhibition        = @"GetAllExhibition";
 NSString *const GetArtistList           = @"GetArtistList";
 NSString *const GetOwnExhibition        = @"GetOwnExhibition";
 NSString *const GetApplyerInfo          = @"GetApplyerInfo";
+NSString *const WorkListCategory        = @"WorkListCategory";
+NSString *const WorkListCategoryById    = @"WorkListCategoryById";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";

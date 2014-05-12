@@ -21,3 +21,5 @@
 #import "LCYMineExhibitions.h"
 #import "LCYGetOwnExhibitionResult.h"
 #import "LCYGetApplyerInfoResult.h"
+#import "LCYSearchingListMainCategoryList.h"
+#import "LCYSearchingListMainWorkListCategory.h"

@@ -21,7 +21,6 @@
 - (void)resultParserDidFinish:(LCYApplyersResultParser *)parser;
 @end
 @interface LCYApplyersResultParser : NSObject<NSXMLParserDelegate>
-
 @property (strong, nonatomic) NSArray *result;
 @property (weak, nonatomic) id<LCYApplyerResultParserDelegate>delegate;
 @end

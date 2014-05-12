@@ -95,6 +95,9 @@ CA_EXTERN NSString *const GetAllExhibition; /**< 主页：获得所有展览 */
 CA_EXTERN NSString *const GetArtistList;    /**< 所有艺术家 */
 CA_EXTERN NSString *const GetOwnExhibition; /**< 我的展览 */
 CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
+CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */
+CA_EXTERN NSString *const WorkListCategoryById;     /**< 获取分类信息（二级分类） */
+
 
 #pragma mark - UserDefaults
 CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */

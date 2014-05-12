@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYSearchingListViewController">
             <connections>
                 <outlet property="icySearchBar" destination="iQf-WF-AhD" id="lsB-fJ-gNk"/>
+                <outlet property="icyTableView" destination="T58-S0-5Hg" id="6bV-zP-WXp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
