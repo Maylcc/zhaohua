@@ -185,6 +185,9 @@
 		8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E96DE190136B0006E6752 /* ZXYProvider.m */; };
 		8B927A0E1908A69000B0EF21 /* download_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B927A0D1908A69000B0EF21 /* download_icon@2x.png */; };
 		8B927A111908ACC700B0EF21 /* InsertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B927A101908ACC700B0EF21 /* InsertView.m */; };
+		8BA8D0B619207506004ED279 /* NetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0B519207506004ED279 /* NetHelper.m */; };
+		8BA8D0BA1920A35B004ED279 /* ZXYUserDefaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0B91920A35B004ED279 /* ZXYUserDefaultSettings.m */; };
+		8BA8D0BD1920ABC5004ED279 /* XMLParserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0BC1920ABC5004ED279 /* XMLParserHelper.m */; };
 		8BBEE10E190354F80067FE37 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBEE10D190354F80067FE37 /* libPods.a */; };
 		8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBEE10F190361090067FE37 /* placehold_image@2x.png */; };
 		8BBEE112190361A60067FE37 /* search_artist_portal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BBEE111190361A60067FE37 /* search_artist_portal@2x.png */; };
@@ -567,6 +570,13 @@
 		8B927A0D1908A69000B0EF21 /* download_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download_icon@2x.png"; sourceTree = "<group>"; };
 		8B927A0F1908ACC700B0EF21 /* InsertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertView.h; sourceTree = "<group>"; };
 		8B927A101908ACC700B0EF21 /* InsertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertView.m; sourceTree = "<group>"; };
+		8BA8D0B419207506004ED279 /* NetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetHelper.h; sourceTree = "<group>"; };
+		8BA8D0B519207506004ED279 /* NetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetHelper.m; sourceTree = "<group>"; };
+		8BA8D0B719208C8E004ED279 /* NetHelperDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetHelperDelegate.h; sourceTree = "<group>"; };
+		8BA8D0B81920A35B004ED279 /* ZXYUserDefaultSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXYUserDefaultSettings.h; sourceTree = "<group>"; };
+		8BA8D0B91920A35B004ED279 /* ZXYUserDefaultSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXYUserDefaultSettings.m; sourceTree = "<group>"; };
+		8BA8D0BB1920ABC5004ED279 /* XMLParserHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParserHelper.h; sourceTree = "<group>"; };
+		8BA8D0BC1920ABC5004ED279 /* XMLParserHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParserHelper.m; sourceTree = "<group>"; };
 		8BBEE10D190354F80067FE37 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		8BBEE10F190361090067FE37 /* placehold_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "placehold_image@2x.png"; sourceTree = "<group>"; };
 		8BBEE111190361A60067FE37 /* search_artist_portal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search_artist_portal@2x.png"; sourceTree = "<group>"; };
@@ -1273,6 +1283,13 @@
 				8BBEE11F1903874B0067FE37 /* DownLoadPictureOperation.m */,
 				8BBEE1251904F0230067FE37 /* DownLoadArtistPictureOperation.h */,
 				8BBEE1261904F0230067FE37 /* DownLoadArtistPictureOperation.m */,
+				8BA8D0B419207506004ED279 /* NetHelper.h */,
+				8BA8D0B519207506004ED279 /* NetHelper.m */,
+				8BA8D0B719208C8E004ED279 /* NetHelperDelegate.h */,
+				8BA8D0BB1920ABC5004ED279 /* XMLParserHelper.h */,
+				8BA8D0BC1920ABC5004ED279 /* XMLParserHelper.m */,
+				8BA8D0B81920A35B004ED279 /* ZXYUserDefaultSettings.h */,
+				8BA8D0B91920A35B004ED279 /* ZXYUserDefaultSettings.m */,
 			);
 			name = netConnect;
 			sourceTree = "<group>";
@@ -1556,6 +1573,7 @@
 				8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */,
 				8B6E96D819013695006E6752 /* NetConnect.m in Sources */,
 				28A997D1190122AE00A09E17 /* LCYActivityList.m in Sources */,
+				8BA8D0BA1920A35B004ED279 /* ZXYUserDefaultSettings.m in Sources */,
 				8B6E96D019013663006E6752 /* DataArtListCellTableViewCell.m in Sources */,
 				2888379C190E4E4C00562EEC /* Base64.m in Sources */,
 				288837B4190E608500562EEC /* ASIDataDecompressor.m in Sources */,
@@ -1592,6 +1610,7 @@
 				8B49BA1E190DF90000F7725D /* DataCMICTableViewCell.m in Sources */,
 				2F8C2C851915E87600C12F4E /* LCYApplyers.m in Sources */,
 				2836BBC81910FD8800F70140 /* MJRefreshHeaderView.m in Sources */,
+				8BA8D0B619207506004ED279 /* NetHelper.m in Sources */,
 				8B49BA1A190DF7E800F7725D /* UIView+screenshot.m in Sources */,
 				8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
@@ -1614,6 +1633,7 @@
 				2F1CB619192071E300ACA658 /* LCYSearchingListMainCategoryList.m in Sources */,
 				282B6810190527FB000DC945 /* LCYRegisterViewController.m in Sources */,
 				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
+				8BA8D0BD1920ABC5004ED279 /* XMLParserHelper.m in Sources */,
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
 				28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */,
 				28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */,

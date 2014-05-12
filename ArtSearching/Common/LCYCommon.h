@@ -111,4 +111,5 @@ CA_EXTERN NSString *const startList;
 CA_EXTERN NSString *const imageHost;
 CA_EXTERN NSString *const startArtDetail;
 CA_EXTERN NSString *const getArtistInfo;
+CA_EXTERN NSString *const getMarketTotalIndex;
 @end

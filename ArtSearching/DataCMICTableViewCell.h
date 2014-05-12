@@ -7,9 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NetHelperDelegate.h"
+@class NetHelper;
+@protocol isCMICDown <NSObject>
 
-@interface DataCMICTableViewCell : UITableViewCell
+- (void)completeDownCMICData:(BOOL)isSuccess;
 
+@end
+
+@interface DataCMICTableViewCell : UITableViewCell<NetHelperDelegate,NSXMLParserDelegate>
+{
+    NetHelper *netHelper;
+}
+@property (nonatomic,strong) id<isCMICDown>delegate;
 @property (weak, nonatomic) IBOutlet UILabel *indexNum;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowPic;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *waitProgress;
 @end

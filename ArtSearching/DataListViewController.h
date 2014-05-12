@@ -14,6 +14,7 @@
 @class ZXYFileOperation;
 @class UIFolderTableView;
 @class DataAcquisitionViewController;
+@class XMLParserHelper;
 @interface DataListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     IBOutlet UIFolderTableView *dataTableV;
@@ -24,5 +25,6 @@
     NSArray *arrGalleryList;
     ZXYFileOperation *fileOperation;
     DataAcquisitionViewController *dataAc;
+    
 }
 @end

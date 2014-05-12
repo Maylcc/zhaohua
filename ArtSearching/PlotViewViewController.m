@@ -6,6 +6,7 @@
 //  Copyright (c) 2014年 Duostec. All rights reserved.
 //
 #define GREEN_PLOT_IDENTIFIER @"hello"
+#define GREEN_PLOT_IDENTIFIER2 @"hello2"
 #import "PlotViewViewController.h"
 
 @interface PlotViewViewController ()
@@ -55,7 +56,7 @@
     // Create graph from theme: 设置主题
     //
     _graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    CPTTheme * theme = [CPTTheme themeNamed:kCPTSlateTheme];
+    CPTTheme * theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
     [_graph applyTheme:theme];
     
     CPTGraphHostingView * hostingView = (CPTGraphHostingView *)self.view;
@@ -131,8 +132,35 @@
     fadeInAnimation.toValue             = [NSNumber numberWithFloat:1.0];
     [dataSourceLinePlot addAnimation:fadeInAnimation forKey:@"animateOpacity"];
     
-    [_graph addPlot:dataSourceLinePlot];
     
+    //**********
+    CPTScatterPlot * dataSourceLinePlot2 = [[CPTScatterPlot alloc] init];
+    dataSourceLinePlot2.dataLineStyle = lineStyle;
+    dataSourceLinePlot2.identifier = GREEN_PLOT_IDENTIFIER2;
+    dataSourceLinePlot2.dataSource = self;
+    
+    // Put an area gradient under the plot above
+    //
+    CPTColor * areaColor2            = [CPTColor colorWithComponentRed:0.3 green:0.3 blue:0.3 alpha:0.8];
+    CPTGradient * areaGradient2      = [CPTGradient gradientWithBeginningColor:areaColor2
+                                                                  endingColor:[CPTColor clearColor]];
+    CPTFill * areaGradientFill2  = [CPTFill fillWithGradient:areaGradient2];
+    areaGradient2.angle              = -90.0f;
+    areaGradientFill2                = [CPTFill fillWithGradient:areaGradient2];
+    dataSourceLinePlot2.areaFill2    = areaGradientFill2;
+    dataSourceLinePlot2.areaBaseValue= CPTDecimalFromString(@"1.75");
+    
+    // Animate in the new plot: 淡入动画
+    dataSourceLinePlot2.opacity = 0.0f;
+    
+    CABasicAnimation *fadeInAnimation2 = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeInAnimation2.duration            = 3.0f;
+    fadeInAnimation2.removedOnCompletion = NO;
+    fadeInAnimation2.fillMode            = kCAFillModeForwards;
+    fadeInAnimation2.toValue             = [NSNumber numberWithFloat:1.0];
+    [dataSourceLinePlot2 addAnimation:fadeInAnimation2 forKey:@"animateOpacity"];
+    [_graph addPlot:dataSourceLinePlot];
+    [_graph addPlot:dataSourceLinePlot2];
 }
 
 -(BOOL)axis:(CPTAxis *)axis shouldUpdateAxisLabelsAtLocations:(NSSet *)locations
@@ -204,6 +232,12 @@
     if ([(NSString *)plot.identifier isEqualToString:GREEN_PLOT_IDENTIFIER]) {
         if (fieldEnum == CPTScatterPlotFieldY) {
             num = [NSNumber numberWithDouble:[num doubleValue] + 1.0];
+        }
+    }
+    else
+    {
+        if (fieldEnum == CPTScatterPlotFieldY) {
+            num = [NSNumber numberWithDouble:[num doubleValue] + 2.0];
         }
     }
     

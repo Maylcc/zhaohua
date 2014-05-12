@@ -39,6 +39,7 @@ NSString *const startList     = @"StarList";
 NSString *const imageHost     = @"http://115.29.41.251/";
 NSString *const startArtDetail= @"WorkDetailByWorkId";
 NSString *const getArtistInfo = @"GetArtistInforById";
+NSString *const getMarketTotalIndex = @"GetMarketTotalIndex";
 @implementation LCYCommon
 
 + (void)postRequestWithAPI:(NSString *)api parameters:(NSDictionary *)parameters successDelegate:(id<NSXMLParserDelegate>)delegate failedBlock:(void (^)(void))failed{
