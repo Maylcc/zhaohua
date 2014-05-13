@@ -1770,7 +1770,11 @@
 				28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
+<<<<<<< HEAD
+				2FE1C12F1921C9A700A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
+=======
 				8B95E7691921B14900852590 /* CXMLDocument_CreationExtensions.m in Sources */,
+>>>>>>> b539a55c05d8782b2ceb676af6dc2fc6471275b1
 				286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
