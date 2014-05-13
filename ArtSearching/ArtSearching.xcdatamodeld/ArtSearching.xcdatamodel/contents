@@ -27,6 +27,14 @@
         <attribute name="unick" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="workid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="QuestionAnswerID" representedClassName="QuestionAnswerID" syncable="YES">
+        <attribute name="questionAnswer" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="questionID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="QuestionNameID" representedClassName="QuestionNameID" syncable="YES">
+        <attribute name="questionID" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="questionName" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="StartArtistsList" representedClassName="StartArtistsList" syncable="YES">
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="beScanTime" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -54,10 +62,12 @@
         <attribute name="workCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
+        <element name="ArtDetail" positionX="-45" positionY="72" width="128" height="270"/>
+        <element name="CommentDetail" positionX="-36" positionY="144" width="128" height="165"/>
         <element name="StartArtistsList" positionX="-63" positionY="-18" width="128" height="148"/>
         <element name="StartArtList" positionX="-54" positionY="45" width="128" height="150"/>
         <element name="StartGalleryList" positionX="-36" positionY="81" width="128" height="133"/>
-        <element name="ArtDetail" positionX="-45" positionY="72" width="128" height="270"/>
-        <element name="CommentDetail" positionX="-36" positionY="144" width="128" height="165"/>
+        <element name="QuestionNameID" positionX="-45" positionY="135" width="128" height="73"/>
+        <element name="QuestionAnswerID" positionX="-36" positionY="144" width="128" height="73"/>
     </elements>
 </model>
