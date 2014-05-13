@@ -22,6 +22,8 @@
 #import "NetHelper.h"
 #import "InsertView.h"
 #import "LCYRegisterViewController.h"
+#import "TouchXML.h"
+#import "AnswerQuestionViewController.h"
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -353,6 +355,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     }
 }
 
+#pragma mark - 拉开效果
 - (void)tableViewOpenGl
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -392,13 +395,32 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     [dataTableV reloadData];
 
 }
-
+#pragma mark - 判断是否需要再次提问的网络代理
 - (void)requestCompleteDelegateWithFlag:(requestCompleteFlag)flag withOperation:(AFHTTPRequestOperation *)opertation withObject:(id)object
 {
-    [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
+   [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
     if(flag == requestCompleteSuccess)
     {
-        NSLog(@"response is %@",[opertation responseString]);
+        CXMLDocument *document = [[CXMLDocument alloc] initWithData:[opertation responseData] encoding:NSUTF8StringEncoding options:0 error:nil];
+        CXMLElement *root = [document rootElement];
+        NSLog(@"response json is %@",[root stringValue]);
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[[root stringValue]dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        NSString *needUpdate = [dic valueForKey:@"needupdate"];
+        NSString *needAnswerAgain = [dic valueForKey:@"needansweragain"];
+        if([needUpdate isEqualToString:@"yes"])
+        {
+            NSLog(@"需要更新本地题库");
+            AnswerQuestionViewController *answerView = [[AnswerQuestionViewController alloc] initWithNibName:@"AnswerQuestionViewController" bundle:nil];
+            [self.navigationController pushViewController:answerView animated:YES];
+        }
+        else if([needAnswerAgain isEqualToString:@"yes"])
+        {
+            NSLog(@"需要重新回答");
+        }
+        else
+        {
+            NSLog(@"显示数据");
+        }
     }
     else
     {
@@ -406,11 +428,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     }
 }
 
+#pragma mark - 隐藏提示语
 - (void)hideMessage
 {
     [insertViewL hideMessageView];
 }
 
+#pragma mark - CMAIC统计值下载完成代理
 - (void)completeDownCMICData:(BOOL)isSuccess
 {
     if(isSuccess)
