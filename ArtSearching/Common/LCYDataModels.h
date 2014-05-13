@@ -24,3 +24,5 @@
 #import "LCYSearchingListMainCategoryList.h"
 #import "LCYSearchingListMainWorkListCategory.h"
 #import "LCYArtistDetailVCArtist.h"
+#import "LCYShowsGalleryGalleries.h"
+#import "LCYShowsGalleryGalleryList.h"

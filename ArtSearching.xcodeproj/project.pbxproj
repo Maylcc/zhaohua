@@ -145,6 +145,12 @@
 		2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */; };
 		2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */; };
 		2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */; };
+		2FE1C12F1921C9A700A043E5 /* LCYShowsGalleryGalleries.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C12D1921C9A700A043E5 /* LCYShowsGalleryGalleries.m */; };
+		2FE1C1321921C9B400A043E5 /* LCYShowsGalleryGalleryList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C1311921C9B400A043E5 /* LCYShowsGalleryGalleryList.m */; };
+		2FE1C1361921F1AA00A043E5 /* LCYAttentShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C1341921F1AA00A043E5 /* LCYAttentShowViewController.m */; };
+		2FE1C1371921F1AA00A043E5 /* LCYAttentShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FE1C1351921F1AA00A043E5 /* LCYAttentShowViewController.xib */; };
+		2FE1C13B19220AD700A043E5 /* LCYShowsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C13919220AD700A043E5 /* LCYShowsTableViewCell.m */; };
+		2FE1C13C19220AD700A043E5 /* LCYShowsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FE1C13A19220AD700A043E5 /* LCYShowsTableViewCell.xib */; };
 		8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167119075D2400C7D300 /* ShowBigImageViewController.m */; };
 		8B06167419075D2400C7D300 /* ShowBigImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */; };
 		8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */; };
@@ -434,6 +440,16 @@
 		2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button3@2x.png"; sourceTree = "<group>"; };
 		2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4@2x.png"; sourceTree = "<group>"; };
 		2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_button4_in@2x.png"; sourceTree = "<group>"; };
+		2FE1C12D1921C9A700A043E5 /* LCYShowsGalleryGalleries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowsGalleryGalleries.m; sourceTree = "<group>"; };
+		2FE1C12E1921C9A700A043E5 /* LCYShowsGalleryGalleries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowsGalleryGalleries.h; sourceTree = "<group>"; };
+		2FE1C1301921C9B400A043E5 /* LCYShowsGalleryGalleryList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowsGalleryGalleryList.h; sourceTree = "<group>"; };
+		2FE1C1311921C9B400A043E5 /* LCYShowsGalleryGalleryList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowsGalleryGalleryList.m; sourceTree = "<group>"; };
+		2FE1C1331921F1AA00A043E5 /* LCYAttentShowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYAttentShowViewController.h; sourceTree = "<group>"; };
+		2FE1C1341921F1AA00A043E5 /* LCYAttentShowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYAttentShowViewController.m; sourceTree = "<group>"; };
+		2FE1C1351921F1AA00A043E5 /* LCYAttentShowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYAttentShowViewController.xib; sourceTree = "<group>"; };
+		2FE1C13819220AD700A043E5 /* LCYShowsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowsTableViewCell.h; sourceTree = "<group>"; };
+		2FE1C13919220AD700A043E5 /* LCYShowsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowsTableViewCell.m; sourceTree = "<group>"; };
+		2FE1C13A19220AD700A043E5 /* LCYShowsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYShowsTableViewCell.xib; sourceTree = "<group>"; };
 		8B06167019075D2400C7D300 /* ShowBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowBigImageViewController.h; sourceTree = "<group>"; };
 		8B06167119075D2400C7D300 /* ShowBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowBigImageViewController.m; sourceTree = "<group>"; };
 		8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShowBigImageViewController.xib; sourceTree = "<group>"; };
@@ -692,12 +708,19 @@
 				2F8C2C721912418D00C12F4E /* LCYArtists.m */,
 				2F8C2C751912418D00C12F4E /* LCYGetArtistListResult.h */,
 				2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */,
+				2FE1C12D1921C9A700A043E5 /* LCYShowsGalleryGalleries.m */,
+				2FE1C12E1921C9A700A043E5 /* LCYShowsGalleryGalleries.h */,
+				2FE1C1301921C9B400A043E5 /* LCYShowsGalleryGalleryList.h */,
+				2FE1C1311921C9B400A043E5 /* LCYShowsGalleryGalleryList.m */,
 				2836BB081910DE5800F70140 /* LCYArtistsAndShowsViewController.h */,
 				2836BB091910DE5800F70140 /* LCYArtistsAndShowsViewController.m */,
 				2836BB0A1910DE5800F70140 /* LCYArtistsAndShowsViewController.xib */,
 				2F8C2C781912463600C12F4E /* LCYArtistsTableViewCell.h */,
 				2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */,
 				2F8C2C7A1912463600C12F4E /* LCYArtistsTableViewCell.xib */,
+				2FE1C13819220AD700A043E5 /* LCYShowsTableViewCell.h */,
+				2FE1C13919220AD700A043E5 /* LCYShowsTableViewCell.m */,
+				2FE1C13A19220AD700A043E5 /* LCYShowsTableViewCell.xib */,
 			);
 			path = ArtistsAndShows;
 			sourceTree = "<group>";
@@ -964,6 +987,9 @@
 				2F527C6B191B1AF70040879F /* LCYRenrenDetailViewController.h */,
 				2F527C6C191B1AF70040879F /* LCYRenrenDetailViewController.m */,
 				2F527C6D191B1AF70040879F /* LCYRenrenDetailViewController.xib */,
+				2FE1C1331921F1AA00A043E5 /* LCYAttentShowViewController.h */,
+				2FE1C1341921F1AA00A043E5 /* LCYAttentShowViewController.m */,
+				2FE1C1351921F1AA00A043E5 /* LCYAttentShowViewController.xib */,
 				2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */,
 				2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */,
 				2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */,
@@ -1456,6 +1482,7 @@
 				8B6E96C51901364B006E6752 /* 22@2x.png in Resources */,
 				2F527C6F191B1AF70040879F /* LCYRenrenDetailViewController.xib in Resources */,
 				8B49BA21190DFA3200F7725D /* whiteDownArrow.png in Resources */,
+				2FE1C1371921F1AA00A043E5 /* LCYAttentShowViewController.xib in Resources */,
 				8BBEE13F190523C00067FE37 /* comment_write@2x.png in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
 				282B6807190527F0000DC945 /* LCYBuildCollectionViewCell.xib in Resources */,
@@ -1505,6 +1532,7 @@
 				282B681C19052815000DC945 /* renren_comment@2x.png in Resources */,
 				2836BBC41910FD8800F70140 /* MJRefresh.bundle in Resources */,
 				2820EA611900F0C30053B15D /* all_ex_right_blank@2x.png in Resources */,
+				2FE1C13C19220AD700A043E5 /* LCYShowsTableViewCell.xib in Resources */,
 				2820EA641900F1200053B15D /* all_ex_right_badge@2x.png in Resources */,
 				282B681A19052815000DC945 /* build_plus@2x.png in Resources */,
 				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
@@ -1595,6 +1623,7 @@
 				28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
+				2FE1C12F1921C9A700A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
 				286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
@@ -1617,6 +1646,7 @@
 				288837B9190E608500562EEC /* ASINetworkQueue.m in Sources */,
 				8BBEE12C190517EF0067FE37 /* ArtDetailViewController.m in Sources */,
 				8BBEE11D190383E80067FE37 /* StartGalleryList.m in Sources */,
+				2FE1C13B19220AD700A043E5 /* LCYShowsTableViewCell.m in Sources */,
 				28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */,
 				2F8C2C89191618FB00C12F4E /* LCYRenrenMineApplyTableViewCell.m in Sources */,
 				2F10E629191A136A00AB9715 /* LCYMyCollectionCell.m in Sources */,
@@ -1631,6 +1661,7 @@
 				288837B2190E608500562EEC /* ASIAuthenticationDialog.m in Sources */,
 				2F527C6E191B1AF70040879F /* LCYRenrenDetailViewController.m in Sources */,
 				2F1CB619192071E300ACA658 /* LCYSearchingListMainCategoryList.m in Sources */,
+				2FE1C1361921F1AA00A043E5 /* LCYAttentShowViewController.m in Sources */,
 				282B6810190527FB000DC945 /* LCYRegisterViewController.m in Sources */,
 				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
 				8BA8D0BD1920ABC5004ED279 /* XMLParserHelper.m in Sources */,
@@ -1650,6 +1681,7 @@
 				2F37D080191C7FDE00526375 /* LCYUserDetailInfoViewController.m in Sources */,
 				28730D751906410B005EA7DE /* LCYAddProfileViewController.m in Sources */,
 				288837B8190E608500562EEC /* ASIInputStream.m in Sources */,
+				2FE1C1321921C9B400A043E5 /* LCYShowsGalleryGalleryList.m in Sources */,
 				2F1CB61E19208E9400ACA658 /* LCYSearchingListLv2ViewController.m in Sources */,
 				2836BB0B1910DE5800F70140 /* LCYArtistsAndShowsViewController.m in Sources */,
 				8B49BA7A190E1EE800F7725D /* PlotViewViewController.m in Sources */,
