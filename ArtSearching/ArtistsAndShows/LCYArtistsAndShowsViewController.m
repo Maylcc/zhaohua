@@ -412,6 +412,7 @@
     // 刷新表格
     [self.icyTableView reloadData];
     isArtistLoading = NO;
+    isShowsLoading = NO;
     // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
     [refreshView endRefreshing];
 }
@@ -419,7 +420,7 @@
 - (void)pullDownToRefresh{
     // 艺术家刷新
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
-        if (!isArtistLoading) {
+        if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
                 artistPageNumber = 0;
                 NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
@@ -439,14 +440,30 @@
     }
     // 画廊刷新
     else {
-        
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                showsPageNumber = 0;
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+                isShowsLoading = YES;
+                LCYArtistsAndShowsPullDownRefreshParser *parser = [[LCYArtistsAndShowsPullDownRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.headerView endRefreshing];
+        }
     }
 }
 
 - (void)pushUpToLoadMore{
     // 艺术家家在更多
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
-        if (!isArtistLoading) {
+        if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
                 NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
                                              @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
@@ -462,23 +479,47 @@
         } else {
             [self.footerView endRefreshing];
         }
+    } else if (currentStatus == LCYArtistsAndShowsStatusShows){
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                // FIXME:加载更多
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+                isShowsLoading = YES;
+                LCYArtistsAndShowsPushUpRefreshParser *parser = [[LCYArtistsAndShowsPushUpRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.footerView endRefreshing];
+        }
     }
     
 }
 
 #pragma mark - LCY Pull Down And Push Up Delegate
 - (void)pullDownParserDidEnd:(LCYArtistsAndShowsPullDownRefreshParser *)parser withResultInfo:(id)info{
-    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+    if (parser.currentStatus == LCYArtistsAndShowsStatusArtists) {
         LCYGetArtistListResult *result = info;
         self.artistsArray = [NSArray arrayWithArray:result.artists];
         artistPageNumber = 1;
+        [self reloadTableView];
+        [self doneWithView:self.headerView];
+    } else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = info;
+        self.showsArray = [NSArray arrayWithArray:result.galleries];
+        showsPageNumber = 1;
         [self reloadTableView];
         [self doneWithView:self.headerView];
     }
 }
 
 - (void)pushUpParserDidEnd:(LCYArtistsAndShowsPushUpRefreshParser *)parser withResultInfo:(id)info{
-    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+    if (parser.currentStatus == LCYArtistsAndShowsStatusArtists) {
         LCYGetArtistListResult *result = info;
         NSMutableArray *tempArray;
         if (self.artistsArray) {
@@ -491,6 +532,27 @@
         artistPageNumber++;
         [self reloadTableView];
         [self doneWithView:self.footerView];
+        if ([result.artists count] == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
+    } else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = info;
+        NSMutableArray *tempArray;
+        if (self.showsArray) {
+            tempArray = [NSMutableArray arrayWithArray:self.showsArray];
+        } else {
+            tempArray = [NSMutableArray array];
+        }
+        [tempArray addObjectsFromArray:result.galleries];
+        self.showsArray = [NSArray arrayWithArray:tempArray];
+        showsPageNumber++;
+        [self reloadTableView];
+        [self doneWithView:self.footerView];
+        if ([result.galleries count] == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
     }
 }
 
@@ -636,6 +698,14 @@
                 [self.delegate pullDownParserDidEnd:self withResultInfo:result];
             });
         }
+    } else if (self.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pullDownParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pullDownParserDidEnd:self withResultInfo:result];
+            });
+        }
     }
 }
 @end
@@ -661,6 +731,14 @@
     NSAssert(self.currentStatus==LCYArtistsAndShowsStatusArtists||self.currentStatus==LCYArtistsAndShowsStatusShows, @"需设置当前加载内容类型");
     if (self.currentStatus == LCYArtistsAndShowsStatusArtists) {
         LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pushUpParserDidEnd:self withResultInfo:result];
+            });
+        }
+    } else if(self.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
         if (self.delegate &&
             [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
             dispatch_async(dispatch_get_main_queue(), ^{
