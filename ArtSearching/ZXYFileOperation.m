@@ -82,7 +82,6 @@ static ZXYFileOperation *fileOperation;
 {
     if([self fileExistsAtPath:direcPath isDirectory:&withB])
     {
-        NSLog(@"direct have exist");
         return YES;
     }
     else

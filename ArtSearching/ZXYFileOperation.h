@@ -9,40 +9,42 @@
 #import <Foundation/Foundation.h>
 
 @interface ZXYFileOperation : NSFileManager
-/*
+/**
     实例化方法
  */
 +(ZXYFileOperation *)sharedSelf;
-/*
+/**
     获得沙河常用到德三个文件夹的目录
  */
 -(NSString *)documentsPath;
 -(NSString *)tempPath;
 -(NSString *)cathePath;
 
-/*
+/**
     创建文件以及文件夹
  */
 -(BOOL)createFileAtPath:(NSString *)filePath isDirectory:(BOOL)isDirectory withData:(NSData *)fileData;
 -(BOOL)createDirectoryAtPath:(NSString *)direcPath withBool:(BOOL)withB;
 
-/*
+/**
    获得星级作品图片的地址传入id
  */
 - (NSString *)findArtOfStartByID:(NSNumber *)art_id;
 
-/*
+/**
  获取星级作品图片的地址 传入url
+ @return 返回startArt下id与url.lastObject的值作为文件名称
  */
 
 - (NSString *)findArtOfStartByUrl:(NSString *)url;
 
-/*
+/**
  获得星级作者图片的地址 传入url
+ @return tmp/startArtist文件夹下
  */
 - (NSString *)findArtistOfStartByUrl:(NSString *)url andID:(NSString *)userid withType:(NSString *)type;
 
-/*
+/**
  获得大图片  传入url
  */
 - (NSString *)findArtOfStartByUrlBig:(NSString *)url;

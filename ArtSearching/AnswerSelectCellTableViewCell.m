@@ -7,7 +7,7 @@
 //
 
 #import "AnswerSelectCellTableViewCell.h"
-
+#import "QuestionAnswerID.h"
 @implementation AnswerSelectCellTableViewCell
 @synthesize questionID = _questionID;
 @synthesize answerForButtonTitle = _answersForButtonTitle;
@@ -54,8 +54,9 @@
 {
     for(int i = 0 ;i<titleS.count;i++)
     {
+        QuestionAnswerID *answer = [titleS objectAtIndex:i];
         UIButton *currentButton = [self.answerButtons objectAtIndex:i];
-        [currentButton setTitle:[titleS objectAtIndex:i] forState:UIControlStateNormal];
+        [currentButton setTitle:answer.questionAnswer forState:UIControlStateNormal];
     }
     
     if(titleS.count == 2)

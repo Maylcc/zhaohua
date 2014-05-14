@@ -11,7 +11,6 @@
 @interface AnswerQuestionViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 {
     __weak IBOutlet UITableView *tableV;
-    
 }
-
+- (id)initWithQuestionArray:(NSArray *)questionArr;
 @end

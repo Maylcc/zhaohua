@@ -1,9 +1,9 @@
 //
 //  QuestionAnswerID.m
-//  ArtSearching
+//  Pods
 //
-//  Created by developer on 14-5-13.
-//  Copyright (c) 2014年 Duostec. All rights reserved.
+//  Created by developer on 14-5-14.
+//
 //
 
 #import "QuestionAnswerID.h"
@@ -11,7 +11,8 @@
 
 @implementation QuestionAnswerID
 
-@dynamic questionID;
 @dynamic questionAnswer;
+@dynamic questionID;
+@dynamic sortIndex;
 
 @end

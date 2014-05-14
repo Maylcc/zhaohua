@@ -1,9 +1,9 @@
 //
 //  QuestionAnswerID.h
-//  ArtSearching
+//  Pods
 //
-//  Created by developer on 14-5-13.
-//  Copyright (c) 2014年 Duostec. All rights reserved.
+//  Created by developer on 14-5-14.
+//
 //
 
 #import <Foundation/Foundation.h>
@@ -12,7 +12,8 @@
 
 @interface QuestionAnswerID : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * questionID;
 @property (nonatomic, retain) NSString * questionAnswer;
+@property (nonatomic, retain) NSNumber * questionID;
+@property (nonatomic, retain) NSNumber * sortIndex;
 
 @end
