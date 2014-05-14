@@ -114,11 +114,13 @@ CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否�
 CA_EXTERN NSString *const UserDefaultsUserId;                       /**< 已经登录的用户名（需要另行检查是否已经登录）*/
 
 #pragma mark - 凶猛的数据
-CA_EXTERN NSString *const hostForXM;
-CA_EXTERN NSString *const startList;
-CA_EXTERN NSString *const imageHost;
-CA_EXTERN NSString *const startArtDetail;
-CA_EXTERN NSString *const getArtistInfo;
-CA_EXTERN NSString *const getMarketTotalIndex;
-CA_EXTERN NSString *const getQuestionStatus;
+CA_EXTERN NSString *const hostForXM;  /**< 接口URL前缀 */
+CA_EXTERN NSString *const startList;  /**< 星级接口 */
+CA_EXTERN NSString *const imageHost;  /**< 获取图片前缀 */
+CA_EXTERN NSString *const startArtDetail;  /**< 星级作品详细信息 */
+CA_EXTERN NSString *const getArtistInfo;  /**< 作者详细信息 */
+CA_EXTERN NSString *const getMarketTotalIndex;  /**< 市场指数 */
+CA_EXTERN NSString *const getQuestionStatus;  /**< 回答问题状态 */
+CA_EXTERN NSString *const getQuestions;  /**< 获取问题 */
+CA_EXTERN NSString *const answerQuestion;/**< 回答问题URL*/
 @end

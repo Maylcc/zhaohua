@@ -32,6 +32,9 @@ static NetHelper *netChild;
     return nil;
 }
 
+/**
+  NetHelper的代理方法
+ */
 - (void)requestStart:(NSString *)urlString withParams:(NSDictionary *)params bySerialize:(AFHTTPResponseSerializer *)serializer
 {
     AFHTTPRequestOperationManager *operationManager = [AFHTTPRequestOperationManager manager];

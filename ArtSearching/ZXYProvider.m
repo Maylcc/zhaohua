@@ -12,6 +12,8 @@
 #import "StartGalleryList.h"
 #import "ArtDetail.h"
 #import "CommentDetail.h"
+#import "QuestionAnswerID.h"
+#import "QuestionNameID.h"
 @implementation ZXYProvider
 static ZXYProvider *instance = nil;
 + (ZXYProvider *)sharedInstance
@@ -35,6 +37,37 @@ static ZXYProvider *instance = nil;
     }
     return nil;
 }
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
+    LCYAppDelegate *ad = (LCYAppDelegate *)[UIApplication sharedApplication].delegate;
+    return [ad persistentStoreCoordinator];
+}
+
+- (NSManagedObjectContext *)childThreadContext
+{
+    if (childThreadManagedObjectContext != nil)
+    {
+        return childThreadManagedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil)
+    {
+        childThreadManagedObjectContext = [[NSManagedObjectContext alloc] init];
+        [childThreadManagedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    else
+    {
+        NSLog(@"create child thread managed object context failed!");
+    }
+    
+    [childThreadManagedObjectContext setStalenessInterval:0.0];
+    [childThreadManagedObjectContext setMergePolicy:NSOverwriteMergePolicy];
+    
+    return childThreadManagedObjectContext;
+}
+
+
 #pragma mark - delete
 -(BOOL)deleteCoreDataFromDB:(NSString *)stringName
 {
@@ -125,6 +158,37 @@ static ZXYProvider *instance = nil;
     }
 
 }
+
+-(NSArray *)readCoreDataFromDB:(NSString *)stringName withContentNumber:(NSNumber *)content andKey:(NSString *)key
+{
+    LCYAppDelegate *app = [[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *manageContext = [app managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:stringName inManagedObjectContext:manageContext ];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    if(key != nil || content!=nil)
+    {
+        NSString *stringFormat = [NSString stringWithFormat:@"%@==\'%@\'",key,content];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:stringFormat];
+        [request setPredicate:predicate];
+    }
+    [request setEntity:entity];
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"sortIndex" ascending:YES];
+    NSArray *arr = [NSArray arrayWithObjects:descriptor, nil];
+    [request setSortDescriptors:arr];
+    NSError *error;
+    NSArray *resultArr = [manageContext executeFetchRequest:request error:&error];
+    if(error)
+    {
+        NSAssert(error, @"readCoreDataFromDB: error");
+        return nil;
+    }
+    else
+    {
+        return resultArr;
+    }
+    
+}
+
 
 -(NSArray *)readCoreDataFromDB:(NSString *)stringName withContent:(NSString *)content andKey:(NSString *)key orderBy:(NSString *)keyOrder isDes:(BOOL)isDes
 {
@@ -369,34 +433,6 @@ static ZXYProvider *instance = nil;
 
 }
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator{
-    LCYAppDelegate *ad = (LCYAppDelegate *)[UIApplication sharedApplication].delegate;
-    return [ad persistentStoreCoordinator];
-}
-
-- (NSManagedObjectContext *)childThreadContext
-{
-    if (childThreadManagedObjectContext != nil)
-    {
-        return childThreadManagedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil)
-    {
-        childThreadManagedObjectContext = [[NSManagedObjectContext alloc] init];
-        [childThreadManagedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    else
-    {
-        NSLog(@"create child thread managed object context failed!");
-    }
-    
-    [childThreadManagedObjectContext setStalenessInterval:0.0];
-    [childThreadManagedObjectContext setMergePolicy:NSOverwriteMergePolicy];
-    
-    return childThreadManagedObjectContext;
-}
 
 -(BOOL)saveArtDetailToCoreData:(NSDictionary *)dic withID:(NSString *)workID
 {
@@ -453,6 +489,51 @@ static ZXYProvider *instance = nil;
         return NO;
     }
 }
+
+/*
+ 保存所有的问题
+ */
+#pragma mark - 保存问题
+-(BOOL)saveQuestionAndAnswer:(NSArray *)questions
+{
+    [self deleteCoreDataFromDB:@"QuestionNameID"];
+    [self deleteCoreDataFromDB:@"QuestionAnswerID"];
+    NSManagedObjectContext *context = [self childThreadContext];
+    QuestionNameID *questionName;
+    for(int i = 0;i<questions.count;i++)
+    {
+        questionName = [NSEntityDescription insertNewObjectForEntityForName:@"QuestionNameID" inManagedObjectContext:context];
+        NSDictionary *dic = [questions objectAtIndex:i];
+        NSString *questionTitle = [dic valueForKey:@"question"];
+        // FIXME:需要需改questionID
+        //NSString *questionID    = [NSNumber numberWithInt:i];
+        questionName.questionName = questionTitle;
+        questionName.questionID   = [NSNumber numberWithInt:i];
+        NSArray *options = [dic objectForKey:@"options"];
+        QuestionAnswerID *answer;
+        for(int j = 0;j<options.count;j++)
+        {
+            NSDictionary *answerDic = [options objectAtIndex:j];
+            answer = [NSEntityDescription insertNewObjectForEntityForName:@"QuestionAnswerID" inManagedObjectContext:context];
+            // FIXME:需要需改answerID
+            answer.questionID = [NSNumber numberWithInt:i];
+            answer.questionAnswer = [answerDic objectForKey:@"answer"];
+            answer.sortIndex      = [NSNumber numberWithInt:j];
+        }
+        
+    }
+    NSError *error = nil;
+    if([context save:&error])
+    {
+        return YES;
+    }
+    else
+    {
+        NSAssert(error != nil, @"saveQuestionAndAnswer 出现错误");
+        return NO;
+    }
+}
+
 
 - (id)formatOfNull:(id)object
 {

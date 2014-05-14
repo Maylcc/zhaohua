@@ -51,6 +51,9 @@ static NSOperationQueue *queue;
 //}
 
 #pragma  mark - 获取明星数据
+/**
+ 获取所有的明星数据
+ */
 -(void)obtainStartList
 {
     NSString *hostUrl = [NSString stringWithFormat:@"%@%@",hostForXM,startList];
@@ -59,6 +62,7 @@ static NSOperationQueue *queue;
     [operate setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         NSData *returnData = [operation responseData];
+        // !!!:此处解析获得的明星数据
         NSXMLParser *parserData = [[NSXMLParser alloc] initWithData:returnData];
         parserData.delegate = self;
         [parserData parse];
@@ -69,6 +73,10 @@ static NSOperationQueue *queue;
     [operate start];
 }
 
+/**
+ 将获得的明星数据保存到数据库
+ */
+// !!!:此处将明星数据保存到数据库中
 - (void)obTainDataForCoreData:(NSString *)stringData
 {
     fileManager = [ZXYFileOperation sharedSelf];
@@ -90,6 +98,7 @@ static NSOperationQueue *queue;
     NSArray *allStartArt = [dataProvider readCoreDataFromDB:@"StartArtList" orderByKey:@"beScanTime" isDes:NO];
     NSArray *allStartArtist = [dataProvider readCoreDataFromDB:@"StartArtistsList" orderByKey:@"beScanTime" isDes:NO];
     NSArray *allStartGallery = [dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO];
+    // !!!:此处下载星级作品的图片（小图片）
     for(int i = 0;i<allStartArt.count;i++)
     {
         NSString *filePaths = [fileManager findArtOfStartByUrl:[[allStartArt objectAtIndex:i] valueForKeyPath:@"url_Small"]];
@@ -100,7 +109,7 @@ static NSOperationQueue *queue;
         DownLoadPictureOperation *downPicOperation = [[DownLoadPictureOperation alloc] initWithUrl:allStartArt[i]];
         [queue addOperation:downPicOperation];
     }
-    
+    // !!!:此处下载星级作者的图片
     for(int i = 0;i<allStartArtist.count;i++)
     {
         NSString *filePaths = [fileManager findArtistOfStartByUrl:[[allStartArtist objectAtIndex:i]valueForKey:@"url_small"]andID:[[allStartArtist objectAtIndex:i]valueForKey:@"id_Art"] withType:@""];
@@ -111,6 +120,7 @@ static NSOperationQueue *queue;
         DownLoadArtistPictureOperation *downOperation = [[DownLoadArtistPictureOperation alloc] initWithUrl:[[allStartArtist objectAtIndex:i]valueForKey:@"url_small"] byType:@"StartArtistsList" andID:[[allStartArtist objectAtIndex:i] valueForKeyPath:@"id_Art"]];
         [queue addOperation:downOperation];
     }
+    // !!!:此处下载星级画廊的图片
     for(int i = 0;i<allStartGallery.count;i++)
     {
         NSString *filePaths = [fileManager findArtistOfStartByUrl:[[allStartGallery objectAtIndex:i]valueForKey:@"url"]andID:[[allStartGallery objectAtIndex:i]valueForKey:@"id_Art"] withType:@""];
@@ -133,6 +143,10 @@ static NSOperationQueue *queue;
     }
 }
 
+/**
+ 获取星级作品的详细信息
+ */
+// !!!:此处获取星级作品的详细信息
 - (void)obtainStartArtDetailInfo:(NSString *)workIDs
 {
     workID = workIDs;
@@ -143,6 +157,7 @@ static NSOperationQueue *queue;
     [manager POST:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"成功了啊-------------------------------------,%@",[operation responseString]);
         isStringElementForDetailWork = YES;
+        // !!!:此处解析获取的星级作品
         NSXMLParser *parserData = [[NSXMLParser alloc] initWithData:[operation responseData]];
         parserData.delegate = self;
         [parserData parse];
@@ -159,6 +174,7 @@ static NSOperationQueue *queue;
     dataProvider = [ZXYProvider sharedInstance];
     NSData *paseData = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:paseData options:NSJSONReadingMutableLeaves error:nil];
+    // !!!:此处将星级作品的详细信息保存到数据库中
     [dataProvider saveArtDetailToCoreData:dic withID:workID];
     NSNotification *noti = [NSNotification notificationWithName:@"artDetailNotification" object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:noti];
@@ -183,6 +199,7 @@ static NSOperationQueue *queue;
 }
 
 //发现元素结束符的处理函数，保存元素各项目数据（即报告元素的结束标记）
+#pragma mark - 解析完成
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     if([elementName isEqualToString:@"string"])

@@ -42,9 +42,11 @@
     NSString *getTotalMarketURL = [NSString stringWithFormat:@"%@%@",hostForXM,getMarketTotalIndex];
     [self.waitProgress setHidden:NO];
     [self.waitProgress startAnimating];
+    // !!!:开始获得总的市场信心指数
     AFXMLParserResponseSerializer *serializer = [AFXMLParserResponseSerializer serializer];
     [netHelper requestStart:getTotalMarketURL withParams:requestParams bySerialize:serializer];
 }
+
 
 - (void)requestCompleteDelegateWithFlag:(requestCompleteFlag)flag withOperation:(AFHTTPRequestOperation *)opertation withObject:(id)object
 {
@@ -54,8 +56,10 @@
         if([self.delegate respondsToSelector:@selector(completeDownCMICData:)])
         {
             NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[opertation responseData]];
+            // !!!:解析CMAIC指数
             parser.delegate = self;
             [parser parse];
+            // !!!:通知代理DataListViewController
             [self.delegate completeDownCMICData:YES];
         }
         else
@@ -95,6 +99,7 @@
 //发现元素结束符的处理函数，保存元素各项目数据（即报告元素的结束标记）
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    // !!!:解析完成
     if([elementName isEqualToString:@"string"])
     {
         isStringElement = NO;
@@ -108,6 +113,9 @@
     
 }
 
+/**
+ 将CMAIC显示
+ */
 - (void)changeInde
 {
     NSLog(@"xml parser result is %@",stringFormatter);

@@ -13,5 +13,8 @@
     IBOutlet UITableView *contentTableView;
 }
 
+/**
+  实例化方法传入作品id 还有大图的url
+ */
 -(id)initWithWorkID:(NSString *)userid andWorkUrl:(NSString *)workUrl withBundleName:(NSString *)bundleName;
 @end

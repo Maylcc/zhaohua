@@ -7,11 +7,13 @@
 //
 
 #import "InsertView.h"
+#import <objc/message.h>
 @interface InsertView ()
 {
     UIView *_superV;
     NSString *_message;
     NSTimeInterval _timerInterval;
+    SEL  _selector;
 }
 @end
 
@@ -28,6 +30,7 @@
         _superV = superV;
         _message = message;
         UILabel *messageTitle = [[UILabel alloc] init];
+        messageTitle.tag = 11;
         messageTitle.frame = CGRectMake(0, 0, 240, 40);
         //messageTitle.center = self.center;
         
@@ -51,8 +54,6 @@
     self.layer.borderWidth = 1;
     self.layer.cornerRadius = 5;
     self.layer.masksToBounds = YES;
-    //[_message drawInRect:<#(CGRect)#> withAttributes:<#(NSDictionary *)#>]
-   
     [super drawRect:rect];
     
 }
@@ -64,16 +65,56 @@
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     [[NSRunLoop currentRunLoop] run];
 }
+
+- (void)setAfterDoneSelector:(SEL)selector
+{
+    if([self.delegate respondsToSelector:selector])
+    {
+        _selector = selector;
+    }
+}
+
+- (void)setMessage:(NSString *)message
+{
+    UILabel *label = (UILabel *)[self viewWithTag:11];
+    label.text = message;
+    NSTimer *timer = [NSTimer timerWithTimeInterval:0 target:self selector:@selector(hideMessageView) userInfo:nil repeats:NO];
+    [timer fire];
+}
+
 - (void)showMessageView
 {
+    self.alpha = 0;
     [_superV setUserInteractionEnabled:NO];
     [_superV addSubview:self];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    self.alpha = 0.8;
+    [UIView commitAnimations];
 }
 
 - (void)hideMessageView
 {
-    [_superV setUserInteractionEnabled:YES];
-    [self removeFromSuperview];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:1];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDelegate:self];
+    self.alpha = 0;
+    [UIView setAnimationDidStopSelector:@selector(removeSelf)];
+    [UIView commitAnimations];
 }
 
+- (void)removeSelf
+{
+    [_superV setUserInteractionEnabled:YES];
+    if(self.delegate)
+    {
+        if([self.delegate respondsToSelector:_selector])
+        {
+            objc_msgSend(self.delegate, _selector);
+        }
+    }
+    [self removeFromSuperview];
+}
 @end
