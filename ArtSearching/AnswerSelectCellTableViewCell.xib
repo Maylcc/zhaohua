@@ -30,6 +30,7 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="11" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="inQ-oe-spi">
                         <rect key="frame" x="6" y="57" width="84" height="84"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" title="没有" backgroundImage="answerQuestion_o.png">
                             <color key="titleColor" red="0.66846699620000005" green="0.66846699620000005" blue="0.66846699620000005" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -44,6 +45,7 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="12" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zph-5B-zDZ">
                         <rect key="frame" x="110" y="57" width="84" height="84"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" title="一般" backgroundImage="answerQuestion_o.png">
                             <color key="titleColor" red="0.66846699620000005" green="0.66846699620000005" blue="0.66846699620000005" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -58,6 +60,7 @@
                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="13" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SwA-nP-aFv">
                         <rect key="frame" x="229" y="57" width="84" height="84"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <state key="normal" title="很有作用" backgroundImage="answerQuestion_o.png">
                             <color key="titleColor" red="0.66846699620000005" green="0.66846699620000005" blue="0.66846699620000005" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

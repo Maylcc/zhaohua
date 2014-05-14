@@ -204,7 +204,6 @@
 		8B95E7741921B14900852590 /* CXMLNode_XPathExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E7641921B14900852590 /* CXMLNode_XPathExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		8B95E7751921B14900852590 /* CTidy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E7671921B14900852590 /* CTidy.m */; };
 		8B95E7771921B74F00852590 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B95E7761921B74F00852590 /* libxml2.dylib */; };
-		8B95E77C1921C62700852590 /* QuestionAnswerID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E77B1921C62700852590 /* QuestionAnswerID.m */; };
 		8B95E77F1921C62800852590 /* QuestionNameID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E77E1921C62800852590 /* QuestionNameID.m */; };
 		8B95E7851921C68F00852590 /* AnswerQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E7831921C68F00852590 /* AnswerQuestionViewController.m */; };
 		8B95E7861921C68F00852590 /* AnswerQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B95E7841921C68F00852590 /* AnswerQuestionViewController.xib */; };
@@ -212,6 +211,10 @@
 		8B95E78B1921C6DE00852590 /* AnswerSelectCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B95E7891921C6DE00852590 /* AnswerSelectCellTableViewCell.xib */; };
 		8B95E78E1921C9DB00852590 /* answerQuestion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B95E78C1921C9DB00852590 /* answerQuestion@2x.png */; };
 		8B95E78F1921C9DB00852590 /* answerQuestion_o@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B95E78D1921C9DB00852590 /* answerQuestion_o@2x.png */; };
+		8B9C2B03192319E40059BAF8 /* AnswerSubmitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C2B01192319E40059BAF8 /* AnswerSubmitCell.m */; };
+		8B9C2B04192319E40059BAF8 /* AnswerSubmitCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9C2B02192319E40059BAF8 /* AnswerSubmitCell.xib */; };
+		8B9C2B0619231A190059BAF8 /* answerSubmit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B9C2B0519231A190059BAF8 /* answerSubmit@2x.png */; };
+		8B9C2B0C192328290059BAF8 /* QuestionAnswerID.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9C2B0B192328290059BAF8 /* QuestionAnswerID.m */; };
 		8BA8D0B619207506004ED279 /* NetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0B519207506004ED279 /* NetHelper.m */; };
 		8BA8D0BA1920A35B004ED279 /* ZXYUserDefaultSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0B91920A35B004ED279 /* ZXYUserDefaultSettings.m */; };
 		8BA8D0BD1920ABC5004ED279 /* XMLParserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA8D0BC1920ABC5004ED279 /* XMLParserHelper.m */; };
@@ -634,8 +637,6 @@
 		8B95E7671921B14900852590 /* CTidy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTidy.m; sourceTree = "<group>"; };
 		8B95E7681921B14900852590 /* TouchXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchXML.h; sourceTree = "<group>"; };
 		8B95E7761921B74F00852590 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
-		8B95E77A1921C62700852590 /* QuestionAnswerID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionAnswerID.h; sourceTree = "<group>"; };
-		8B95E77B1921C62700852590 /* QuestionAnswerID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionAnswerID.m; sourceTree = "<group>"; };
 		8B95E77D1921C62800852590 /* QuestionNameID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionNameID.h; sourceTree = "<group>"; };
 		8B95E77E1921C62800852590 /* QuestionNameID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionNameID.m; sourceTree = "<group>"; };
 		8B95E7821921C68F00852590 /* AnswerQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerQuestionViewController.h; sourceTree = "<group>"; };
@@ -646,6 +647,12 @@
 		8B95E7891921C6DE00852590 /* AnswerSelectCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerSelectCellTableViewCell.xib; sourceTree = "<group>"; };
 		8B95E78C1921C9DB00852590 /* answerQuestion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "answerQuestion@2x.png"; sourceTree = "<group>"; };
 		8B95E78D1921C9DB00852590 /* answerQuestion_o@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "answerQuestion_o@2x.png"; sourceTree = "<group>"; };
+		8B9C2B00192319E40059BAF8 /* AnswerSubmitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerSubmitCell.h; sourceTree = "<group>"; };
+		8B9C2B01192319E40059BAF8 /* AnswerSubmitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnswerSubmitCell.m; sourceTree = "<group>"; };
+		8B9C2B02192319E40059BAF8 /* AnswerSubmitCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnswerSubmitCell.xib; sourceTree = "<group>"; };
+		8B9C2B0519231A190059BAF8 /* answerSubmit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "answerSubmit@2x.png"; sourceTree = "<group>"; };
+		8B9C2B0A192328290059BAF8 /* QuestionAnswerID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionAnswerID.h; sourceTree = "<group>"; };
+		8B9C2B0B192328290059BAF8 /* QuestionAnswerID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionAnswerID.m; sourceTree = "<group>"; };
 		8BA8D0B419207506004ED279 /* NetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetHelper.h; sourceTree = "<group>"; };
 		8BA8D0B519207506004ED279 /* NetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetHelper.m; sourceTree = "<group>"; };
 		8BA8D0B719208C8E004ED279 /* NetHelperDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetHelperDelegate.h; sourceTree = "<group>"; };
@@ -1437,6 +1444,7 @@
 			children = (
 				8B95E78C1921C9DB00852590 /* answerQuestion@2x.png */,
 				8B95E78D1921C9DB00852590 /* answerQuestion_o@2x.png */,
+				8B9C2B0519231A190059BAF8 /* answerSubmit@2x.png */,
 				8B95E7811921C65400852590 /* modal */,
 				8B95E7821921C68F00852590 /* AnswerQuestionViewController.h */,
 				8B95E7831921C68F00852590 /* AnswerQuestionViewController.m */,
@@ -1444,6 +1452,9 @@
 				8B95E7871921C6DE00852590 /* AnswerSelectCellTableViewCell.h */,
 				8B95E7881921C6DE00852590 /* AnswerSelectCellTableViewCell.m */,
 				8B95E7891921C6DE00852590 /* AnswerSelectCellTableViewCell.xib */,
+				8B9C2B00192319E40059BAF8 /* AnswerSubmitCell.h */,
+				8B9C2B01192319E40059BAF8 /* AnswerSubmitCell.m */,
+				8B9C2B02192319E40059BAF8 /* AnswerSubmitCell.xib */,
 			);
 			name = AnswerQuestion;
 			sourceTree = "<group>";
@@ -1453,8 +1464,8 @@
 			children = (
 				8B95E77D1921C62800852590 /* QuestionNameID.h */,
 				8B95E77E1921C62800852590 /* QuestionNameID.m */,
-				8B95E77A1921C62700852590 /* QuestionAnswerID.h */,
-				8B95E77B1921C62700852590 /* QuestionAnswerID.m */,
+				8B9C2B0A192328290059BAF8 /* QuestionAnswerID.h */,
+				8B9C2B0B192328290059BAF8 /* QuestionAnswerID.m */,
 			);
 			name = modal;
 			sourceTree = "<group>";
@@ -1611,6 +1622,7 @@
 				8B565BB218FFA497002520D3 /* Default-568h@2x.png in Resources */,
 				2820EA5F1900F0C30053B15D /* all_ex_left_blank@2x.png in Resources */,
 				8BBEE13819051BD70067FE37 /* ArtDetailContentArtCell.xib in Resources */,
+				8B9C2B0619231A190059BAF8 /* answerSubmit@2x.png in Resources */,
 				2F8C2C921916334300C12F4E /* LCYApplyAccAndRejViewController.xib in Resources */,
 				2F3836FB19163B1200C020ED /* applyAccepted@2x.png in Resources */,
 				8B06167419075D2400C7D300 /* ShowBigImageViewController.xib in Resources */,
@@ -1650,6 +1662,7 @@
 				8B95E78E1921C9DB00852590 /* answerQuestion@2x.png in Resources */,
 				28730D6C19063E47005EA7DE /* service_line_on@2x.png in Resources */,
 				2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */,
+				8B9C2B04192319E40059BAF8 /* AnswerSubmitCell.xib in Resources */,
 				2820EA601900F0C30053B15D /* all_ex_left_filled@2x.png in Resources */,
 				2F37D081191C7FDE00526375 /* LCYUserDetailInfoViewController.xib in Resources */,
 				8B6E96D319013663006E6752 /* DataStartGallertyCell.xib in Resources */,
@@ -1716,7 +1729,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\nKEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
 			showEnvVarsInLog = 0;
 		};
 		38493CF2535C42288406E8C0 /* Check Pods Manifest.lock */ = {
@@ -1782,6 +1795,7 @@
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
 				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
 				2F1CB6391920AC0900ACA658 /* LCYArtistDetailLine1TableViewCell.m in Sources */,
+				8B9C2B0C192328290059BAF8 /* QuestionAnswerID.m in Sources */,
 				2FE1C13D1922137B00A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
 				2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */,
 				8B95E7721921B14900852590 /* CXMLNode.m in Sources */,
@@ -1822,11 +1836,11 @@
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
 				28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */,
 				8B95E78A1921C6DE00852590 /* AnswerSelectCellTableViewCell.m in Sources */,
+				8B9C2B03192319E40059BAF8 /* AnswerSubmitCell.m in Sources */,
 				28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */,
 				2F8C2C7F1915E79100C12F4E /* LCYGetOwnExhibitionResult.m in Sources */,
 				28623405190F4F9300747E26 /* JSONKit.m in Sources */,
 				8B95E7741921B14900852590 /* CXMLNode_XPathExtensions.m in Sources */,
-				8B95E77C1921C62700852590 /* QuestionAnswerID.m in Sources */,
 				2F8C2C8D19161EB300C12F4E /* LCYGetApplyerInfoResult.m in Sources */,
 				2F527C72191B1B570040879F /* LCYWaterFlowLayout.m in Sources */,
 				2F1CB61A192071E300ACA658 /* LCYSearchingListMainWorkListCategory.m in Sources */,

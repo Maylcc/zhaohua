@@ -24,6 +24,7 @@
 #import "LCYRegisterViewController.h"
 #import "TouchXML.h"
 #import "AnswerQuestionViewController.h"
+
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -33,13 +34,13 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
 @interface DataListViewController ()<UIFolderTableViewDelegate,isCMICDown>
 {
-    BOOL isCMICDown;
-    InsertView *insertViewL;
+    BOOL isCMICDown; //判断CMI总体指数是否下载完成
+    InsertView *insertViewL; //提示视图
 }
 @end
 
 @implementation DataListViewController
-
+//实例化
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -59,6 +60,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     return self;
 }
 
+//视图实例化
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -78,6 +80,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    // !!!:在此处获取所有星级作品，画家，画廊
     [self obtainAllStartData];
 }
 
@@ -87,6 +90,9 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     // Dispose of any resources txvhat can be recreated.
 }
 
+/**
+  获取星级作品，作者，画廊
+ */
 - (void)obtainAllStartData
 {
    [NSThread detachNewThreadSelector:@selector(obtainStartList) toTarget:netConnect withObject:nil];
@@ -331,6 +337,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             netHelper.netHelperDelegate = self;
             NSString *userID = [LCYCommon currentUserID];
             NSDate *date = [ZXYUserDefaultSettings zxyUserUpdateTime];
+           // NSDate *date = [NSDate date];
             NSString *stringURL = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestionStatus];
             NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:date,@"Date",userID,@"UserID",nil];
             AFXMLParserResponseSerializer *xmlSerializer = [AFXMLParserResponseSerializer serializer];
@@ -393,12 +400,10 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     arrArtList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartArtList" isDes:NO orderByKey:@"beScanTime",@"beStoreTime",nil]];
     arrGalleryList     = [NSArray arrayWithArray:[dataProvider readCoreDataFromDB:@"StartGalleryList" orderByKey:@"beScanTime" isDes:NO]];
     [dataTableV reloadData];
-
 }
 #pragma mark - 判断是否需要再次提问的网络代理
 - (void)requestCompleteDelegateWithFlag:(requestCompleteFlag)flag withOperation:(AFHTTPRequestOperation *)opertation withObject:(id)object
 {
-   [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
     if(flag == requestCompleteSuccess)
     {
         CXMLDocument *document = [[CXMLDocument alloc] initWithData:[opertation responseData] encoding:NSUTF8StringEncoding options:0 error:nil];
@@ -407,24 +412,62 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[[root stringValue]dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
         NSString *needUpdate = [dic valueForKey:@"needupdate"];
         NSString *needAnswerAgain = [dic valueForKey:@"needansweragain"];
+        // !!!:判断是否更新
+        /*
         if([needUpdate isEqualToString:@"yes"])
         {
             NSLog(@"需要更新本地题库");
-            AnswerQuestionViewController *answerView = [[AnswerQuestionViewController alloc] initWithNibName:@"AnswerQuestionViewController" bundle:nil];
-            [self.navigationController pushViewController:answerView animated:YES];
+            NSString *userID = [LCYCommon currentUserID];
+            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:userID,@"UserID", nil];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestions];
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+            [manager POST:urlString parameters:paramsDic success:^(AFHTTPRequestOperation *operation, id responseObject)
+            {
+                
+                CXMLDocument *xmlDocument = [[CXMLDocument alloc] initWithData:[operation responseData] encoding:NSUTF8StringEncoding options:0 error:nil];
+                CXMLElement *rootS = [xmlDocument rootElement];
+                NSLog(@"%@",[rootS stringValue]);
+                NSDictionary *operationDic = [NSJSONSerialization JSONObjectWithData:[[rootS stringValue] dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                NSString *dateString = [operationDic objectForKey:@"date"];
+                [ZXYUserDefaultSettings saveUserUpdateTime:dateString];
+                NSArray *operationArr = [operationDic objectForKey:@"questions"];
+                [dataProvider saveQuestionAndAnswer:operationArr];
+                [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
+                NSArray *questionArr = [dataProvider readCoreDataFromDB:@"QuestionNameID" orderByKey:@"questionID" isDes:NO];
+                AnswerQuestionViewController *answerView = [[AnswerQuestionViewController alloc] initWithQuestionArray:questionArr];
+                [self.navigationController pushViewController:answerView animated:YES];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                ;
+            }];
+            
         }
+        // !!!:是否需要重新回答
         else if([needAnswerAgain isEqualToString:@"yes"])
         {
+            NSArray *questionArr = [dataProvider readCoreDataFromDB:@"QuestionNameID" orderByKey:@"questionID" isDes:NO];
+            AnswerQuestionViewController *answerView = [[AnswerQuestionViewController alloc] initWithQuestionArray:questionArr];
+            [self.navigationController pushViewController:answerView animated:YES];
+
+            [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
             NSLog(@"需要重新回答");
         }
+        // TODO:没有实现显示数据
+        // !!!:显示数据
         else
         {
+         */
+            [self tableViewOpenGl];
+            [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
             NSLog(@"显示数据");
-        }
+       // }
     }
     else
     {
-        
+        [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"网络连接错误，请链接网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 

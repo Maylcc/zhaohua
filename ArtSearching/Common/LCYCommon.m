@@ -42,7 +42,8 @@ NSString *const startArtDetail= @"WorkDetailByWorkId";
 NSString *const getArtistInfo = @"GetArtistInforById";
 NSString *const getMarketTotalIndex = @"GetMarketTotalIndex";
 NSString *const getQuestionStatus   = @"GetQuestionStatus";
-
+NSString *const getQuestions        = @"GetQuestions";
+NSString *const answerQuestion      = @"AnswerQuestion";
 
 @implementation LCYCommon
 
