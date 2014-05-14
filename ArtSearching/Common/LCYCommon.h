@@ -88,6 +88,14 @@
  */
 + (NSString *)currentUserID;
 
+/**
+ *  将Data写入到文件，文件路径为Path，自动根据文件路径创建文件夹
+ *
+ *  @param data 待写入的数据
+ *  @param path 文件路径
+ */
++ (void)writeData:(NSData *)data toFilePath:(NSString *)path;
+
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const hostIMGPrefix;    /**< 图片地址前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */

@@ -94,6 +94,11 @@
  */
 @property (strong, nonatomic) NSMutableArray *artistAvatarAddedToQueue;
 
+/**
+ *  保证画廊图片只被下载一次
+ */
+@property (strong, nonatomic) NSMutableArray *showsImageAddedToQueue;
+
 @end
 
 @implementation LCYArtistsAndShowsViewController
@@ -122,6 +127,7 @@
     isArtistLoading = NO;
     isShowsLoading = NO;
     self.artistAvatarAddedToQueue = [NSMutableArray array];
+    self.showsImageAddedToQueue = [NSMutableArray array];
     
     // 添加导航栏按钮（艺术家、画廊）
     UIBarButtonItem *ph1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -408,6 +414,44 @@
         LCYShowsGalleryGalleries *galleryInRow = [self.showsArray objectAtIndex:indexPath.row];
         cell.showsNameLabel.text = galleryInRow.name;
         cell.visitorNumberLabel.text = [NSString stringWithFormat:@"%.f",galleryInRow.openTimes];
+        
+        // 检查图片是否已经存在
+        NSString *originalPath = galleryInRow.logoUrl;
+        if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]]) {
+            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]];
+            cell.icyImageView.image = avatarImage;
+        } else {
+            cell.icyImageView.image = [UIImage imageNamed:@"akalin.jpg"];
+            // 检查是否已经下载过一次，避免重复下载不存在的文件
+            BOOL hasDownloaded = NO;
+            for (NSString *oneFileName in self.showsImageAddedToQueue) {
+                if ([oneFileName isEqualToString:originalPath]) {
+                    hasDownloaded = YES;
+                    break;
+                }
+            }
+            if (!hasDownloaded) {
+                // 启动下载线程
+                [self.showsImageAddedToQueue addObject:originalPath];
+                if (!self.queue) {
+                    self.queue = [[NSOperationQueue alloc] init];
+                }
+                if (!self.myDownloadOperation) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.myDownloadOperation initConfigure];
+                    [self.queue addOperation:self.myDownloadOperation];
+                }
+                if (self.myDownloadOperation.isCancelled) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.queue addOperation:self.myDownloadOperation];
+                }
+                [self.myDownloadOperation addImageName:originalPath];
+                LCYLOG(@"add:%@",originalPath);
+            }
+        }
+        
         return cell;
     }
     return nil;
@@ -503,7 +547,7 @@
 }
 
 - (void)pushUpToLoadMore{
-    // 艺术家家在更多
+    // 艺术家加载更多
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
         if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
@@ -524,7 +568,7 @@
     } else if (currentStatus == LCYArtistsAndShowsStatusShows){
         if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
-                // FIXME:加载更多
+                // 加载更多
                 NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
                                              @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
                 isShowsLoading = YES;
@@ -639,7 +683,7 @@
 }
 @end
 
-#pragma mark - 下载头像
+#pragma mark - 下载头像(!不再使用-用下载所有图片代替)
 @interface LCYArtistsAvatarDownloadOperation ()
 @property (strong, atomic) NSMutableArray *urlArray;
 @property (strong, atomic) NSCondition *arrayCondition;
@@ -678,7 +722,8 @@
                 UIImage *downImg = (UIImage *)responseObject;
                 NSData *imageData = UIImageJPEGRepresentation(downImg, 1.0);
                 LCYLOG(@"success");
-                [imageData writeToFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+//                [imageData writeToFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+                [LCYCommon writeData:imageData toFilePath:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName]];
                 LCYLOG(@"write to file:%@",[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName]);
                 if (self.delegate &&
                     [self.delegate respondsToSelector:@selector(avatarDownloadDidFinished)]) {
@@ -743,7 +788,8 @@
             LCYLOG(@"current object count = %ld",(long)self.imageNameArray.count);
             [self.arrayCondition unlock];
             // 开启异步下载，完成后发送signal
-            NSString *imageURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,imageName];
+//            NSString *imageURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,imageName];
+            NSString *imageURL = [hostIMGPrefix stringByAppendingPathComponent:imageName];
             NSString *urlString = [[NSString stringWithFormat:@"%@",imageURL] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
             NSString *imageFileName = imageName;
             NSURL *url = [NSURL URLWithString:urlString];
@@ -754,7 +800,9 @@
                 UIImage *downImg = (UIImage *)responseObject;
                 NSData *imageData = UIImageJPEGRepresentation(downImg, 1.0);
                 LCYLOG(@"success");
-                [imageData writeToFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+//                [imageData writeToFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+                 [LCYCommon writeData:imageData toFilePath:[[LCYCommon renrenMainImagePath
+                                                             ] stringByAppendingPathComponent:imageFileName]];
                 LCYLOG(@"write to file:%@",[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName]);
                 if (self.delegate &&
                     [self.delegate respondsToSelector:@selector(imageDownloadDidFinished)]) {
