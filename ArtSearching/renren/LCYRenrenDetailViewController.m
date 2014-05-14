@@ -9,6 +9,8 @@
 #import "LCYRenrenDetailViewController.h"
 #import "LCYWaterFlowLayout.h"
 #import "LCYMyCollectionCell.h"
+#import "LCYCommon.h"
+#import "LCYAttentShowViewController.h"
 
 #define CELL_COUNT 15
 @interface LCYRenrenDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,LCYWaterFlowLayoutDelegate>
@@ -18,6 +20,8 @@
     BOOL isNib3Registered;  /**< 画——瀑布流 */
     BOOL isNib4Registered;  /**< Collection View Header */
     CGFloat lastOffset;     /**< 上次滑动位置 */
+    BOOL isFootBarShown;    /**< 下方菜单是否已经显示 */
+    BOOL isFirstLoad;
 }
 @property (strong, nonatomic) NSMutableArray *cellSizes;
 
@@ -47,7 +51,9 @@
     isNibRegistered = NO;
     isNib2Registered = NO;
     isNib3Registered = NO;
+    isFootBarShown = NO;
     lastOffset = 0;
+    isFirstLoad = NO;
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [backBtn setFrame:CGRectMake(0, 0, 40, 40)];
@@ -63,6 +69,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Actions
+
 - (void)backToParent{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -77,6 +85,56 @@
     }
     return _cellSizes;
 }
+
+- (void)showFootBar{
+    CGSize footBarSize = self.footerToolBarView.frame.size;
+    if (IS_IPHONE5) {
+        CGRect frame = CGRectMake(0, 568, footBarSize.width, footBarSize.height);
+        self.footerToolBarView.frame = frame;
+        [self.view addSubview:self.footerToolBarView];
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect toFrame = CGRectMake(0, 568-footBarSize.height, footBarSize.width, footBarSize.height);
+            [self.footerToolBarView setFrame:toFrame];
+        } completion:^(BOOL finished) {
+        }];
+    } else {
+        CGRect frame = CGRectMake(0, 480, footBarSize.width, footBarSize.height);
+        self.footerToolBarView.frame = frame;
+        [self.view addSubview:self.footerToolBarView];
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect toFrame = CGRectMake(0, 480-footBarSize.height, footBarSize.width, footBarSize.height);
+            [self.footerToolBarView setFrame:toFrame];
+        } completion:^(BOOL finished) {
+        }];
+    }
+}
+
+- (void)hideFootBar{
+    CGSize footBarSize = self.footerToolBarView.frame.size;
+    if (IS_IPHONE5) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect toFrame = CGRectMake(0, 568, footBarSize.width, footBarSize.height);
+            [self.footerToolBarView setFrame:toFrame];
+        } completion:^(BOOL finished) {
+            [self.footerToolBarView removeFromSuperview];
+        }];
+    } else {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect toFrame = CGRectMake(0, 480, footBarSize.width, footBarSize.height);
+            [self.footerToolBarView setFrame:toFrame];
+        } completion:^(BOOL finished) {
+            [self.footerToolBarView removeFromSuperview];
+        }];
+    }
+}
+
+- (IBAction)attentButtonPressed:(id)sender {
+    LCYAttentShowViewController *attendVC = [[LCYAttentShowViewController alloc] init];
+    attendVC.title = @"我要参展";
+    [self.navigationController pushViewController:attendVC animated:YES];
+}
+
+
 #pragma mark - UICollectionView
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 3;
@@ -176,8 +234,21 @@
         CGFloat currentY = scrollView.contentOffset.y;
         if (currentY - lastOffset >= 25) {
             LCYLOG(@"up");
+            if (isFootBarShown) {
+                isFootBarShown = NO;
+                [self hideFootBar];
+            }
         } else if (lastOffset - currentY >= 25){
             LCYLOG(@"down");
+            if (!isFirstLoad) {
+                isFirstLoad = YES;
+                lastOffset = currentY;
+                return;
+            }
+            if (!isFootBarShown) {
+                isFootBarShown = YES;
+                [self showFootBar];
+            }
         }
         lastOffset = currentY;
     }

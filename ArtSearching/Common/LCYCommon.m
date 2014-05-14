@@ -23,6 +23,7 @@ NSString *const UploadFile              = @"UploadFile";
 NSString *const RegisterThree           = @"RegisterThree";
 NSString *const GetAllExhibition        = @"GetAllExhibition";
 NSString *const GetArtistList           = @"GetArtistList";
+NSString *const GetGalleryList          = @"GetGalleryList";
 NSString *const GetOwnExhibition        = @"GetOwnExhibition";
 NSString *const GetApplyerInfo          = @"GetApplyerInfo";
 NSString *const WorkListCategory        = @"WorkListCategory";

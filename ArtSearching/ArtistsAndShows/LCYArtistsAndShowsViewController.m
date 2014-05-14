@@ -17,13 +17,11 @@
 #import "LCYSearchingListViewController.h"
 #import "LCYArtistDetailViewController.h"
 #import "MJRefresh.h"
+#import "LCYShowsTableViewCell.h"
 
 
-@interface LCYArtistsAndShowsViewController ()<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate>
-typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
-    LCYArtistsAndShowsStatusArtists,    /**< 艺术家 */
-    LCYArtistsAndShowsStatusShows       /**< 画廊 */
-};
+@interface LCYArtistsAndShowsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYArtistsAndShowsPullDownRefreshParserDelegate,LCYArtistsAndShowsPushUpRefreshParserDelegate,LCYArtistsAndShowsFirstLoadParserDelegate>
+
 @end
 
 @interface LCYArtistsAndShowsViewController ()
@@ -34,7 +32,10 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     BOOL isArtistLoading;
     BOOL isShowsLoading;
     BOOL isArtistNibRegistered;
+    BOOL isShowsNibRegistered;
     NSInteger numberOfArtistsPerPage;
+    NSInteger numberOfShowsPerPage;
+    BOOL isShowsButtonClicked;  /**< 标记画廊内容是否经过首次加载 */
 }
 
 @property (strong, nonatomic) MJRefreshHeaderView *headerView;
@@ -109,7 +110,12 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     artistPageNumber = 0;
     showsPageNumber = 0;
     isArtistNibRegistered = NO;
+    isShowsNibRegistered = NO;
     numberOfArtistsPerPage = 12;
+    numberOfShowsPerPage = 12;
+    isShowsButtonClicked = NO;
+    isArtistLoading = NO;
+    isShowsLoading = NO;
     self.artistAvatarAddedToQueue = [NSMutableArray array];
     
     // 添加导航栏按钮（艺术家、画廊）
@@ -140,12 +146,36 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc{
+    [_headerView free];
+    [_footerView free];
+}
+
 - (void)loadArtist{
-    isArtistLoading = YES;
     NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
                                  @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
     if ([LCYCommon networkAvailable]) {
-        [LCYCommon postRequestWithAPI:GetArtistList parameters:parameter successDelegate:self failedBlock:nil];
+        isArtistLoading = YES;
+        LCYArtistsAndShowsFirstLoadParser *parser = [[LCYArtistsAndShowsFirstLoadParser alloc] init];
+        parser.currentStatus = LCYArtistsAndShowsStatusArtists;
+        parser.delegate = self;
+        [LCYCommon postRequestWithAPI:GetArtistList parameters:parameter successDelegate:parser failedBlock:nil];
+    } else {
+        UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [networkUnabailableAlert show];
+    }
+}
+
+- (void)loadShows{
+    isShowsButtonClicked = YES;
+    if ([LCYCommon networkAvailable]) {
+        isShowsLoading = YES;
+        NSDictionary *parameter = @{@"pageIndex": [NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+                                    @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+        LCYArtistsAndShowsFirstLoadParser *parser = [[LCYArtistsAndShowsFirstLoadParser alloc] init];
+        parser.delegate = self;
+        parser.currentStatus = LCYArtistsAndShowsStatusShows;
+        [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [networkUnabailableAlert show];
@@ -206,38 +236,59 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         self.showsNabigatinLabel.textColor = [UIColor blackColor];
         currentStatus = LCYArtistsAndShowsStatusShows;
         [self reloadTableView];
+        if (!isShowsButtonClicked) {
+            [self loadShows];
+        }
     }
 }
 
-#pragma mark - NSXMLParserDelegate Methods
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
-    self.xmlTempString = [[NSMutableString alloc] init];
-}
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
-    [self.xmlTempString appendString:string];
+#pragma mark - 首次加载解析完成，更新界面
+- (void)firstLoadDidEnd:(LCYArtistsAndShowsFirstLoadParser *)parser withResultInfo:(id)info{
+    // 首次加载所有艺术家
+    if (parser.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = info;
+        self.artistsArray = [NSArray arrayWithArray:result.artists];
+        artistPageNumber++;
+        isArtistLoading = NO;
+        [self reloadTableView];
+    }
+    // 首次加载所有画廊
+    else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = info;
+        self.showsArray = [NSArray arrayWithArray:result.galleries];
+        showsPageNumber++;
+        isShowsLoading = NO;
+        [self reloadTableView];
+    }
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
-    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error;
-    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                 options:kNilOptions
-                                                                   error:&error];
-//    NSLog(@"json:%@",jsonResponse);
-    LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
-//    NSLog(@"get %ld artists",(long)[result.artists count]);
-    NSMutableArray *tempArray;
-    if (self.artistsArray) {
-        tempArray = [NSMutableArray arrayWithArray:self.artistsArray];
-    }else{
-        tempArray = [NSMutableArray array];
-    }
-    [tempArray addObjectsFromArray:result.artists];
-    self.artistsArray = [NSArray arrayWithArray:tempArray];
-    numberOfArtistsPerPage++;
-    isArtistLoading = NO;
-    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
-}
+//#pragma mark - NSXMLParserDelegate Methods
+//- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+//    self.xmlTempString = [[NSMutableString alloc] init];
+//}
+//- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+//    [self.xmlTempString appendString:string];
+//}
+//
+//- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+//    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+//    NSError *error;
+//    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+//                                                                 options:kNilOptions
+//                                                                   error:&error];
+//    LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+//    NSMutableArray *tempArray;
+//    if (self.artistsArray) {
+//        tempArray = [NSMutableArray arrayWithArray:self.artistsArray];
+//    }else{
+//        tempArray = [NSMutableArray array];
+//    }
+//    [tempArray addObjectsFromArray:result.artists];
+//    self.artistsArray = [NSArray arrayWithArray:tempArray];
+//    artistPageNumber++;
+//    isArtistLoading = NO;
+//    [self performSelectorOnMainThread:@selector(reloadTableView) withObject:nil waitUntilDone:NO];
+//}
 
 #pragma mark - UITableView DataSource And Delegate Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -257,6 +308,7 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *artistIdentifier = @"LCYArtistsTableViewCellIdentifier";
+    static NSString *showsIdentifier = @"LCYShowsTableViewCellIdentifier";
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
         if (!isArtistNibRegistered) {
             UINib *nib = [UINib nibWithNibName:@"LCYArtistsTableViewCell" bundle:nil];
@@ -307,17 +359,30 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
             }
         }
         return cell;
+    } else if (currentStatus == LCYArtistsAndShowsStatusShows) {
+        if (!isShowsNibRegistered) {
+            UINib *nib = [UINib nibWithNibName:@"LCYShowsTableViewCell" bundle:nil];
+            [tableView registerNib:nib forCellReuseIdentifier:showsIdentifier];
+            isShowsNibRegistered = YES;
+        }
+        LCYShowsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:showsIdentifier];
+        LCYShowsGalleryGalleries *galleryInRow = [self.showsArray objectAtIndex:indexPath.row];
+        cell.showsNameLabel.text = galleryInRow.name;
+        cell.visitorNumberLabel.text = [NSString stringWithFormat:@"%.f",galleryInRow.openTimes];
+        return cell;
     }
     return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
-    NSString *artistID = [NSString stringWithFormat:@"%.f",artist.artistId];
-    //TODO:跳转到作者详细
-    LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
-    artistDVC.artistID = artistID;
-    [self.navigationController pushViewController:artistDVC animated:YES];
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
+        NSString *artistID = [NSString stringWithFormat:@"%.f",artist.artistId];
+        // 跳转到作者详细
+        LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
+        artistDVC.artistID = artistID;
+        [self.navigationController pushViewController:artistDVC animated:YES];
+    }
 }
 #pragma mark - UISearchBar Delegate Methods
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
@@ -335,14 +400,204 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
     formatter.dateFormat = @"HH : mm : ss.SSS";
     if (self.headerView == refreshView) {
         LCYLOG(@"下拉刷新");
+        [self pullDownToRefresh];
     } else {
         LCYLOG(@"上拉刷新");
+        [self pushUpToLoadMore];
     }
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self.icyTableView selector:@selector(reloadData) userInfo:nil repeats:NO];
+}
+
+- (void)doneWithView:(MJRefreshBaseView *)refreshView
+{
+    // 刷新表格
+    [self.icyTableView reloadData];
+    isArtistLoading = NO;
+    isShowsLoading = NO;
+    // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+    [refreshView endRefreshing];
+}
+
+- (void)pullDownToRefresh{
+    // 艺术家刷新
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                artistPageNumber = 0;
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
+                isArtistLoading = YES;
+                LCYArtistsAndShowsPullDownRefreshParser *parser = [[LCYArtistsAndShowsPullDownRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusArtists;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetArtistList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.headerView endRefreshing];
+        }
+    }
+    // 画廊刷新
+    else {
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                showsPageNumber = 0;
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+                isShowsLoading = YES;
+                LCYArtistsAndShowsPullDownRefreshParser *parser = [[LCYArtistsAndShowsPullDownRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.headerView endRefreshing];
+        }
+    }
+}
+
+- (void)pushUpToLoadMore{
+    // 艺术家家在更多
+    if (currentStatus == LCYArtistsAndShowsStatusArtists) {
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
+                isArtistLoading = YES;
+                LCYArtistsAndShowsPushUpRefreshParser *parser = [[LCYArtistsAndShowsPushUpRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusArtists;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetArtistList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.footerView endRefreshing];
+        }
+    } else if (currentStatus == LCYArtistsAndShowsStatusShows){
+        if (!isArtistLoading && !isShowsLoading) {
+            if ([LCYCommon networkAvailable]) {
+                // FIXME:加载更多
+                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+                isShowsLoading = YES;
+                LCYArtistsAndShowsPushUpRefreshParser *parser = [[LCYArtistsAndShowsPushUpRefreshParser alloc] init];
+                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.footerView endRefreshing];
+        }
+    }
+    
+}
+
+#pragma mark - LCY Pull Down And Push Up Delegate
+- (void)pullDownParserDidEnd:(LCYArtistsAndShowsPullDownRefreshParser *)parser withResultInfo:(id)info{
+    if (parser.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = info;
+        self.artistsArray = [NSArray arrayWithArray:result.artists];
+        artistPageNumber = 1;
+        [self reloadTableView];
+        [self doneWithView:self.headerView];
+    } else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = info;
+        self.showsArray = [NSArray arrayWithArray:result.galleries];
+        showsPageNumber = 1;
+        [self reloadTableView];
+        [self doneWithView:self.headerView];
+    }
+}
+
+- (void)pushUpParserDidEnd:(LCYArtistsAndShowsPushUpRefreshParser *)parser withResultInfo:(id)info{
+    if (parser.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = info;
+        NSMutableArray *tempArray;
+        if (self.artistsArray) {
+            tempArray = [NSMutableArray arrayWithArray:self.artistsArray];
+        } else {
+            tempArray = [NSMutableArray array];
+        }
+        [tempArray addObjectsFromArray:result.artists];
+        self.artistsArray = [NSArray arrayWithArray:tempArray];
+        artistPageNumber++;
+        [self reloadTableView];
+        [self doneWithView:self.footerView];
+        if ([result.artists count] == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
+    } else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = info;
+        NSMutableArray *tempArray;
+        if (self.showsArray) {
+            tempArray = [NSMutableArray arrayWithArray:self.showsArray];
+        } else {
+            tempArray = [NSMutableArray array];
+        }
+        [tempArray addObjectsFromArray:result.galleries];
+        self.showsArray = [NSArray arrayWithArray:tempArray];
+        showsPageNumber++;
+        [self reloadTableView];
+        [self doneWithView:self.footerView];
+        if ([result.galleries count] == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
+    }
 }
 
 @end
 
+#pragma mark - 首次加载完毕解析
+
+@interface LCYArtistsAndShowsFirstLoadParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYArtistsAndShowsFirstLoadParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSAssert(self.currentStatus==LCYArtistsAndShowsStatusArtists||self.currentStatus==LCYArtistsAndShowsStatusShows, @"需设置当前加载内容类型");
+    if (self.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(firstLoadDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate firstLoadDidEnd:self withResultInfo:result];
+            });
+        }
+    } else {
+        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(firstLoadDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate firstLoadDidEnd:self withResultInfo:result];
+            });
+        }
+    }
+}
+@end
+
+#pragma mark - 下载头像
 @interface LCYArtistsAvatarDownloadOperation ()
 @property (strong, atomic) NSMutableArray *urlArray;
 @property (strong, atomic) NSCondition *arrayCondition;
@@ -413,5 +668,83 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
         [self.arrayCondition signal];
     }
     [self.arrayCondition unlock];
+}
+@end
+
+#pragma mark - 下拉刷新
+
+@interface LCYArtistsAndShowsPullDownRefreshParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYArtistsAndShowsPullDownRefreshParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSAssert(self.currentStatus==LCYArtistsAndShowsStatusArtists||self.currentStatus==LCYArtistsAndShowsStatusShows, @"需设置当前加载内容类型");
+    if (self.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pullDownParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pullDownParserDidEnd:self withResultInfo:result];
+            });
+        }
+    } else if (self.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pullDownParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pullDownParserDidEnd:self withResultInfo:result];
+            });
+        }
+    }
+}
+@end
+
+#pragma mark - 上拉加载更多
+
+@interface LCYArtistsAndShowsPushUpRefreshParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYArtistsAndShowsPushUpRefreshParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSAssert(self.currentStatus==LCYArtistsAndShowsStatusArtists||self.currentStatus==LCYArtistsAndShowsStatusShows, @"需设置当前加载内容类型");
+    if (self.currentStatus == LCYArtistsAndShowsStatusArtists) {
+        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pushUpParserDidEnd:self withResultInfo:result];
+            });
+        }
+    } else if(self.currentStatus == LCYArtistsAndShowsStatusShows) {
+        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pushUpParserDidEnd:self withResultInfo:result];
+            });
+        }
+    }
 }
 @end

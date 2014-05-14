@@ -144,12 +144,12 @@
 		2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7118FE9D9A006880E7 /* tab_button3@2x.png */; };
 		2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7318FE9D9A006880E7 /* tab_button4@2x.png */; };
 		2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FB88F7418FE9D9A006880E7 /* tab_button4_in@2x.png */; };
+		2FE1C12F1921C9A700A043E5 /* LCYShowsGalleryGalleries.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C12D1921C9A700A043E5 /* LCYShowsGalleryGalleries.m */; };
 		2FE1C1321921C9B400A043E5 /* LCYShowsGalleryGalleryList.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C1311921C9B400A043E5 /* LCYShowsGalleryGalleryList.m */; };
 		2FE1C1361921F1AA00A043E5 /* LCYAttentShowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C1341921F1AA00A043E5 /* LCYAttentShowViewController.m */; };
 		2FE1C1371921F1AA00A043E5 /* LCYAttentShowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FE1C1351921F1AA00A043E5 /* LCYAttentShowViewController.xib */; };
 		2FE1C13B19220AD700A043E5 /* LCYShowsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C13919220AD700A043E5 /* LCYShowsTableViewCell.m */; };
 		2FE1C13C19220AD700A043E5 /* LCYShowsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FE1C13A19220AD700A043E5 /* LCYShowsTableViewCell.xib */; };
-		2FE1C13D1922137B00A043E5 /* LCYShowsGalleryGalleries.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE1C12D1921C9A700A043E5 /* LCYShowsGalleryGalleries.m */; };
 		8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167119075D2400C7D300 /* ShowBigImageViewController.m */; };
 		8B06167419075D2400C7D300 /* ShowBigImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */; };
 		8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */; };
@@ -1770,7 +1770,11 @@
 				28883798190E02D800562EEC /* LCYRegisterOneResult.m in Sources */,
 				282B6808190527F0000DC945 /* LCYBuildExhibitionViewController.m in Sources */,
 				8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */,
+<<<<<<< HEAD
+				2FE1C12F1921C9A700A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
+=======
 				8B95E7691921B14900852590 /* CXMLDocument_CreationExtensions.m in Sources */,
+>>>>>>> b539a55c05d8782b2ceb676af6dc2fc6471275b1
 				286233FA190F4B6100747E26 /* LCYXDTools.m in Sources */,
 				8BBEE1271904F0230067FE37 /* DownLoadArtistPictureOperation.m in Sources */,
 				288837B3190E608500562EEC /* ASIDataCompressor.m in Sources */,
@@ -1782,7 +1786,6 @@
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
 				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
 				2F1CB6391920AC0900ACA658 /* LCYArtistDetailLine1TableViewCell.m in Sources */,
-				2FE1C13D1922137B00A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
 				2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */,
 				8B95E7721921B14900852590 /* CXMLNode.m in Sources */,
 				8B49BA1E190DF90000F7725D /* DataCMICTableViewCell.m in Sources */,
