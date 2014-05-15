@@ -1,52 +1,98 @@
 //
-//  PlotViewViewController.m
+//  DrawPlotViewController.m
 //  ArtSearching
 //
-//  Created by developer on 14-4-28.
+//  Created by developer on 14-5-15.
 //  Copyright (c) 2014年 Duostec. All rights reserved.
 //
+
+#import "DrawPlotViewController.h"
+#import <AFNetworking.h>
+#import "LCYCommon.h"
+#import "TouchXML.h"
+#import "CPTPlot.h"
 #define GREEN_PLOT_IDENTIFIER @"hello"
 #define GREEN_PLOT_IDENTIFIER2 @"hello2"
-#import "PlotViewViewController.h"
-
-@interface PlotViewViewController ()
+@interface DrawPlotViewController ()
 {
+    NSInteger _dataType;
+    NSString *_questionID;
     NSArray *_currentMarketIndexArr;
     NSArray *_currentConfidentIndexArr;
     NSString *fromString ;
     NSInteger fromValue;
+    BOOL   isTotal;
 }
+@property (nonatomic,assign)NSInteger dataType;
+@property (nonatomic,strong)NSString *questionID;
 @end
 
-@implementation PlotViewViewController
-
-- (id)initWithTotalMarketIndex:(NSArray *)indexMArr andConfidentIndex:(NSArray *)indexCArr
+@implementation DrawPlotViewController
+@synthesize dataType = _dataType;
+@synthesize questionID = _questionID;
+- (id)initWithDataType:(NSInteger)dataType andQuestionID:(NSString *)questionID
 {
-    if(self = [super initWithNibName:@"PlotViewViewController" bundle:nil])
+    if(self = [super initWithNibName:@"DrawPlotViewController" bundle:nil])
     {
-        _currentConfidentIndexArr = indexCArr;
-        _currentMarketIndexArr    = indexMArr;
-        fromString = [[[_currentMarketIndexArr objectAtIndex:0] allKeys]objectAtIndex:0];
-        fromValue  = [fromString integerValue];
+        self.dataType = dataType;
+        self.questionID = questionID;
     }
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.waitProgress startAnimating];
+    AFHTTPRequestOperationManager *request = [AFHTTPRequestOperationManager manager];
+    request.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    NSDate *dataPram = [NSDate date];
+    NSInteger typePram = self.dataType;
+    NSDictionary *dicPram = [NSDictionary dictionaryWithObjectsAndKeys:dataPram,@"Date",[NSNumber numberWithInteger:typePram],@"Type", nil];
+    NSString *postURLString;
+    if(_questionID == nil || _questionID.length == 0)
+    {
+        postURLString = [NSString stringWithFormat:@"%@%@",hostForXM,getMarketTotalIndex];
+        isTotal = YES;
+    }
+    else
+    {
+        postURLString = [NSString stringWithFormat:@"%@%@",hostForXM,getQuestionlIndex];
+        isTotal = NO;
+    }
+    [request POST:postURLString parameters:dicPram success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        CXMLDocument *document = [[CXMLDocument alloc] initWithData:[operation responseData] options:0 error:nil];
+        CXMLElement *rootElement = [document rootElement];
+        NSString *stringForJSON = [rootElement stringValue];
+        NSDictionary *dicJSON = [NSJSONSerialization JSONObjectWithData:[stringForJSON dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        NSArray *confidence;
+        NSArray *market;
+        if(isTotal)
+        {
+            confidence = [dicJSON objectForKey:@"confidenceIndex"];
+            market     = [dicJSON objectForKey:@"marketIndex"];
+        }
+        else
+        {
+            confidence = [dicJSON objectForKey:@"answerIndex"];
+            market     = [dicJSON objectForKey:@"marketIndex"];
+        }
+        [self.waitProgress stopAnimating];
+        [self begainDrawPlotWithTotalMarketIndex:market andConfidentIndex:confidence];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请链接网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }];
+    // Do any additional setup after loading the view from its nib.
 }
-- (void)didReceiveMemoryWarning
+
+- (void)begainDrawPlotWithTotalMarketIndex:(NSArray *)indexMArr andConfidentIndex:(NSArray *)indexCArr
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void) viewDidAppear:(BOOL)animated {
-
+    _currentConfidentIndexArr = indexCArr;
+    _currentMarketIndexArr    = indexMArr;
+    fromString = [[[_currentMarketIndexArr objectAtIndex:0] allKeys]objectAtIndex:0];
+    fromValue  = [fromString integerValue];
     [self setupCoreplotViews];
-    [super viewDidAppear:animated];
 }
 
 - (void)setupCoreplotViews
@@ -104,9 +150,9 @@
     y.labelExclusionRanges = exclusionRanges;
     //y.delegate = self;
     
-//    lineStyle.dashPattern    = [NSArray arrayWithObjects:
-//                                [NSNumber numberWithFloat:5.0f],
-//                                [NSNumber numberWithFloat:5.0f], nil];
+    //    lineStyle.dashPattern    = [NSArray arrayWithObjects:
+    //                                [NSNumber numberWithFloat:5.0f],
+    //                                [NSNumber numberWithFloat:5.0f], nil];
     
     CPTScatterPlot * dataSourceLinePlot = [[CPTScatterPlot alloc] init];
     dataSourceLinePlot.dataLineStyle = lineStyle;
@@ -135,7 +181,7 @@
     //
     CPTColor * areaColor2            = [CPTColor colorWithComponentRed:0.3 green:0.3 blue:0.3 alpha:0.8];
     CPTGradient * areaGradient2      = [CPTGradient gradientWithBeginningColor:areaColor2
-                                                                  endingColor:[CPTColor clearColor]];
+                                                                   endingColor:[CPTColor clearColor]];
     CPTFill * areaGradientFill2  = [CPTFill fillWithGradient:areaGradient2];
     areaGradient2.angle              = -90.0f;
     areaGradientFill2                = [CPTFill fillWithGradient:areaGradient2];
@@ -230,22 +276,29 @@
     NSNumber *yNumC = [NSNumber numberWithInt:yKeyC.intValue];
     if(fieldEnum == CPTScatterPlotFieldY)
     {
-//        if ([(NSString *)plot.identifier isEqualToString:GREEN_PLOT_IDENTIFIER])
-//        {
-//            
-//            return yNumM;
-//        }
-//        else
-//        {
-//            return yNumC;
-//        }
+        //        if ([(NSString *)plot.identifier isEqualToString:GREEN_PLOT_IDENTIFIER])
+        //        {
+        //
+        //            return yNumM;
+        //        }
+        //        else
+        //        {
+        //            return yNumC;
+        //        }
         return yNumC;
-
+        
     }
     else
     {
         return xNumC;
     }
+}
+
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

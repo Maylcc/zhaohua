@@ -46,6 +46,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.74934231505102034" green="0.0" blue="0.0081311182093193254" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
+                <outlet property="arrowImage" destination="HV6-bA-IoS" id="kNi-tV-klK"/>
                 <outlet property="arrowPic" destination="HV6-bA-IoS" id="zkn-N1-nUT"/>
                 <outlet property="indexNum" destination="vcU-ad-v6o" id="Fkm-ur-I7S"/>
                 <outlet property="waitProgress" destination="l1A-Tv-xh5" id="cMr-RT-5oy"/>

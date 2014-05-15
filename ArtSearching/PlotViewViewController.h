@@ -18,4 +18,6 @@
 
 -(CPTPlotRange *)CPTPlotRangeFromFloat:(float)location length:(float)length;
 
+- (id)initWithTotalMarketIndex:(NSArray *)indexMArr andConfidentIndex:(NSArray *)indexCArr;
+
 @end

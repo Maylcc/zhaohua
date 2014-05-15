@@ -123,4 +123,5 @@ CA_EXTERN NSString *const getMarketTotalIndex;  /**< 市场指数 */
 CA_EXTERN NSString *const getQuestionStatus;  /**< 回答问题状态 */
 CA_EXTERN NSString *const getQuestions;  /**< 获取问题 */
 CA_EXTERN NSString *const answerQuestion;/**< 回答问题URL*/
+CA_EXTERN NSString *const getQuestionlIndex;/**< 取得相关问题的指数信息 */
 @end
