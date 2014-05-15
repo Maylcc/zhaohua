@@ -39,6 +39,20 @@ typedef NS_ENUM(NSInteger, LCYArtistsAndShowsStatus){
 - (void)initConfigure;
 @end
 
+#pragma  mark - 下载各种图片
+@protocol LCYArtistAndShowsDownloadImageOperationDelegate <NSObject>
+@optional
+/**
+ *  一张图片下载完毕时调用
+ */
+- (void)imageDownloadDidFinished;
+@end
+@interface LCYArtistAndShowsDownloadImageOperation : NSOperation
+@property (weak, nonatomic) id<LCYArtistAndShowsDownloadImageOperationDelegate>delegate;
+- (void)addImageName:(NSString *)imageName;
+- (void)initConfigure;
+@end
+
 #pragma mark - 下拉刷新
 @class LCYArtistsAndShowsPullDownRefreshParser;
 @protocol LCYArtistsAndShowsPullDownRefreshParserDelegate <NSObject>

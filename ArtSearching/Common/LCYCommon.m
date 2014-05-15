@@ -151,4 +151,15 @@ NSString *const getQuestionlIndex   = @"GetQuestionlIndex";
     }
 }
 
++ (void)writeData:(NSData *)data toFilePath:(NSString *)path{
+    NSString *pathWithoutFileName = [path stringByDeletingLastPathComponent];
+    LCYLOG(@"path without file name = %@",pathWithoutFileName);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDir;
+    if (![fileManager fileExistsAtPath:pathWithoutFileName isDirectory:&isDir]) {
+        LCYLOG(@"creating folder");
+        [fileManager createDirectoryAtPath:pathWithoutFileName withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    [data writeToFile:path atomically:YES];
+}
 @end

@@ -20,7 +20,7 @@
 #import "LCYShowsTableViewCell.h"
 
 
-@interface LCYArtistsAndShowsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYArtistsAndShowsPullDownRefreshParserDelegate,LCYArtistsAndShowsPushUpRefreshParserDelegate,LCYArtistsAndShowsFirstLoadParserDelegate>
+@interface LCYArtistsAndShowsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYArtistsAndShowsPullDownRefreshParserDelegate,LCYArtistsAndShowsPushUpRefreshParserDelegate,LCYArtistsAndShowsFirstLoadParserDelegate,LCYArtistAndShowsDownloadImageOperationDelegate>
 
 @end
 
@@ -75,10 +75,15 @@
  */
 @property (strong, nonatomic) NSArray *showsArray;
 
+///**
+// *  头像下载线程
+// */
+//@property (strong, nonatomic) LCYArtistsAvatarDownloadOperation *operation;
+
 /**
- *  头像下载线程
+ *  所有图片下载线程
  */
-@property (strong, nonatomic) LCYArtistsAvatarDownloadOperation *operation;
+@property (strong, nonatomic) LCYArtistAndShowsDownloadImageOperation *myDownloadOperation;
 /**
  *  下载队列
  */
@@ -88,6 +93,11 @@
  *  保证艺术家头像只被下载一次
  */
 @property (strong, nonatomic) NSMutableArray *artistAvatarAddedToQueue;
+
+/**
+ *  保证画廊图片只被下载一次
+ */
+@property (strong, nonatomic) NSMutableArray *showsImageAddedToQueue;
 
 @end
 
@@ -117,6 +127,7 @@
     isArtistLoading = NO;
     isShowsLoading = NO;
     self.artistAvatarAddedToQueue = [NSMutableArray array];
+    self.showsImageAddedToQueue = [NSMutableArray array];
     
     // 添加导航栏按钮（艺术家、画廊）
     UIBarButtonItem *ph1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
@@ -321,43 +332,77 @@
         cell.artistWorksLabel.text = [NSString stringWithFormat:@"(%.f件作品)",artist.artistWorkCount];
         // 检查图片是否已经存在
         NSString *originalPath = artist.artistPortalS;
-        NSString *replaceSlash = [originalPath stringByReplacingOccurrencesOfString:@"\\" withString:@""];
-        NSString *fileName = [replaceSlash lastPathComponent];
-        if ([LCYCommon isFileExistsAt:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]]) {
-            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]];
+        if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]]) {
+            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]];
             cell.icyImage.image = avatarImage;
         } else {
             cell.icyImage.image = [UIImage imageNamed:@"akalin.jpg"];
-            NSString *fileURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,replaceSlash];
             // 检查是否已经下载过一次，避免重复下载不存在的文件
             BOOL hasDownloaded = NO;
             for (NSString *oneFileName in self.artistAvatarAddedToQueue) {
-                if ([oneFileName isEqualToString:fileURL]) {
+                if ([oneFileName isEqualToString:originalPath]) {
                     hasDownloaded = YES;
                     break;
                 }
             }
             if (!hasDownloaded) {
                 // 启动下载线程
-                [self.artistAvatarAddedToQueue addObject:fileURL];
+                [self.artistAvatarAddedToQueue addObject:originalPath];
                 if (!self.queue) {
                     self.queue = [[NSOperationQueue alloc] init];
                 }
-                if (!self.operation) {
-                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
-                    self.operation.delegate = self;
-                    [self.operation initConfigure];
-                    [self.queue addOperation:self.operation];
+                if (!self.myDownloadOperation) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.myDownloadOperation initConfigure];
+                    [self.queue addOperation:self.myDownloadOperation];
                 }
-                if (self.operation.isCancelled) {
-                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
-                    self.operation.delegate = self;
-                    [self.queue addOperation:self.operation];
+                if (self.myDownloadOperation.isCancelled) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.queue addOperation:self.myDownloadOperation];
                 }
-                [self.operation addAvartarURL:fileURL];
-                LCYLOG(@"add:%@",fileURL);
+                [self.myDownloadOperation addImageName:originalPath];
+                LCYLOG(@"add:%@",originalPath);
             }
         }
+//        NSString *replaceSlash = [originalPath stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+//        NSString *fileName = [replaceSlash lastPathComponent];
+//        if ([LCYCommon isFileExistsAt:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]]) {
+//            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:fileName]];
+//            cell.icyImage.image = avatarImage;
+//        } else {
+//            cell.icyImage.image = [UIImage imageNamed:@"akalin.jpg"];
+//            NSString *fileURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,replaceSlash];
+//            // 检查是否已经下载过一次，避免重复下载不存在的文件
+//            BOOL hasDownloaded = NO;
+//            for (NSString *oneFileName in self.artistAvatarAddedToQueue) {
+//                if ([oneFileName isEqualToString:fileURL]) {
+//                    hasDownloaded = YES;
+//                    break;
+//                }
+//            }
+//            if (!hasDownloaded) {
+//                // 启动下载线程
+//                [self.artistAvatarAddedToQueue addObject:fileURL];
+//                if (!self.queue) {
+//                    self.queue = [[NSOperationQueue alloc] init];
+//                }
+//                if (!self.operation) {
+//                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
+//                    self.operation.delegate = self;
+//                    [self.operation initConfigure];
+//                    [self.queue addOperation:self.operation];
+//                }
+//                if (self.operation.isCancelled) {
+//                    self.operation = [[LCYArtistsAvatarDownloadOperation alloc] init];
+//                    self.operation.delegate = self;
+//                    [self.queue addOperation:self.operation];
+//                }
+//                [self.operation addAvartarURL:fileURL];
+//                LCYLOG(@"add:%@",fileURL);
+//            }
+//        }
         return cell;
     } else if (currentStatus == LCYArtistsAndShowsStatusShows) {
         if (!isShowsNibRegistered) {
@@ -369,6 +414,44 @@
         LCYShowsGalleryGalleries *galleryInRow = [self.showsArray objectAtIndex:indexPath.row];
         cell.showsNameLabel.text = galleryInRow.name;
         cell.visitorNumberLabel.text = [NSString stringWithFormat:@"%.f",galleryInRow.openTimes];
+        
+        // 检查图片是否已经存在
+        NSString *originalPath = galleryInRow.logoUrl;
+        if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]]) {
+            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]];
+            cell.icyImageView.image = avatarImage;
+        } else {
+            cell.icyImageView.image = [UIImage imageNamed:@"akalin.jpg"];
+            // 检查是否已经下载过一次，避免重复下载不存在的文件
+            BOOL hasDownloaded = NO;
+            for (NSString *oneFileName in self.showsImageAddedToQueue) {
+                if ([oneFileName isEqualToString:originalPath]) {
+                    hasDownloaded = YES;
+                    break;
+                }
+            }
+            if (!hasDownloaded) {
+                // 启动下载线程
+                [self.showsImageAddedToQueue addObject:originalPath];
+                if (!self.queue) {
+                    self.queue = [[NSOperationQueue alloc] init];
+                }
+                if (!self.myDownloadOperation) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.myDownloadOperation initConfigure];
+                    [self.queue addOperation:self.myDownloadOperation];
+                }
+                if (self.myDownloadOperation.isCancelled) {
+                    self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
+                    self.myDownloadOperation.delegate = self;
+                    [self.queue addOperation:self.myDownloadOperation];
+                }
+                [self.myDownloadOperation addImageName:originalPath];
+                LCYLOG(@"add:%@",originalPath);
+            }
+        }
+        
         return cell;
     }
     return nil;
@@ -390,6 +473,9 @@
 }
 #pragma mark - LCYArtistsAvatarDownloadOperation Delegate
 - (void)avatarDownloadDidFinished{
+    [self reloadTableView];
+}
+- (void)imageDownloadDidFinished{
     [self reloadTableView];
 }
 
@@ -461,7 +547,7 @@
 }
 
 - (void)pushUpToLoadMore{
-    // 艺术家家在更多
+    // 艺术家加载更多
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
         if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
@@ -482,7 +568,7 @@
     } else if (currentStatus == LCYArtistsAndShowsStatusShows){
         if (!isArtistLoading && !isShowsLoading) {
             if ([LCYCommon networkAvailable]) {
-                // FIXME:加载更多
+                // 加载更多
                 NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
                                              @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
                 isShowsLoading = YES;
@@ -597,7 +683,7 @@
 }
 @end
 
-#pragma mark - 下载头像
+#pragma mark - 下载头像(!不再使用-用下载所有图片代替)
 @interface LCYArtistsAvatarDownloadOperation ()
 @property (strong, atomic) NSMutableArray *urlArray;
 @property (strong, atomic) NSCondition *arrayCondition;
@@ -636,7 +722,8 @@
                 UIImage *downImg = (UIImage *)responseObject;
                 NSData *imageData = UIImageJPEGRepresentation(downImg, 1.0);
                 LCYLOG(@"success");
-                [imageData writeToFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+//                [imageData writeToFile:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+                [LCYCommon writeData:imageData toFilePath:[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName]];
                 LCYLOG(@"write to file:%@",[[LCYCommon artistAvatarImagePath] stringByAppendingPathComponent:imageFileName]);
                 if (self.delegate &&
                     [self.delegate respondsToSelector:@selector(avatarDownloadDidFinished)]) {
@@ -665,6 +752,85 @@
     }
     if (!gotOne) {
         [self.urlArray addObject:URL];
+        [self.arrayCondition signal];
+    }
+    [self.arrayCondition unlock];
+}
+@end
+
+#pragma mark - 下载各种图片
+
+@interface LCYArtistAndShowsDownloadImageOperation ()
+@property (strong, atomic) NSMutableArray *imageNameArray;
+@property (strong, atomic) NSCondition *arrayCondition;
+@end
+@implementation LCYArtistAndShowsDownloadImageOperation
+- (void)initConfigure{
+    self.imageNameArray = [NSMutableArray array];
+    self.arrayCondition = [[NSCondition alloc] init];
+}
+- (void)main{
+    while (YES) {
+        // 检查线程是否已经结束
+        if (self.isCancelled) {
+            break;
+        }
+        // 检查需要下载的列表
+        [self.arrayCondition lock];
+        if (self.imageNameArray.count == 0) {
+            [self.arrayCondition wait];
+            [self.arrayCondition unlock];
+        } else {
+            dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+            NSString *imageName = [self.imageNameArray lastObject];
+            [self.imageNameArray removeObject:imageName];
+            LCYLOG(@"pop object:%@",imageName);
+            LCYLOG(@"current object count = %ld",(long)self.imageNameArray.count);
+            [self.arrayCondition unlock];
+            // 开启异步下载，完成后发送signal
+//            NSString *imageURL = [NSString stringWithFormat:@"%@%@",hostIMGPrefix,imageName];
+            NSString *imageURL = [hostIMGPrefix stringByAppendingPathComponent:imageName];
+            NSString *urlString = [[NSString stringWithFormat:@"%@",imageURL] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            NSString *imageFileName = imageName;
+            NSURL *url = [NSURL URLWithString:urlString];
+            NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:url];
+            AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+            requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+            [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                UIImage *downImg = (UIImage *)responseObject;
+                NSData *imageData = UIImageJPEGRepresentation(downImg, 1.0);
+                LCYLOG(@"success");
+//                [imageData writeToFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName] atomically:YES];
+                 [LCYCommon writeData:imageData toFilePath:[[LCYCommon renrenMainImagePath
+                                                             ] stringByAppendingPathComponent:imageFileName]];
+                LCYLOG(@"write to file:%@",[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName]);
+                if (self.delegate &&
+                    [self.delegate respondsToSelector:@selector(imageDownloadDidFinished)]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.delegate imageDownloadDidFinished];
+                    });
+                }
+                dispatch_semaphore_signal(sema);
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                LCYLOG(@"下载图片失败 error is %@",error);
+                dispatch_semaphore_signal(sema);
+            }];
+            [requestOperation start];
+            dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        }
+    }
+}
+- (void)addImageName:(NSString *)imageName{
+    [self.arrayCondition lock];
+    BOOL gotOne = NO;
+    for (NSString *oneImageName in self.imageNameArray) {
+        if ([oneImageName isEqualToString:imageName]) {
+            gotOne = YES;
+            break;
+        }
+    }
+    if (!gotOne) {
+        [self.imageNameArray addObject:imageName];
         [self.arrayCondition signal];
     }
     [self.arrayCondition unlock];
