@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol ArtToAuthorDelegate<NSObject>
 - (void)artToAuthorDelegateWithID:(NSNumber *)artistID;
+- (void)toShareWithWXWBView;
 @end
 @interface ArtDetailContentArtCell : UITableViewCell
 
@@ -21,4 +22,5 @@
 @property (nonatomic,strong)NSNumber *indexNum;
 @property (nonatomic,strong)id<ArtToAuthorDelegate>delegate;
 - (IBAction)toAuthodDetail:(id)sender;
+- (IBAction)actionForSharing:(id)sender;
 @end
