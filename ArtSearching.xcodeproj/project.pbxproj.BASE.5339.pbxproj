@@ -76,18 +76,6 @@
 		28A997D2190122AE00A09E17 /* LCYActivityListBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D0190122AE00A09E17 /* LCYActivityListBase.m */; };
 		28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */; };
 		28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */; };
-		2F0B6B571925E8CB00D295A1 /* artist_NFav@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B561925E8CB00D295A1 /* artist_NFav@2x.png */; };
-		2F0B6B5C1925ECBF00D295A1 /* LCYShowDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B5A1925ECBF00D295A1 /* LCYShowDetailViewController.m */; };
-		2F0B6B5D1925ECBF00D295A1 /* LCYShowDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B5B1925ECBF00D295A1 /* LCYShowDetailViewController.xib */; };
-		2F0B6B621925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B5F1925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m */; };
-		2F0B6B631925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B601925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m */; };
-		2F0B6B671925FC4E00D295A1 /* LCYXMLDictionaryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B661925FC4E00D295A1 /* LCYXMLDictionaryParser.m */; };
-		2F0B6B6B1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B691925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m */; };
-		2F0B6B6C1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6A1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib */; };
-		2F0B6B701926009000D295A1 /* LCYShowDetailLine2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6E1926009000D295A1 /* LCYShowDetailLine2TableViewCell.m */; };
-		2F0B6B711926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6F1926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib */; };
-		2F0B6B751926025200D295A1 /* LCYShowDetailLine3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B731926025200D295A1 /* LCYShowDetailLine3TableViewCell.m */; };
-		2F0B6B761926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B741926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib */; };
 		2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F10E5DB1919F53700AB9715 /* akalin.jpg */; };
 		2F10E629191A136A00AB9715 /* LCYMyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F10E628191A136A00AB9715 /* LCYMyCollectionCell.m */; };
 		2F10E62B191A137E00AB9715 /* LCYMyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F10E62A191A137E00AB9715 /* LCYMyCollectionCell.xib */; };
@@ -119,7 +107,6 @@
 		2F527C74191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */; };
 		2F527C76191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */; };
 		2F527C7A191B5C590040879F /* LCYRenrenDetailFirstHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */; };
-		2F68AE301925AA1F00859186 /* LCYImageDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F68AE2F1925AA1F00859186 /* LCYImageDownloadOperation.m */; };
 		2F8C2C761912418D00C12F4E /* LCYArtists.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C721912418D00C12F4E /* LCYArtists.m */; };
 		2F8C2C771912418D00C12F4E /* LCYGetArtistListResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */; };
 		2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8C2C791912463600C12F4E /* LCYArtistsTableViewCell.m */; };
@@ -168,8 +155,6 @@
 		8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */; };
 		8B06167A19079B1C00C7D300 /* AuthodDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167819079B1C00C7D300 /* AuthodDetailViewController.xib */; };
 		8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167F1907A1FF00C7D300 /* ArtistInfo.m */; };
-		8B2C847F1925F4730064B7EA /* ShareHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2C847E1925F4730064B7EA /* ShareHelper.m */; };
-		8B2C84811925F9280064B7EA /* iconForWeixin.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B2C84801925F9280064B7EA /* iconForWeixin.png */; };
 		8B3D04F9192465990059343E /* DrawPlotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3D04F7192465990059343E /* DrawPlotViewController.m */; };
 		8B3D04FA192465990059343E /* DrawPlotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3D04F8192465990059343E /* DrawPlotViewController.xib */; };
 		8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B49B854190DF6C900F7725D /* DataAcquisitionViewController.m */; };
@@ -205,16 +190,6 @@
 		8B6E96D319013663006E6752 /* DataStartGallertyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E96CF19013663006E6752 /* DataStartGallertyCell.xib */; };
 		8B6E96D819013695006E6752 /* NetConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E96D719013695006E6752 /* NetConnect.m */; };
 		8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E96DE190136B0006E6752 /* ZXYProvider.m */; };
-		8B7773ED1925A905000F35DC /* pyshareimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773EC1925A905000F35DC /* pyshareimg@2x.png */; };
-		8B7773EF1925A911000F35DC /* copyimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773EE1925A911000F35DC /* copyimg@2x.png */; };
-		8B7773F11925A91B000F35DC /* wxshareimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773F01925A91B000F35DC /* wxshareimg@2x.png */; };
-		8B7773F31925A926000F35DC /* xlshareimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773F21925A926000F35DC /* xlshareimg@2x.png */; };
-		8B7773F51925AA3C000F35DC /* closeimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773F41925AA3C000F35DC /* closeimg@2x.png */; };
-		8B7773F91925B4A8000F35DC /* ArtShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7773F71925B4A8000F35DC /* ArtShareViewController.m */; };
-		8B7773FA1925B4A8000F35DC /* ArtShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7773F81925B4A8000F35DC /* ArtShareViewController.xib */; };
-		8B7773FC1925DBD4000F35DC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7773FB1925DBD4000F35DC /* Accelerate.framework */; };
-		8B7773FE1925DD12000F35DC /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7773FD1925DD12000F35DC /* CoreImage.framework */; };
-		8B7774031925E610000F35DC /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B7774001925E610000F35DC /* libWeChatSDK.a */; };
 		8B927A0E1908A69000B0EF21 /* download_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B927A0D1908A69000B0EF21 /* download_icon@2x.png */; };
 		8B927A111908ACC700B0EF21 /* InsertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B927A101908ACC700B0EF21 /* InsertView.m */; };
 		8B95E7691921B14900852590 /* CXMLDocument_CreationExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B95E74E1921B14900852590 /* CXMLDocument_CreationExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -395,26 +370,6 @@
 		28A997D4190125C000A09E17 /* LCYRenrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRenrenTableViewCell.h; sourceTree = "<group>"; };
 		28A997D5190125C000A09E17 /* LCYRenrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenTableViewCell.m; sourceTree = "<group>"; };
 		28A997D7190125D200A09E17 /* LCYRenrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenTableViewCell.xib; sourceTree = "<group>"; };
-		2F0B6B561925E8CB00D295A1 /* artist_NFav@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "artist_NFav@2x.png"; sourceTree = "<group>"; };
-		2F0B6B591925ECBF00D295A1 /* LCYShowDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowDetailViewController.h; sourceTree = "<group>"; };
-		2F0B6B5A1925ECBF00D295A1 /* LCYShowDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowDetailViewController.m; sourceTree = "<group>"; };
-		2F0B6B5B1925ECBF00D295A1 /* LCYShowDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYShowDetailViewController.xib; sourceTree = "<group>"; };
-		2F0B6B5E1925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetGalleryInfoByIDGallery.h; sourceTree = "<group>"; };
-		2F0B6B5F1925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetGalleryInfoByIDGallery.m; sourceTree = "<group>"; };
-		2F0B6B601925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetGalleryInfoByIDGalleryInfo.m; sourceTree = "<group>"; };
-		2F0B6B611925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetGalleryInfoByIDGalleryInfo.h; sourceTree = "<group>"; };
-		2F0B6B641925F35C00D295A1 /* LCYGetGalleryInfoByID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCYGetGalleryInfoByID.h; sourceTree = "<group>"; };
-		2F0B6B651925FC4E00D295A1 /* LCYXMLDictionaryParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYXMLDictionaryParser.h; sourceTree = "<group>"; };
-		2F0B6B661925FC4E00D295A1 /* LCYXMLDictionaryParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYXMLDictionaryParser.m; sourceTree = "<group>"; };
-		2F0B6B681925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowDetailLine1TableViewCell.h; sourceTree = "<group>"; };
-		2F0B6B691925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowDetailLine1TableViewCell.m; sourceTree = "<group>"; };
-		2F0B6B6A1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYShowDetailLine1TableViewCell.xib; sourceTree = "<group>"; };
-		2F0B6B6D1926009000D295A1 /* LCYShowDetailLine2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowDetailLine2TableViewCell.h; sourceTree = "<group>"; };
-		2F0B6B6E1926009000D295A1 /* LCYShowDetailLine2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowDetailLine2TableViewCell.m; sourceTree = "<group>"; };
-		2F0B6B6F1926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYShowDetailLine2TableViewCell.xib; sourceTree = "<group>"; };
-		2F0B6B721926025200D295A1 /* LCYShowDetailLine3TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYShowDetailLine3TableViewCell.h; sourceTree = "<group>"; };
-		2F0B6B731926025200D295A1 /* LCYShowDetailLine3TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYShowDetailLine3TableViewCell.m; sourceTree = "<group>"; };
-		2F0B6B741926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYShowDetailLine3TableViewCell.xib; sourceTree = "<group>"; };
 		2F10E5DB1919F53700AB9715 /* akalin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = akalin.jpg; sourceTree = "<group>"; };
 		2F10E627191A136A00AB9715 /* LCYMyCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYMyCollectionCell.h; sourceTree = "<group>"; };
 		2F10E628191A136A00AB9715 /* LCYMyCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYMyCollectionCell.m; sourceTree = "<group>"; };
@@ -459,8 +414,6 @@
 		2F527C73191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailFirstLineCell.xib; sourceTree = "<group>"; };
 		2F527C75191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailSecondLineCell.xib; sourceTree = "<group>"; };
 		2F527C79191B5C590040879F /* LCYRenrenDetailFirstHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailFirstHeader.xib; sourceTree = "<group>"; };
-		2F68AE2E1925AA1F00859186 /* LCYImageDownloadOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYImageDownloadOperation.h; sourceTree = "<group>"; };
-		2F68AE2F1925AA1F00859186 /* LCYImageDownloadOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYImageDownloadOperation.m; sourceTree = "<group>"; };
 		2F8C2C721912418D00C12F4E /* LCYArtists.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYArtists.m; sourceTree = "<group>"; };
 		2F8C2C731912418D00C12F4E /* LCYArtists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYArtists.h; sourceTree = "<group>"; };
 		2F8C2C741912418D00C12F4E /* LCYGetArtistListResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetArtistListResult.m; sourceTree = "<group>"; };
@@ -531,9 +484,6 @@
 		8B06167D1907A1FF00C7D300 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
 		8B06167E1907A1FF00C7D300 /* ArtistInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistInfo.h; sourceTree = "<group>"; };
 		8B06167F1907A1FF00C7D300 /* ArtistInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistInfo.m; sourceTree = "<group>"; };
-		8B2C847D1925F4730064B7EA /* ShareHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareHelper.h; sourceTree = "<group>"; };
-		8B2C847E1925F4730064B7EA /* ShareHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareHelper.m; sourceTree = "<group>"; };
-		8B2C84801925F9280064B7EA /* iconForWeixin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconForWeixin.png; sourceTree = "<group>"; };
 		8B3D04F6192465990059343E /* DrawPlotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPlotViewController.h; sourceTree = "<group>"; };
 		8B3D04F7192465990059343E /* DrawPlotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPlotViewController.m; sourceTree = "<group>"; };
 		8B3D04F8192465990059343E /* DrawPlotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawPlotViewController.xib; sourceTree = "<group>"; };
@@ -661,19 +611,6 @@
 		8B6E96D719013695006E6752 /* NetConnect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetConnect.m; sourceTree = "<group>"; };
 		8B6E96DD190136B0006E6752 /* ZXYProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZXYProvider.h; sourceTree = "<group>"; };
 		8B6E96DE190136B0006E6752 /* ZXYProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZXYProvider.m; sourceTree = "<group>"; };
-		8B7773EC1925A905000F35DC /* pyshareimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pyshareimg@2x.png"; sourceTree = "<group>"; };
-		8B7773EE1925A911000F35DC /* copyimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copyimg@2x.png"; sourceTree = "<group>"; };
-		8B7773F01925A91B000F35DC /* wxshareimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wxshareimg@2x.png"; sourceTree = "<group>"; };
-		8B7773F21925A926000F35DC /* xlshareimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xlshareimg@2x.png"; sourceTree = "<group>"; };
-		8B7773F41925AA3C000F35DC /* closeimg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeimg@2x.png"; sourceTree = "<group>"; };
-		8B7773F61925B4A8000F35DC /* ArtShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtShareViewController.h; sourceTree = "<group>"; };
-		8B7773F71925B4A8000F35DC /* ArtShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtShareViewController.m; sourceTree = "<group>"; };
-		8B7773F81925B4A8000F35DC /* ArtShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArtShareViewController.xib; sourceTree = "<group>"; };
-		8B7773FB1925DBD4000F35DC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		8B7773FD1925DD12000F35DC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
-		8B7774001925E610000F35DC /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		8B7774011925E610000F35DC /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		8B7774021925E610000F35DC /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		8B927A0D1908A69000B0EF21 /* download_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download_icon@2x.png"; sourceTree = "<group>"; };
 		8B927A0F1908ACC700B0EF21 /* InsertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsertView.h; sourceTree = "<group>"; };
 		8B927A101908ACC700B0EF21 /* InsertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsertView.m; sourceTree = "<group>"; };
@@ -771,8 +708,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B7773FE1925DD12000F35DC /* CoreImage.framework in Frameworks */,
-				8B7773FC1925DBD4000F35DC /* Accelerate.framework in Frameworks */,
 				8B95E7771921B74F00852590 /* libxml2.dylib in Frameworks */,
 				2F98634A1918C60000912891 /* QuartzCore.framework in Frameworks */,
 				288837BF190E618600562EEC /* libz.dylib in Frameworks */,
@@ -785,7 +720,6 @@
 				2FB88F2C18FE4723006880E7 /* UIKit.framework in Frameworks */,
 				2FB88F2818FE4723006880E7 /* Foundation.framework in Frameworks */,
 				8B49BA76190E1D5700F7725D /* libCorePlot-CocoaTouch.a in Frameworks */,
-				8B7774031925E610000F35DC /* libWeChatSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,7 +776,6 @@
 			isa = PBXGroup;
 			children = (
 				2F1CB62D1920A25900ACA658 /* Artists */,
-				2F0B6B581925EC7200D295A1 /* Shows */,
 				2F8C2C731912418D00C12F4E /* LCYArtists.h */,
 				2F8C2C721912418D00C12F4E /* LCYArtists.m */,
 				2F8C2C751912418D00C12F4E /* LCYGetArtistListResult.h */,
@@ -957,30 +890,6 @@
 			path = ASIHttpRequest;
 			sourceTree = "<group>";
 		};
-		2F0B6B581925EC7200D295A1 /* Shows */ = {
-			isa = PBXGroup;
-			children = (
-				2F0B6B641925F35C00D295A1 /* LCYGetGalleryInfoByID.h */,
-				2F0B6B5E1925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.h */,
-				2F0B6B5F1925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m */,
-				2F0B6B611925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.h */,
-				2F0B6B601925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m */,
-				2F0B6B591925ECBF00D295A1 /* LCYShowDetailViewController.h */,
-				2F0B6B5A1925ECBF00D295A1 /* LCYShowDetailViewController.m */,
-				2F0B6B5B1925ECBF00D295A1 /* LCYShowDetailViewController.xib */,
-				2F0B6B681925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.h */,
-				2F0B6B691925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m */,
-				2F0B6B6A1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib */,
-				2F0B6B6D1926009000D295A1 /* LCYShowDetailLine2TableViewCell.h */,
-				2F0B6B6E1926009000D295A1 /* LCYShowDetailLine2TableViewCell.m */,
-				2F0B6B6F1926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib */,
-				2F0B6B721926025200D295A1 /* LCYShowDetailLine3TableViewCell.h */,
-				2F0B6B731926025200D295A1 /* LCYShowDetailLine3TableViewCell.m */,
-				2F0B6B741926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib */,
-			);
-			path = Shows;
-			sourceTree = "<group>";
-		};
 		2F10E5DA1919F53700AB9715 /* ArtistsAndShows */ = {
 			isa = PBXGroup;
 			children = (
@@ -1048,8 +957,6 @@
 		2FB88F2618FE4723006880E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8B7773FD1925DD12000F35DC /* CoreImage.framework */,
-				8B7773FB1925DBD4000F35DC /* Accelerate.framework */,
 				8B95E7761921B74F00852590 /* libxml2.dylib */,
 				2F9863491918C60000912891 /* QuartzCore.framework */,
 				288837BE190E618600562EEC /* libz.dylib */,
@@ -1069,7 +976,6 @@
 		2FB88F2F18FE4723006880E7 /* ArtSearching */ = {
 			isa = PBXGroup;
 			children = (
-				8B7773FF1925E5FE000F35DC /* WeiXinSDK */,
 				2F37D082191C9B8C00526375 /* SearchingList */,
 				2836BB051910DE0C00F70140 /* ArtistsAndShows */,
 				282B680C190527FB000DC945 /* userInfo */,
@@ -1217,10 +1123,6 @@
 				289BD34F1908F4B6000A8C4B /* LCYGlobalHeader.h */,
 				286233F8190F4B6100747E26 /* LCYXDTools.h */,
 				286233F9190F4B6100747E26 /* LCYXDTools.m */,
-				2F68AE2E1925AA1F00859186 /* LCYImageDownloadOperation.h */,
-				2F68AE2F1925AA1F00859186 /* LCYImageDownloadOperation.m */,
-				2F0B6B651925FC4E00D295A1 /* LCYXMLDictionaryParser.h */,
-				2F0B6B661925FC4E00D295A1 /* LCYXMLDictionaryParser.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1266,16 +1168,6 @@
 				8B06167F1907A1FF00C7D300 /* ArtistInfo.m */,
 			);
 			name = modalTemp;
-			sourceTree = "<group>";
-		};
-		8B2C847C1925F4580064B7EA /* shareHelper */ = {
-			isa = PBXGroup;
-			children = (
-				8B2C84801925F9280064B7EA /* iconForWeixin.png */,
-				8B2C847D1925F4730064B7EA /* ShareHelper.h */,
-				8B2C847E1925F4730064B7EA /* ShareHelper.m */,
-			);
-			name = shareHelper;
 			sourceTree = "<group>";
 		};
 		8B49BA11190DF7D800F7725D /* FolderCoverView */ = {
@@ -1388,7 +1280,6 @@
 		8B565BA518FFA0A2002520D3 /* DataXM */ = {
 			isa = PBXGroup;
 			children = (
-				8B2C847C1925F4580064B7EA /* shareHelper */,
 				8B95E7801921C64300852590 /* AnswerQuestion */,
 				8B95E74B1921B14900852590 /* Source */,
 				8B49BA11190DF7D800F7725D /* FolderCoverView */,
@@ -1428,7 +1319,6 @@
 		8B565BAB18FFA47E002520D3 /* ImageResource */ = {
 			isa = PBXGroup;
 			children = (
-				8B7773EB1925A8FC000F35DC /* sharing */,
 				8B6E96BD19013634006E6752 /* mainDataList */,
 				8B565BAC18FFA497002520D3 /* Default-568h@2x.png */,
 				8B565BAD18FFA497002520D3 /* Default.png */,
@@ -1460,7 +1350,6 @@
 				8B6E96BE1901364B006E6752 /* 1_07@2x.png */,
 				8B6E96BF1901364B006E6752 /* 22@2x.png */,
 				8B6E96C01901364B006E6752 /* artist_Attention@2x.png */,
-				2F0B6B561925E8CB00D295A1 /* artist_NFav@2x.png */,
 				8B6E96C11901364B006E6752 /* artist_Fav@2x.png */,
 				8B6E96C21901364B006E6752 /* hotPoint_collect@2x.png */,
 				8B6E96C31901364B006E6752 /* hotPoint_data@2x.png */,
@@ -1506,28 +1395,6 @@
 				8BA8D0B91920A35B004ED279 /* ZXYUserDefaultSettings.m */,
 			);
 			name = netConnect;
-			sourceTree = "<group>";
-		};
-		8B7773EB1925A8FC000F35DC /* sharing */ = {
-			isa = PBXGroup;
-			children = (
-				8B7773F41925AA3C000F35DC /* closeimg@2x.png */,
-				8B7773F21925A926000F35DC /* xlshareimg@2x.png */,
-				8B7773F01925A91B000F35DC /* wxshareimg@2x.png */,
-				8B7773EE1925A911000F35DC /* copyimg@2x.png */,
-				8B7773EC1925A905000F35DC /* pyshareimg@2x.png */,
-			);
-			name = sharing;
-			sourceTree = "<group>";
-		};
-		8B7773FF1925E5FE000F35DC /* WeiXinSDK */ = {
-			isa = PBXGroup;
-			children = (
-				8B7774001925E610000F35DC /* libWeChatSDK.a */,
-				8B7774011925E610000F35DC /* WXApi.h */,
-				8B7774021925E610000F35DC /* WXApiObject.h */,
-			);
-			name = WeiXinSDK;
 			sourceTree = "<group>";
 		};
 		8B95E74B1921B14900852590 /* Source */ = {
@@ -1626,9 +1493,6 @@
 				8BBEE129190517EF0067FE37 /* ArtDetailViewController.h */,
 				8BBEE12A190517EF0067FE37 /* ArtDetailViewController.m */,
 				8BBEE12B190517EF0067FE37 /* ArtDetailViewController.xib */,
-				8B7773F61925B4A8000F35DC /* ArtShareViewController.h */,
-				8B7773F71925B4A8000F35DC /* ArtShareViewController.m */,
-				8B7773F81925B4A8000F35DC /* ArtShareViewController.xib */,
 				8B06167019075D2400C7D300 /* ShowBigImageViewController.h */,
 				8B06167119075D2400C7D300 /* ShowBigImageViewController.m */,
 				8B06167219075D2400C7D300 /* ShowBigImageViewController.xib */,
@@ -1753,7 +1617,6 @@
 				282B681819052815000DC945 /* build_confirm_button@2x.png in Resources */,
 				8B565BAA18FFA0C3002520D3 /* DataListViewController.xib in Resources */,
 				8BBEE114190361E90067FE37 /* personal_setting@2x.png in Resources */,
-				8B7773F11925A91B000F35DC /* wxshareimg@2x.png in Resources */,
 				8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */,
 				8B49BA1F190DF90000F7725D /* DataCMICTableViewCell.xib in Resources */,
 				2F527C74191B227E0040879F /* LCYRenrenDetailFirstLineCell.xib in Resources */,
@@ -1761,7 +1624,6 @@
 				282B680B190527F0000DC945 /* LCYMyCollectionViewController.xib in Resources */,
 				8B6E96D119013663006E6752 /* DataArtListCellTableViewCell.xib in Resources */,
 				2F10E62E191A193200AB9715 /* myCollectionCheckMark@2x.png in Resources */,
-				8B7773F51925AA3C000F35DC /* closeimg@2x.png in Resources */,
 				8BBEE13319051B480067FE37 /* ImageViewForCellTableViewCell.xib in Resources */,
 				8B6E96C81901364B006E6752 /* hotPoint_collect@2x.png in Resources */,
 				8B6E96C91901364B006E6752 /* hotPoint_data@2x.png in Resources */,
@@ -1784,14 +1646,12 @@
 				8B3D04FA192465990059343E /* DrawPlotViewController.xib in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
 				282B6807190527F0000DC945 /* LCYBuildCollectionViewCell.xib in Resources */,
-				8B7773FA1925B4A8000F35DC /* ArtShareViewController.xib in Resources */,
 				28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */,
 				8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,
 				280F3E0B190673A2000217D7 /* LCYUserInformationViewController.xib in Resources */,
 				28730D7119063F32005EA7DE /* LCYRegisterStep2ViewController.xib in Resources */,
 				2FB88F6718FE8603006880E7 /* LCYRenrenLeftBarButton@2x.png in Resources */,
-				8B7773ED1925A905000F35DC /* pyshareimg@2x.png in Resources */,
 				2FB88F3418FE4723006880E7 /* InfoPlist.strings in Resources */,
 				8B565BB418FFA497002520D3 /* Default@2x.png in Resources */,
 				8BBEE13B19051C6D0067FE37 /* work_detail_right_gray.png in Resources */,
@@ -1800,7 +1660,6 @@
 				2F1CB61F19208E9400ACA658 /* LCYSearchingListLv2ViewController.xib in Resources */,
 				8B49BA7B190E1EE800F7725D /* PlotViewViewController.xib in Resources */,
 				2F37D087191C9BA500526375 /* LCYSearchingListViewController.xib in Resources */,
-				8B7773EF1925A911000F35DC /* copyimg@2x.png in Resources */,
 				282B681B19052815000DC945 /* renren_admire@2x.png in Resources */,
 				2FB88F7B18FE9D9A006880E7 /* tab_button3@2x.png in Resources */,
 				28A997D8190125D200A09E17 /* LCYRenrenTableViewCell.xib in Resources */,
@@ -1810,9 +1669,7 @@
 				2FB88F7D18FE9D9A006880E7 /* tab_button4@2x.png in Resources */,
 				2F3836FC19163B1200C020ED /* applyRejected@2x.png in Resources */,
 				8B95E78E1921C9DB00852590 /* answerQuestion@2x.png in Resources */,
-				8B2C84811925F9280064B7EA /* iconForWeixin.png in Resources */,
 				28730D6C19063E47005EA7DE /* service_line_on@2x.png in Resources */,
-				2F0B6B571925E8CB00D295A1 /* artist_NFav@2x.png in Resources */,
 				2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */,
 				8B9C2B04192319E40059BAF8 /* AnswerSubmitCell.xib in Resources */,
 				2820EA601900F0C30053B15D /* all_ex_left_filled@2x.png in Resources */,
@@ -1821,7 +1678,6 @@
 				282B6809190527F0000DC945 /* LCYBuildExhibitionViewController.xib in Resources */,
 				2FB88F6118FE7D16006880E7 /* LCYRenrenViewController.xib in Resources */,
 				2F1CB6321920A25900ACA658 /* LCYArtistDetailViewController.xib in Resources */,
-				2F0B6B5D1925ECBF00D295A1 /* LCYShowDetailViewController.xib in Resources */,
 				8B565BB318FFA497002520D3 /* Default.png in Resources */,
 				2F527C7A191B5C590040879F /* LCYRenrenDetailFirstHeader.xib in Resources */,
 				28730D651906139F005EA7DE /* launh_sure@2x.png in Resources */,
@@ -1836,7 +1692,6 @@
 				8B95E78B1921C6DE00852590 /* AnswerSelectCellTableViewCell.xib in Resources */,
 				2F527C76191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib in Resources */,
 				2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */,
-				8B7773F31925A926000F35DC /* xlshareimg@2x.png in Resources */,
 				2897CD841908A14000D88FA7 /* nav_setting@2x.png in Resources */,
 				282B681C19052815000DC945 /* renren_comment@2x.png in Resources */,
 				2836BBC41910FD8800F70140 /* MJRefresh.bundle in Resources */,
@@ -1847,13 +1702,11 @@
 				2FB88F7918FE9D9A006880E7 /* tab_button2@2x.png in Resources */,
 				8B565BB618FFA497002520D3 /* Icon.png in Resources */,
 				2F10E62B191A137E00AB9715 /* LCYMyCollectionCell.xib in Resources */,
-				2F0B6B711926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib in Resources */,
 				2F10E62F191A193200AB9715 /* myCollectionEye@2x.png in Resources */,
 				2FB88F7718FE9D9A006880E7 /* tab_button1@2x.png in Resources */,
 				8B49B857190DF6C900F7725D /* DataAcquisitionViewController.xib in Resources */,
 				2FB88F3F18FE4723006880E7 /* Images.xcassets in Resources */,
 				2820EA621900F0C30053B15D /* all_ex_right_filled@2x.png in Resources */,
-				2F0B6B761926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib in Resources */,
 				2F1CB6421920ACD000ACA658 /* LCYArtistDetailLine2TableViewCell.xib in Resources */,
 				8B95E7861921C68F00852590 /* AnswerQuestionViewController.xib in Resources */,
 				8B49BA23190E150F00F7725D /* everyButton@2x.png in Resources */,
@@ -1950,11 +1803,9 @@
 				28730D7019063F32005EA7DE /* LCYRegisterStep2ViewController.m in Sources */,
 				8BBEE11A190383E80067FE37 /* StartArtList.m in Sources */,
 				8BBEE13219051B480067FE37 /* ImageViewForCellTableViewCell.m in Sources */,
-				2F0B6B6B1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m in Sources */,
 				280F3E0A190673A2000217D7 /* LCYUserInformationViewController.m in Sources */,
 				2F1CB6391920AC0900ACA658 /* LCYArtistDetailLine1TableViewCell.m in Sources */,
 				8B9C2B0C192328290059BAF8 /* QuestionAnswerID.m in Sources */,
-				2F0B6B5C1925ECBF00D295A1 /* LCYShowDetailViewController.m in Sources */,
 				2FE1C13D1922137B00A043E5 /* LCYShowsGalleryGalleries.m in Sources */,
 				2F8C2C7B1912463600C12F4E /* LCYArtistsTableViewCell.m in Sources */,
 				8B95E7721921B14900852590 /* CXMLNode.m in Sources */,
@@ -1963,14 +1814,11 @@
 				2836BBC81910FD8800F70140 /* MJRefreshHeaderView.m in Sources */,
 				8BA8D0B619207506004ED279 /* NetHelper.m in Sources */,
 				8B49BA1A190DF7E800F7725D /* UIView+screenshot.m in Sources */,
-				8B2C847F1925F4730064B7EA /* ShareHelper.m in Sources */,
 				8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */,
-				2F0B6B621925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m in Sources */,
 				8B95E7851921C68F00852590 /* AnswerQuestionViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
 				288837B9190E608500562EEC /* ASINetworkQueue.m in Sources */,
 				8BBEE12C190517EF0067FE37 /* ArtDetailViewController.m in Sources */,
-				8B7773F91925B4A8000F35DC /* ArtShareViewController.m in Sources */,
 				8BBEE11D190383E80067FE37 /* StartGalleryList.m in Sources */,
 				2FE1C13B19220AD700A043E5 /* LCYShowsTableViewCell.m in Sources */,
 				28A997D6190125C000A09E17 /* LCYRenrenTableViewCell.m in Sources */,
@@ -1984,7 +1832,6 @@
 				288837B6190E608500562EEC /* ASIFormDataRequest.m in Sources */,
 				282B680A190527F0000DC945 /* LCYMyCollectionViewController.m in Sources */,
 				8B95E7711921B14900852590 /* CXMLNamespaceNode.m in Sources */,
-				2F68AE301925AA1F00859186 /* LCYImageDownloadOperation.m in Sources */,
 				2F1CB6311920A25900ACA658 /* LCYArtistDetailViewController.m in Sources */,
 				8B95E77F1921C62800852590 /* QuestionNameID.m in Sources */,
 				8B95E76D1921B14900852590 /* CXMLDocument_PrivateExtensions.m in Sources */,
@@ -2019,8 +1866,6 @@
 				8B95E7731921B14900852590 /* CXMLNode_PrivateExtensions.m in Sources */,
 				288837B8190E608500562EEC /* ASIInputStream.m in Sources */,
 				2FE1C1321921C9B400A043E5 /* LCYShowsGalleryGalleryList.m in Sources */,
-				2F0B6B671925FC4E00D295A1 /* LCYXMLDictionaryParser.m in Sources */,
-				2F0B6B751926025200D295A1 /* LCYShowDetailLine3TableViewCell.m in Sources */,
 				2F1CB61E19208E9400ACA658 /* LCYSearchingListLv2ViewController.m in Sources */,
 				2836BB0B1910DE5800F70140 /* LCYArtistsAndShowsViewController.m in Sources */,
 				8B49BA7A190E1EE800F7725D /* PlotViewViewController.m in Sources */,
@@ -2032,9 +1877,7 @@
 				2836BBC51910FD8800F70140 /* MJRefreshBaseView.m in Sources */,
 				2F8C2C821915E85200C12F4E /* LCYMineExhibitions.m in Sources */,
 				8B49BA19190DF7E800F7725D /* UIFolderTableView.m in Sources */,
-				2F0B6B631925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m in Sources */,
 				282B6806190527F0000DC945 /* LCYBuildCollectionViewCell.m in Sources */,
-				2F0B6B701926009000D295A1 /* LCYShowDetailLine2TableViewCell.m in Sources */,
 				8BC5E9A11906195F00D2CF26 /* CommentDetail.m in Sources */,
 				28883790190DF46400562EEC /* Reachability.m in Sources */,
 				8BBEE12419038DBF0067FE37 /* ZXYFileOperation.m in Sources */,

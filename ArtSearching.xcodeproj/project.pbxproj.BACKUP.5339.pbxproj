@@ -1784,7 +1784,11 @@
 				8B3D04FA192465990059343E /* DrawPlotViewController.xib in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
 				282B6807190527F0000DC945 /* LCYBuildCollectionViewCell.xib in Resources */,
+<<<<<<< HEAD
+				2F0B6B6C1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib in Resources */,
+=======
 				8B7773FA1925B4A8000F35DC /* ArtShareViewController.xib in Resources */,
+>>>>>>> 7d190d4658cb622fc9fa9d1f61d5e249b44b7be0
 				28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */,
 				8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,

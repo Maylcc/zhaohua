@@ -17,6 +17,7 @@
 #import "ZXYFileOperation.h"
 #import "ShowBigImageViewController.h"
 #import "LCYArtistDetailViewController.h"
+#import "ArtShareViewController.h"
 
 @interface ArtDetailViewController ()<ArtToAuthorDelegate>
 {
@@ -29,6 +30,8 @@
     ZXYFileOperation *fileOperate;
     NSData *imageData;
     UIImage *currentImage;
+    BOOL isSharingViewShow;
+    ArtShareViewController *artShare;
 }
 @property (nonatomic,strong)NSString *workID;
 @property (nonatomic,strong)NSString *imageURL;
@@ -45,6 +48,8 @@
     {
         self.workID = userid;
         self.imageURL = workUrl;
+        isSharingViewShow = NO;
+       
     }
     return self;
 }
@@ -85,7 +90,7 @@
         artDetail = [allDetails objectAtIndex:0];
     }
     [contentTableView reloadData];
-    // Do any additional setup after loading the view from its nib.
+    artShare = [[ArtShareViewController alloc] initWithSuperView:self.view];
 }
 
 - (void)downLoadImage
@@ -299,8 +304,16 @@
     [self.navigationController pushViewController:artistDVC animated:YES];
 }
 
+- (void)toShareWithWXWBView
+{
+    [artShare presentShareView];
+}
+
+
 - (void)backViewBtn:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 @end
