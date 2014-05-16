@@ -83,11 +83,11 @@
 		2F0B6B631925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B601925F32C00D295A1 /* LCYGetGalleryInfoByIDGalleryInfo.m */; };
 		2F0B6B671925FC4E00D295A1 /* LCYXMLDictionaryParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B661925FC4E00D295A1 /* LCYXMLDictionaryParser.m */; };
 		2F0B6B6B1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B691925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.m */; };
-		2F0B6B6C1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6A1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib */; };
 		2F0B6B701926009000D295A1 /* LCYShowDetailLine2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6E1926009000D295A1 /* LCYShowDetailLine2TableViewCell.m */; };
 		2F0B6B711926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6F1926009000D295A1 /* LCYShowDetailLine2TableViewCell.xib */; };
 		2F0B6B751926025200D295A1 /* LCYShowDetailLine3TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B6B731926025200D295A1 /* LCYShowDetailLine3TableViewCell.m */; };
 		2F0B6B761926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B741926025200D295A1 /* LCYShowDetailLine3TableViewCell.xib */; };
+		2F0B6B771926135200D295A1 /* LCYShowDetailLine1TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F0B6B6A1925FEA100D295A1 /* LCYShowDetailLine1TableViewCell.xib */; };
 		2F10E5DC1919F53700AB9715 /* akalin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2F10E5DB1919F53700AB9715 /* akalin.jpg */; };
 		2F10E629191A136A00AB9715 /* LCYMyCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F10E628191A136A00AB9715 /* LCYMyCollectionCell.m */; };
 		2F10E62B191A137E00AB9715 /* LCYMyCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F10E62A191A137E00AB9715 /* LCYMyCollectionCell.xib */; };
@@ -1760,6 +1760,7 @@
 				2F10E631191A1A0500AB9715 /* tester.jpg in Resources */,
 				282B680B190527F0000DC945 /* LCYMyCollectionViewController.xib in Resources */,
 				8B6E96D119013663006E6752 /* DataArtListCellTableViewCell.xib in Resources */,
+				2F0B6B771926135200D295A1 /* LCYShowDetailLine1TableViewCell.xib in Resources */,
 				2F10E62E191A193200AB9715 /* myCollectionCheckMark@2x.png in Resources */,
 				8B7773F51925AA3C000F35DC /* closeimg@2x.png in Resources */,
 				8BBEE13319051B480067FE37 /* ImageViewForCellTableViewCell.xib in Resources */,
