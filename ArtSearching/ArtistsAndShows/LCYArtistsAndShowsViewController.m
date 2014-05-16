@@ -18,6 +18,7 @@
 #import "LCYArtistDetailViewController.h"
 #import "MJRefresh.h"
 #import "LCYShowsTableViewCell.h"
+#import "LCYShowDetailViewController.h"
 
 
 @interface LCYArtistsAndShowsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,LCYArtistsAvatarDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYArtistsAndShowsPullDownRefreshParserDelegate,LCYArtistsAndShowsPushUpRefreshParserDelegate,LCYArtistsAndShowsFirstLoadParserDelegate,LCYArtistAndShowsDownloadImageOperationDelegate>
@@ -36,6 +37,7 @@
     NSInteger numberOfArtistsPerPage;
     NSInteger numberOfShowsPerPage;
     BOOL isShowsButtonClicked;  /**< 标记画廊内容是否经过首次加载 */
+    BOOL isHUDShown;            /**< 提示框是否显示 */
 }
 
 @property (strong, nonatomic) MJRefreshHeaderView *headerView;
@@ -126,6 +128,7 @@
     isShowsButtonClicked = NO;
     isArtistLoading = NO;
     isShowsLoading = NO;
+    isHUDShown = NO;
     self.artistAvatarAddedToQueue = [NSMutableArray array];
     self.showsImageAddedToQueue = [NSMutableArray array];
     
@@ -166,6 +169,10 @@
     NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)artistPageNumber],
                                  @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfArtistsPerPage]};
     if ([LCYCommon networkAvailable]) {
+        if (!isHUDShown) {
+            isHUDShown = YES;
+            [LCYCommon showHUDTo:self.view withTips:nil];
+        }
         isArtistLoading = YES;
         LCYArtistsAndShowsFirstLoadParser *parser = [[LCYArtistsAndShowsFirstLoadParser alloc] init];
         parser.currentStatus = LCYArtistsAndShowsStatusArtists;
@@ -180,6 +187,10 @@
 - (void)loadShows{
     isShowsButtonClicked = YES;
     if ([LCYCommon networkAvailable]) {
+        if (!isHUDShown) {
+            isHUDShown = YES;
+            [LCYCommon showHUDTo:self.view withTips:nil];
+        }
         isShowsLoading = YES;
         NSDictionary *parameter = @{@"pageIndex": [NSString stringWithFormat:@"%ld",(long)showsPageNumber],
                                     @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
@@ -262,6 +273,10 @@
         artistPageNumber++;
         isArtistLoading = NO;
         [self reloadTableView];
+        if (isHUDShown) {
+            [LCYCommon hideHUDFrom:self.view];
+            isHUDShown = NO;
+        }
     }
     // 首次加载所有画廊
     else if (parser.currentStatus == LCYArtistsAndShowsStatusShows) {
@@ -270,6 +285,10 @@
         showsPageNumber++;
         isShowsLoading = NO;
         [self reloadTableView];
+        if (isHUDShown) {
+            [LCYCommon hideHUDFrom:self.view];
+            isHUDShown = NO;
+        }
     }
 }
 
@@ -461,10 +480,17 @@
     if (currentStatus == LCYArtistsAndShowsStatusArtists) {
         LCYArtists *artist = [self.artistsArray objectAtIndex:indexPath.row];
         NSString *artistID = [NSString stringWithFormat:@"%.f",artist.artistId];
-        // 跳转到作者详细
+        // 跳转到艺术家详细
         LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
         artistDVC.artistID = artistID;
         [self.navigationController pushViewController:artistDVC animated:YES];
+    } else if (currentStatus == LCYArtistsAndShowsStatusShows){
+        LCYShowsGalleryGalleries *gallery = [self.showsArray objectAtIndex:indexPath.row];
+        NSString *galleryID = [NSString stringWithFormat:@"%.f,",gallery.galleriesIdentifier];
+        // 跳转到画廊详细
+        LCYShowDetailViewController *showDVC = [[LCYShowDetailViewController alloc] init];
+        showDVC.galleryID = galleryID;
+        [self.navigationController pushViewController:showDVC animated:YES];
     }
 }
 #pragma mark - UISearchBar Delegate Methods

@@ -11,12 +11,14 @@
 #import "LCYDataModels.h"
 #import "LCYArtistDetailLine1TableViewCell.h"
 #import "LCYArtistDetailLine2TableViewCell.h"
+#import "LCYImageDownloadOperation.h"
 
-@interface LCYArtistDetailViewController ()<LCYArtistDetailViewControllerXMLParserDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface LCYArtistDetailViewController ()<LCYArtistDetailViewControllerXMLParserDelegate,UITableViewDelegate,UITableViewDataSource,LCYImageDownloadOperationDelegate,LCYArtistDetailLine2TableViewCellDelegate>
 {
     BOOL isNib1Registered;
     BOOL isNib2Registered;
     BOOL hasDownloadedAvatarImage;
+    BOOL isShareViewShown;
 }
 /**
  *  艺术家信息
@@ -26,6 +28,21 @@
  *  艺术家信息列表
  */
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
+
+@property (strong, nonatomic) NSOperationQueue *queue;
+/**
+ *  多线程-下载头像
+ */
+@property (strong, nonatomic) LCYImageDownloadOperation *operation;
+/**
+ *  每当头像进行下载，就将其加入队列，避免多次加载不存在的图片
+ */
+@property (strong, nonatomic) NSMutableArray *artistAvatarAddedToQueue;
+/**
+ *  点击分享弹出的窗口
+ */
+@property (strong, nonatomic) IBOutlet UIView *shareView;
+
 @end
 
 @implementation LCYArtistDetailViewController
@@ -47,6 +64,8 @@
     isNib1Registered = NO;
     isNib2Registered = NO;
     hasDownloadedAvatarImage = NO;
+    isShareViewShown = NO;
+    self.artistAvatarAddedToQueue = [NSMutableArray array];
     
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -85,11 +104,14 @@
         [networkUnabailableAlert show];
     }
 }
+
+- (void)reloadTableView{
+    [self.infoTableView reloadData];
+}
 #pragma mark - LCYArtistDetailViewControllerXMLParserDelegate
 - (void)didFinishGetXMLInfo:(id)info{
     self.artistInfo = info;
-    // TODO:更新界面，将艺术家信息进行显示
-    
+    // 更新界面，将艺术家信息进行显示
     [self.infoTableView setHidden:NO];
     [self.infoTableView reloadData];
     [LCYCommon hideHUDFrom:self.view];
@@ -123,6 +145,42 @@
         LCYArtistDetailLine1TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
         cell.artistNameLabel.text = self.artistInfo.artistName;
         cell.artistEducationLabel.text = self.artistInfo.artistEducation;
+        // 显示头像
+        NSString *originalPath = self.artistInfo.artistPortalS;
+        if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]]) {
+            UIImage *avatarImage = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:originalPath]];
+            cell.icyImage.image = avatarImage;
+        } else {
+            cell.icyImage.image = [UIImage imageNamed:@"akalin.jpg"];
+            // 检查是否已经下载过一次，避免重复下载不存在的文件
+            BOOL hasDownloaded = NO;
+            for (NSString *oneFileName in self.artistAvatarAddedToQueue) {
+                if ([oneFileName isEqualToString:originalPath]) {
+                    hasDownloaded = YES;
+                    break;
+                }
+            }
+            if (!hasDownloaded) {
+                // 启动下载线程
+                [self.artistAvatarAddedToQueue addObject:originalPath];
+                if (!self.queue) {
+                    self.queue = [[NSOperationQueue alloc] init];
+                }
+                if (!self.operation) {
+                    self.operation = [[LCYImageDownloadOperation alloc] init];
+                    self.operation.delegate = self;
+                    [self.operation initConfigure];
+                    [self.queue addOperation:self.operation];
+                }
+                if (self.operation.isCancelled) {
+                    self.operation = [[LCYImageDownloadOperation alloc] init];
+                    self.operation.delegate = self;
+                    [self.queue addOperation:self.operation];
+                }
+                [self.operation addImageName:originalPath];
+                LCYLOG(@"add:%@",originalPath);
+            }
+        }
         return cell;
     } else if (indexPath.row == 1){
         static NSString *identifier2 = @"LCYArtistDetailLine2TableViewCellIdentifier";
@@ -132,6 +190,7 @@
             isNib2Registered = YES;
         }
         LCYArtistDetailLine2TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier2];
+        cell.delegate = self;
         return cell;
     } else {
         static NSString *identifier3= @"LCYArtistDetailLine3TableViewCellIdentifier";
@@ -143,6 +202,50 @@
         }
         cell.textLabel.text = [NSString stringWithFormat:@"作品（%.f）",self.artistInfo.artistWorkCount];
         return cell;
+    }
+}
+
+#pragma mark - LCYImageDownloadOperation
+- (void)imageDownloadDidFinished{
+    [self reloadTableView];
+}
+
+#pragma mark - LCYArtistDetailLine2TableViewCellDelegate 点击关注和分享
+- (void)sharedButtonDidClicked{
+    if (!isShareViewShown) {
+        // 显示分享菜单
+        CGRect frame;
+        if (IS_IPHONE5) {
+            frame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
+        } else {
+            frame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
+        }
+        self.shareView.frame = frame;
+        [self.view addSubview:self.shareView];
+        isShareViewShown = YES;
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect newFrame;
+            if (IS_IPHONE5) {
+                newFrame = CGRectMake(0, 568-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
+            } else {
+                newFrame = CGRectMake(0, 480-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
+            }
+            [self.shareView setFrame:newFrame];
+        }];
+    } else {
+        // 隐藏分享菜单
+        isShareViewShown = NO;
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect newFrame;
+            if (IS_IPHONE5) {
+                newFrame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
+            } else {
+                newFrame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
+            }
+            [self.shareView setFrame:newFrame];
+        } completion:^(BOOL finished) {
+            [self.shareView removeFromSuperview];
+        }];
     }
 }
 @end
@@ -173,3 +276,4 @@
     }
 }
 @end
+

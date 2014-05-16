@@ -110,6 +110,7 @@ CA_EXTERN NSString *const GetAllExhibition; /**< 主页：获得所有展览 */
 CA_EXTERN NSString *const GetArtistList;    /**< 所有艺术家 */
 CA_EXTERN NSString *const GetGalleryList;   /**< 所有画廊 */
 CA_EXTERN NSString *const GetArtistInforById;       /**< 根据ID获取艺术家详细信息 */
+CA_EXTERN NSString *const GetGalleryInfoById;       /**< 根据ID获取画廊详细信息 */
 CA_EXTERN NSString *const GetOwnExhibition; /**< 我的展览 */
 CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
 CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */

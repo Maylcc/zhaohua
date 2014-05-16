@@ -131,6 +131,12 @@
 - (IBAction)forgetPWButtonPressed:(id)sender {
 }
 
+- (IBAction)backgroundTouchDown:(id)sender {
+    [self.userNameTextField resignFirstResponder];
+    [self.passwordTextField resignFirstResponder];
+}
+
+
 #pragma mark - UITextField Delegate Methods
 - (IBAction)textFieldDidEndOnExit:(id)sender{
     UITextField *textField = sender;

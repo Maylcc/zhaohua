@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface LCYArtistDetailViewController : UIViewController
 @property (strong, nonatomic) NSString *artistID;
 @end
+
+#pragma mark - 解析XML
 
 @protocol LCYArtistDetailViewControllerXMLParserDelegate <NSObject>
 @optional

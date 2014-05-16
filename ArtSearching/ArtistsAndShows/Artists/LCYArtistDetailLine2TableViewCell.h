@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LCYArtistDetailLine2TableViewCell : UITableViewCell
+@protocol LCYArtistDetailLine2TableViewCellDelegate <NSObject>
+@optional
+- (void)sharedButtonDidClicked;
+@end
 
+@interface LCYArtistDetailLine2TableViewCell : UITableViewCell
+@property (weak, nonatomic) id<LCYArtistDetailLine2TableViewCellDelegate>delegate;
 @end

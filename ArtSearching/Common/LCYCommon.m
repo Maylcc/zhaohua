@@ -29,6 +29,7 @@ NSString *const GetApplyerInfo          = @"GetApplyerInfo";
 NSString *const WorkListCategory        = @"WorkListCategory";
 NSString *const WorkListCategoryById    = @"WorkListCategoryById";
 NSString *const GetArtistInforById      = @"GetArtistInforById";
+NSString *const GetGalleryInfoById      = @"GetGalleryInfoById";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";

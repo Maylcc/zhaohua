@@ -22,4 +22,11 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)shareButtonPressed:(id)sender {
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(sharedButtonDidClicked)]) {
+        [self.delegate sharedButtonDidClicked];
+    }
+}
+
 @end
