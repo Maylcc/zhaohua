@@ -42,6 +42,7 @@
 
 - (void)initViewControllerS
 {
+    // TODO:此处获取数据需要传递questionID服务器端没有完成
     drawPlotViewTotal = [[DrawPlotViewController alloc] initWithDataType:currentType andQuestionID:nil];
     drawPlotView1     = [[DrawPlotViewController alloc] initWithDataType:currentPage andQuestionID:nil];
     drawPlotView2     = [[DrawPlotViewController alloc] initWithDataType:currentType andQuestionID:nil];
@@ -96,7 +97,7 @@
 {
     UIButton *selectBtn = (UIButton *)sender;
     NSLog(@"%@",selectBtn.titleLabel.text);
-    CGRect rect = drawPlotViewTotal.view.frame;
+    //CGRect rect = drawPlotViewTotal.view.frame;
     if([selectBtn.titleLabel.text isEqualToString:@"每周"])
     {
         currentType = 0;
@@ -135,17 +136,6 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-}
-
-- (void)addSubPlotView
-{
-    for(int i = 1;i<8;i++)
-    {
-        // TODO:需要解决questionID;
-        DrawPlotViewController *drawPlotQuestion = [[DrawPlotViewController alloc] initWithDataType:currentType andQuestionID:nil];
-        drawPlotQuestion.view.frame = CGRectMake(i*self.ploatScroll.frame.size.width, 0, self.ploatScroll.frame.size.width , self.ploatScroll.frame.size.height);
-        [self.ploatScroll addSubview:drawPlotQuestion.view];
-    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

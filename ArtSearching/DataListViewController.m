@@ -423,6 +423,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         NSString *needUpdate = [dic valueForKey:@"needupdate"];
         NSString *needAnswerAgain = [dic valueForKey:@"needansweragain"];
         // !!!:判断是否更新
+        // TODO:此处需要打开注释，服务器端没有完成，现阶段注释才能进行下一个功能的开发
         /*
         if([needUpdate isEqualToString:@"yes"])
         {

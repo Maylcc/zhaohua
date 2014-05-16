@@ -29,4 +29,12 @@
         [self.delegate artToAuthorDelegateWithID:self.indexNum];
     }
 }
+
+- (IBAction)actionForSharing:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(toShareWithWXWBView)])
+    {
+        [self.delegate toShareWithWXWBView];
+    }
+}
 @end
