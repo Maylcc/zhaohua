@@ -155,6 +155,8 @@
 		8B06167919079B1C00C7D300 /* AuthodDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167719079B1C00C7D300 /* AuthodDetailViewController.m */; };
 		8B06167A19079B1C00C7D300 /* AuthodDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B06167819079B1C00C7D300 /* AuthodDetailViewController.xib */; };
 		8B0616801907A1FF00C7D300 /* ArtistInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B06167F1907A1FF00C7D300 /* ArtistInfo.m */; };
+		8B3D04F9192465990059343E /* DrawPlotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3D04F7192465990059343E /* DrawPlotViewController.m */; };
+		8B3D04FA192465990059343E /* DrawPlotViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3D04F8192465990059343E /* DrawPlotViewController.xib */; };
 		8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B49B854190DF6C900F7725D /* DataAcquisitionViewController.m */; };
 		8B49B857190DF6C900F7725D /* DataAcquisitionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B49B855190DF6C900F7725D /* DataAcquisitionViewController.xib */; };
 		8B49BA18190DF7E800F7725D /* FolderCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B49BA13190DF7E800F7725D /* FolderCoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -482,6 +484,9 @@
 		8B06167D1907A1FF00C7D300 /* DataModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModels.h; sourceTree = "<group>"; };
 		8B06167E1907A1FF00C7D300 /* ArtistInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArtistInfo.h; sourceTree = "<group>"; };
 		8B06167F1907A1FF00C7D300 /* ArtistInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArtistInfo.m; sourceTree = "<group>"; };
+		8B3D04F6192465990059343E /* DrawPlotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawPlotViewController.h; sourceTree = "<group>"; };
+		8B3D04F7192465990059343E /* DrawPlotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawPlotViewController.m; sourceTree = "<group>"; };
+		8B3D04F8192465990059343E /* DrawPlotViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawPlotViewController.xib; sourceTree = "<group>"; };
 		8B49B853190DF6C900F7725D /* DataAcquisitionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataAcquisitionViewController.h; sourceTree = "<group>"; };
 		8B49B854190DF6C900F7725D /* DataAcquisitionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataAcquisitionViewController.m; sourceTree = "<group>"; };
 		8B49B855190DF6C900F7725D /* DataAcquisitionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataAcquisitionViewController.xib; sourceTree = "<group>"; };
@@ -1298,6 +1303,9 @@
 				8B49B853190DF6C900F7725D /* DataAcquisitionViewController.h */,
 				8B49B854190DF6C900F7725D /* DataAcquisitionViewController.m */,
 				8B49B855190DF6C900F7725D /* DataAcquisitionViewController.xib */,
+				8B3D04F6192465990059343E /* DrawPlotViewController.h */,
+				8B3D04F7192465990059343E /* DrawPlotViewController.m */,
+				8B3D04F8192465990059343E /* DrawPlotViewController.xib */,
 				8B49BA77190E1EE800F7725D /* PlotViewViewController.h */,
 				8B49BA78190E1EE800F7725D /* PlotViewViewController.m */,
 				8B49BA79190E1EE800F7725D /* PlotViewViewController.xib */,
@@ -1635,6 +1643,7 @@
 				8B49BA21190DFA3200F7725D /* whiteDownArrow.png in Resources */,
 				2FE1C1371921F1AA00A043E5 /* LCYAttentShowViewController.xib in Resources */,
 				8BBEE13F190523C00067FE37 /* comment_write@2x.png in Resources */,
+				8B3D04FA192465990059343E /* DrawPlotViewController.xib in Resources */,
 				8BBEE144190524E80067FE37 /* UserCommentCell.xib in Resources */,
 				282B6807190527F0000DC945 /* LCYBuildCollectionViewCell.xib in Resources */,
 				28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */,
@@ -1769,6 +1778,7 @@
 				8BBEE117190383E70067FE37 /* StartArtistsList.m in Sources */,
 				8B95E76B1921B14900852590 /* CXHTMLDocument.m in Sources */,
 				2F3836F71916389200C020ED /* LCYApplyAccAndRegTableViewCell.m in Sources */,
+				8B3D04F9192465990059343E /* DrawPlotViewController.m in Sources */,
 				289BD3521909137C000A8C4B /* LCYRegisterGlobal.m in Sources */,
 				8B95E7701921B14900852590 /* CXMLElement_ElementTreeExtensions.m in Sources */,
 				8BBEE13719051BD70067FE37 /* ArtDetailContentArtCell.m in Sources */,
@@ -2044,7 +2054,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ArtSearching/ArtSearching-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

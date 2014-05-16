@@ -11,7 +11,7 @@
 @class NetHelper;
 @protocol isCMICDown <NSObject>
 
-- (void)completeDownCMICData:(BOOL)isSuccess;
+- (void)completeDownCMICData:(BOOL)isSuccess withResponseDic:(NSDictionary *)responseDic;
 
 @end
 
@@ -23,4 +23,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *indexNum;
 @property (weak, nonatomic) IBOutlet UIImageView *arrowPic;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *waitProgress;
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImage;
 @end

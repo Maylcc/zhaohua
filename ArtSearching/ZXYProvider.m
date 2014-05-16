@@ -465,7 +465,10 @@ static ZXYProvider *instance = nil;
     detail.workSize        = [self formatOfNull:[dic objectForKey:@"workSize"] ];
     detail.workRecord      = [self formatOfNull:[dic objectForKey:@"workRecord"] ];
     NSArray *allComment    = [dic objectForKey:@"commentList"];
-    detail.beCommentTime = [NSNumber numberWithInt:allComment.count];
+    if(allComment.count)
+    {
+        detail.beCommentTime = [NSNumber numberWithInt:allComment.count];
+    }
     CommentDetail *comment ;
     for(int i = 0;i<allComment.count;i++)
     {

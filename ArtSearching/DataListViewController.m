@@ -36,6 +36,8 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 {
     BOOL isCMICDown; //判断CMI总体指数是否下载完成
     InsertView *insertViewL; //提示视图
+    NSDictionary *dataOfCMAICView;
+    UIImageView *_arrowImage;
 }
 @end
 
@@ -175,6 +177,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                 if([oneObject isKindOfClass:[DataCMICTableViewCell class]])
                 {
                     cmicCell = (DataCMICTableViewCell *)oneObject;
+                    _arrowImage = cmicCell.arrowImage;
                     cmicCell.delegate = self;
                 }
             }
@@ -365,19 +368,26 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 #pragma mark - 拉开效果
 - (void)tableViewOpenGl
 {
+    if(dataOfCMAICView == nil)
+    {
+        return;
+    }
+    _arrowImage.transform = CGAffineTransformMakeRotation((180.0f * M_PI) / 180.0f);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    dataAc = [[DataAcquisitionViewController alloc] initWithNibName:@"DataAcquisitionViewController" bundle:nil];
+    dataAc = [[DataAcquisitionViewController alloc] initWithInitialDataDic:dataOfCMAICView];
     dataTableV.scrollEnabled = NO;
     UIFolderTableView *folderTableView = (UIFolderTableView *)dataTableV;
     [folderTableView openFolderAtIndexPath:indexPath WithContentView:dataAc.view
                                  openBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
                                      // opening actions
-                                 }
+                                     _arrowImage.transform = CGAffineTransformMakeRotation(2*M_PI);
+                                }
                                 closeBlock:^(UIView *subClassView, CFTimeInterval duration, CAMediaTimingFunction *timingFunction){
                                     // closing actions
                                 }
                            completionBlock:^{
                                // completed actions
+                               
                                dataTableV.scrollEnabled = YES;
                            }];
 
@@ -478,11 +488,12 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 }
 
 #pragma mark - CMAIC统计值下载完成代理
-- (void)completeDownCMICData:(BOOL)isSuccess
+- (void)completeDownCMICData:(BOOL)isSuccess withResponseDic:(NSDictionary *)responseDic
 {
     if(isSuccess)
     {
         isCMICDown = YES;
+        dataOfCMAICView = responseDic;
     }
     else
     {

@@ -53,29 +53,21 @@
     [self.waitProgress stopAnimating];
     if(flag == requestCompleteSuccess)
     {
-        if([self.delegate respondsToSelector:@selector(completeDownCMICData:)])
-        {
-            NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[opertation responseData]];
-            // !!!:解析CMAIC指数
-            parser.delegate = self;
-            [parser parse];
-            // !!!:通知代理DataListViewController
-            [self.delegate completeDownCMICData:YES];
-        }
-        else
-        {
-            NSAssert(![self.delegate respondsToSelector:@selector(completeDownCMICData:)], @"isCMICDown 的代理没有实现必须的方法");
-        }
+        NSXMLParser *parser = [[NSXMLParser alloc] initWithData:[opertation responseData]];
+        // !!!:解析CMAIC指数
+        parser.delegate = self;
+        [parser parse];
+        
     }
     else
     {
-        if([self.delegate respondsToSelector:@selector(completeDownCMICData:)])
+        if([self.delegate respondsToSelector:@selector(completeDownCMICData:withResponseDic:)])
         {
-            [self.delegate completeDownCMICData:NO];
+            [self.delegate completeDownCMICData:NO withResponseDic:nil];
         }
         else
         {
-            NSAssert(![self.delegate respondsToSelector:@selector(completeDownCMICData:)], @"isCMICDown 的代理没有实现必须的方法");
+            NSAssert(![self.delegate respondsToSelector:@selector(completeDownCMICData:withResponseDic:)], @"isCMICDown 的代理没有实现必须的方法");
         }
     }
 }
@@ -122,6 +114,15 @@
     NSDictionary *parserDic = [NSJSONSerialization JSONObjectWithData:[stringFormatter dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:nil];
     NSString *cmaicString = [parserDic objectForKey:@"camci"];
     self.indexNum.text = cmaicString;
+    // !!!:通知代理DataListViewController
+    if([self.delegate respondsToSelector:@selector(completeDownCMICData:withResponseDic:)])
+    {
+        [self.delegate completeDownCMICData:YES withResponseDic:parserDic];
+    }
+    else
+    {
+        NSAssert(![self.delegate respondsToSelector:@selector(completeDownCMICData:withResponseDic:)], @"isCMICDown 的代理没有实现必须的方法");
+    }
 }
 
 @end

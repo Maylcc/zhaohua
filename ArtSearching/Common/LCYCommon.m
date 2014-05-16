@@ -44,6 +44,7 @@ NSString *const getMarketTotalIndex = @"GetMarketTotalIndex";
 NSString *const getQuestionStatus   = @"GetQuestionStatus";
 NSString *const getQuestions        = @"GetQuestions";
 NSString *const answerQuestion      = @"AnswerQuestion";
+NSString *const getQuestionlIndex   = @"GetQuestionlIndex";
 
 @implementation LCYCommon
 
