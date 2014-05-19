@@ -18,6 +18,10 @@
 #import "ShowBigImageViewController.h"
 #import "LCYArtistDetailViewController.h"
 #import "ArtShareViewController.h"
+#import "XDPopUpView.h"
+#import "MBProgressHUD.h"
+#import "LCYRegisterViewController.h"
+#import "ArtDetailCommentViewController.h"
 
 @interface ArtDetailViewController ()<ArtToAuthorDelegate>
 {
@@ -32,6 +36,10 @@
     UIImage *currentImage;
     BOOL isSharingViewShow;
     ArtShareViewController *artShare;
+    XDPopUpView *popView;
+    MBProgressHUD *insertView;
+    UIImageView *collectImageView;
+    BOOL isCollect;
 }
 @property (nonatomic,strong)NSString *workID;
 @property (nonatomic,strong)NSString *imageURL;
@@ -49,7 +57,7 @@
         self.workID = userid;
         self.imageURL = workUrl;
         isSharingViewShow = NO;
-       
+        popView = [[XDPopUpView alloc] init];
     }
     return self;
 }
@@ -63,6 +71,13 @@
     [backBtn addTarget:self action:@selector(backViewBtn:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBtn;
+    
+    UIButton *showDataBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    showDataBtn.frame = CGRectMake(0, 0, 45, 45);
+    [showDataBtn setImage:[UIImage imageNamed:@"hotPoint_data.png"] forState:UIControlStateNormal];
+    [showDataBtn addTarget:self action:@selector(showDataView) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *showDataBtnright = [[UIBarButtonItem alloc] initWithCustomView:showDataBtn];
+    self.navigationItem.rightBarButtonItem = showDataBtnright;
     NSNotificationCenter *noti = [NSNotificationCenter defaultCenter];
     [noti addObserver:self selector:@selector(refreshCurrentTable:) name:@"artDetailNotification" object:nil];
        //[netConnect obtainStartArtDetailInfo:self.workID];
@@ -80,8 +95,8 @@
     }
     dataProvider = [ZXYProvider sharedInstance];
     netConnect = [NetConnect sharedSelf];
-    [NSThread detachNewThreadSelector:@selector(obtainStartArtDetailInfo:) toTarget:netConnect withObject:self.workID];
     
+    [self getDataFromServe];
     NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
     commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
     
@@ -91,6 +106,7 @@
     }
     [contentTableView reloadData];
     artShare = [[ArtShareViewController alloc] initWithSuperView:self.view];
+    //insertView = [[MBProgressHUD alloc] initWithView:self.view];
 }
 
 - (void)downLoadImage
@@ -123,21 +139,31 @@
     
 }
 
+- (void)getDataFromServe
+{
+     [NSThread detachNewThreadSelector:@selector(obtainStartArtDetailInfo:) toTarget:netConnect withObject:self.workID];
+}
+
 - (void)refreshCurrentTable:(NSNotification *)noti
 {
     if(!self)
     {
         return;
     }
+    
+    [self performSelectorOnMainThread:@selector(reloadData) withObject:self waitUntilDone:YES];
+}
+
+- (void)reloadData
+{
     NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
     if(allDetails.count)
     {
         artDetail = [allDetails objectAtIndex:0];
     }
-
+    
     commentArr = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
-       [contentTableView reloadData];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"artDetailNotification" object:nil];
+    [contentTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -237,7 +263,9 @@
             imageCell.concerdNum.text = [NSString stringWithFormat:@"%d次关注",artDetail.beStoreTime.intValue];
             imageCell.commentNum.text = [NSString stringWithFormat:@"这张画已经被说了%d次",artDetail.beCommentTime.intValue];
             imageCell.indexNum = artDetail.artistID;
+            collectImageView = imageCell.concerdNumImage;
         }
+        NSString *userID = [LCYCommon currentUserID];
         imageCell.delegate = self;
         cell = imageCell;
     }
@@ -315,5 +343,60 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)showDataView
+{
+    [popView GetStarWorkPVInfoById:_workID];
+    [popView setpopupviewshow:YES];
+}
 
+- (void)payAttention
+{
+    if([LCYCommon isUserLogin])
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        NSString *stringURL = [NSString stringWithFormat:@"%@%@",hostForXM,getAddStore];
+        NSString *userID = [LCYCommon currentUserID];
+        NSString *work_ids = self.workID;
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:userID,@"uid",work_ids,@"id",[NSNumber numberWithInt:0],@"type", nil];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFXMLParserResponseSerializer serializer];
+        [manager POST:stringURL parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if(!isCollect)
+            {
+                collectImageView.image = [UIImage imageNamed:@"artist_NFav"];
+                isCollect = YES;
+            }
+            else
+            {
+                collectImageView.image = [UIImage imageNamed:@"hotPoint_collect"];
+                isCollect = NO;
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+        }];
+    }
+    else
+    {
+        LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
+        [self.navigationController pushViewController:registerVC animated:YES];
+    }
+}
+
+- (void)addComment
+{
+    if(![LCYCommon isUserLogin])
+    {
+        LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
+        [self.navigationController pushViewController:registerVC animated:YES];
+
+    }
+    else
+    {
+        ArtDetailCommentViewController *comment = [[ArtDetailCommentViewController alloc] initWithNibName:@"ArtDetailCommentViewController" bundle:nil];
+        comment.workID = self.workID;
+        [self.navigationController pushViewController:comment animated:YES];
+    }
+}
 @end

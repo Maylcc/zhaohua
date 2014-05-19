@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "WXApi.h"
+#import "WeiboSDK.h"
 /**
  *  微信返回到应用代理
  *
@@ -23,6 +24,7 @@ typedef enum
 {
     SharedTypeWX = 0,
     SharedTypePY = 1,
+    SharedTypeWB = 2,
 }SharedType;
 @interface ShareHelper : NSObject<WXApiDelegate>
 
@@ -38,4 +40,9 @@ typedef enum
  *  @return 安装返回YES，没有安装返回NO
  */
 - (BOOL)isWXInstalled;
+
+/*! @brief 微博分享
+ *  @param 安装返回YES，没有安装返回NO
+ */
+- (void)weiBoShare:(SharedType)type ;
 @end

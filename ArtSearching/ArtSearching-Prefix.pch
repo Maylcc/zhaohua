@@ -19,3 +19,34 @@
 #endif
 
 #import "LCYGlobalHeader.h"
+#define c_TitleFont      [UIColor colorWithRed:184.0/255.0 green:235.0/255.0 blue:61.0/255.0 alpha:1.0];
+// 选中文字_蓝色高亮
+#define c_SelectedFont   [UIColor colorWithRed:50.0/255.0 green:143.0/255.0 blue:212.0/255.0 alpha:1.0];
+// 未选中文字_灰色
+#define c_UnselectedFont [UIColor colorWithRed:170.0/255.0 green:170.0/255.0 blue:170.0/255.0 alpha:1.0];
+
+// 今年_红
+#define c_CurrentYear    [UIColor colorWithRed:224.0/255.0 green:58.0/255.0 blue:62.0/255.0 alpha:1.0];
+// 去年_绿
+//#define c_LastYear       [UIColor colorWithRed:98.0/255.0 green:187.0/255.0 blue:71.0/255.0 alpha:1.0];
+// 白色
+#define c_LastYear       [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+// 前年_蓝
+//#define c_BeforeLastYear [UIColor colorWithRed:0.0/255.0 green:157.0/255.0 blue:220.0/255.0 alpha:1.0];
+//灰绿
+#define c_BeforeLastYear [UIColor colorWithRed:124.0/255.0 green:152.0/255.0 blue:100.0/255.0 alpha:1.0];
+// 预期_洋红
+#define c_Forecast       [UIColor colorWithRed:255.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:1.0];
+
+// 高于预估值_绿
+#define c_MoreThan       [UIColor colorWithRed:184.0/255.0 green:235.0/255.0 blue:61.0/255.0 alpha:1.0];
+// 低于预估值_红
+#define c_LessThan       [UIColor colorWithRed:224.0/255.0 green:58.0/255.0 blue:62.0/255.0 alpha:1.0];
+// 中间值_黄
+#define c_MiddleOf       [UIColor colorWithRed:251.0/255.0 green:183.0/255.0 blue:38.0/255.0 alpha:1.0];
+// 未展业_灰
+#define c_None           [UIColor colorWithRed:223.0/255.0 green:223.0/255.0 blue:223.0/255.0 alpha:1.0];
+
+// 高亮蓝
+#define c_HoverBlue      [UIColor colorWithRed:0.0/255.0 green:157.0/255.0 blue:220.0/255.0 alpha:1.0];
+#define c_Qing           [UIColor colorWithRed:5.0/255.0 green:160.0/255.0 blue:233.0/255.0 alpha:1.0];

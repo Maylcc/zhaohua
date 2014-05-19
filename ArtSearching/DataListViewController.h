@@ -12,6 +12,7 @@
 #import "NetConnect.h"
 #import "ZXYProvider.h"
 #import "NetHelperDelegate.h"
+#import "LineChartViewDemo.h"
 @class ZXYFileOperation;
 @class UIFolderTableView;
 @class DataAcquisitionViewController;
@@ -29,5 +30,25 @@
     ZXYFileOperation *fileOperation; //处理图片下载路径的类
     DataAcquisitionViewController *dataAc; // 用来显示信心指数的视图控制器
     NetHelper *netHelper;    //下载数据帮助类
+    NSString *historyHighAttention;
+    NSString *historyHighScan;
+    NSString *threeMonthHighAttention;
+    NSString *threeMonthHighScan;
+    NSString *todayAttentionData;
+    NSString *todayScanData;
+    
+    NSMutableArray *pointArr;
+    NSMutableArray  *pointArr2;
+    
+    UILabel *scanNum;
+    UIImageView * imageView;// 背景
+    UILabel *occNum;//关注
+    UILabel *rateNum;
+    
+    UILabel *topLabel1;
+    UILabel *topLabel2;
+    UILabel *topLabel3;
+    UILabel *topLabel4;
+    LineChartViewDemo* Chartline;
 }
 @end

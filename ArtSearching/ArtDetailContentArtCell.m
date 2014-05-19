@@ -8,6 +8,11 @@
 
 #import "ArtDetailContentArtCell.h"
 #import "LCYArtistDetailViewController.h"
+@interface ArtDetailContentArtCell()
+@property (weak, nonatomic) IBOutlet UIButton *collectBtn;
+
+@end
+
 @implementation ArtDetailContentArtCell
 
 - (void)awakeFromNib
@@ -35,6 +40,23 @@
     if([self.delegate respondsToSelector:@selector(toShareWithWXWBView)])
     {
         [self.delegate toShareWithWXWBView];
+    }
+}
+
+- (IBAction)actionCollect:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(payAttention)])
+    {
+        [self.delegate payAttention];
+    }
+
+}
+
+- (IBAction)addComment:(id)sender
+{
+    if([self.delegate respondsToSelector:@selector(addComment)])
+    {
+        [self.delegate addComment];
     }
 }
 @end
