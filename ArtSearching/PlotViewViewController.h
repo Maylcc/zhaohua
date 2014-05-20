@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CorePlotHeaders/CorePlot-CocoaTouch.h"
-@interface PlotViewViewController : UIViewController<CPTPlotDataSource, CPTAxisDelegate>
+@interface PlotViewViewController : UIViewController 
 {
     //CPTXYGraph *graph;
     CPTXYGraph * _graph;

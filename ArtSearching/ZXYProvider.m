@@ -469,9 +469,10 @@ static ZXYProvider *instance = nil;
     {
         detail.beCommentTime = [NSNumber numberWithInt:allComment.count];
     }
-    CommentDetail *comment ;
+    
     for(int i = 0;i<allComment.count;i++)
     {
+        CommentDetail *comment ;
         NSDictionary *commentDic = [allComment objectAtIndex:i];
         //NSLog(@"test is %@",[commentDic objectForKey:@"commentId"]);
         comment = [NSEntityDescription insertNewObjectForEntityForName:@"CommentDetail" inManagedObjectContext:manageContext];
@@ -482,6 +483,7 @@ static ZXYProvider *instance = nil;
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSDate *date = [dateFormatter dateFromString:[commentDic objectForKey:@"commentTime"]];
         comment.comdate = date;
+        [manageContext save:nil];
     }
     if([manageContext save:nil])
     {

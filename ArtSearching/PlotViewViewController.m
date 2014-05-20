@@ -130,7 +130,6 @@
     dataSourceLinePlot2.dataLineStyle = lineStyle;
     dataSourceLinePlot2.identifier = GREEN_PLOT_IDENTIFIER2;
     dataSourceLinePlot2.dataSource = self;
-    
     // Put an area gradient under the plot above
     //
     CPTColor * areaColor2            = [CPTColor colorWithComponentRed:0.3 green:0.3 blue:0.3 alpha:0.8];
