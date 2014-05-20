@@ -11,7 +11,9 @@
 #import <Accelerate/Accelerate.h>
 #import <CoreImage/CoreImage.h>
 #import "ShareHelper.h"
-@interface ArtShareViewController ()<ResponseForShared>
+#import "UMSocial.h"
+#import "InsertView.h"
+@interface ArtShareViewController ()<ResponseForShared,UMSocialUIDelegate>
 {
     UIView *_selfSuperView;
     BOOL isSharingViewShow;
@@ -20,6 +22,7 @@
     id  owner;
     UIImage *currentImage;
     ShareHelper *shareHelper;
+    InsertView *insertView;
 }
 @property(nonatomic,strong)UIView *selfSuperView;
 @end
@@ -35,6 +38,7 @@
         isFirstAdd = YES;
         shareHelper = [ShareHelper initialInstance];
         shareHelper.wxResponseDelegate = self;
+        insertView = [[InsertView alloc] initWithMessage:@"复制成功" andSuperV:superViews withPoint:200];
     }
     return self;
 }
@@ -141,7 +145,9 @@
     }
 }
 
-- (IBAction)wbShare:(id)sender {
+- (IBAction)wbShare:(id)sender
+{
+    [shareHelper weiBoShare:3];
 }
 
 // !!!:shareHelper的代理
@@ -270,6 +276,32 @@
     CGImageRef outImage = [context createCGImage:outputImage
                                              fromRect:[outputImage extent]];
     return [UIImage imageWithCGImage:outImage];
+}
+
+-(IBAction)shareViewBtnCLick:(id)sender
+{
+    UIButton *button = (UIButton *)sender;
+    NSInteger tag = button.tag-10 ;
+    //设置分享内容和回调对象
+    if (tag == 0){
+        //微信会话
+        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeText;
+        [[UMSocialControllerService defaultControllerService] setShareText:@"分享到微信－找画APP" shareImage:[UIImage imageNamed:@"Icon"] socialUIDelegate:self];
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatSession].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }else if (tag == 1){
+        //朋友圈分享
+        [[UMSocialControllerService defaultControllerService] setShareText:@"分享到朋友圈－找画APP" shareImage:[UIImage imageNamed:@"Icon"] socialUIDelegate:self];
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToWechatTimeline].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }else if (tag == 2){
+        //新浪微博
+        [[UMSocialControllerService defaultControllerService] setShareText:@"分享到新浪微博－找画APP" shareImage:[UIImage imageNamed:@"Icon"] socialUIDelegate:self];
+        [UMSocialSnsPlatformManager getSocialPlatformWithName:UMShareToSina].snsClickHandler(self,[UMSocialControllerService defaultControllerService],YES);
+    }else if (tag == 3){
+        //复制链接地址
+        [[UIPasteboard generalPasteboard] setString:@"找画URL"];
+        [insertView showMessageViewWithTime:1];
+    }
+    
 }
 
 @end

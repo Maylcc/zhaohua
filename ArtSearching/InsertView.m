@@ -62,8 +62,9 @@
 {
     [self showMessageView];
     NSTimer *timer = [NSTimer timerWithTimeInterval:time target:self selector:@selector(hideMessageView) userInfo:nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-    [[NSRunLoop currentRunLoop] run];
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:time];
+    [timer setFireDate:date];
+    [timer fire];
 }
 
 - (void)setAfterDoneSelector:(SEL)selector
@@ -97,7 +98,7 @@
 - (void)hideMessageView
 {
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:1];
+    [UIView setAnimationDuration:0.5];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationDelegate:self];
     self.alpha = 0;

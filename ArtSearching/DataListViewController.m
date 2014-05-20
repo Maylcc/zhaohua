@@ -24,7 +24,16 @@
 #import "LCYRegisterViewController.h"
 #import "TouchXML.h"
 #import "AnswerQuestionViewController.h"
-
+#import "DrawPointLineDelegate.h"
+#import "XDTools.h"
+#import "ASIHTTPRequest.h"
+#import "SoapXmlParseHelper.h"
+#import "XDPopUpView.h"
+#import "LCYShowDetailViewController.h"
+#import "LCYArtistDetailViewController.h"
+#define GETStarWorkPVInfoById               @"GetStarWorkPVInfoById"// 明星作品折线图数据
+#define GETStarArtistPVInfoById             @"GetStarArtistPVInfoById"// 明星艺术家
+#define GETStarGalleryPVInfoById            @"GetStarGalleryPVInfoById"// 明星画廊
 #define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 #define UI_SCREEN_WIDTH                 ([[UIScreen mainScreen] bounds].size.width)
 #define UI_SCREEN_HEIGHT                ([[UIScreen mainScreen] bounds].size.height)
@@ -32,12 +41,13 @@
 green:((float)((0x3a3a3a & 0xFF00) >> 8))/255.0 \
 blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
 
-@interface DataListViewController ()<UIFolderTableViewDelegate,isCMICDown>
+@interface DataListViewController ()<UIFolderTableViewDelegate,isCMICDown,DrawPointLineDelegate,ASIHTTPRequestDelegate>
 {
     BOOL isCMICDown; //判断CMI总体指数是否下载完成
     InsertView *insertViewL; //提示视图
     NSDictionary *dataOfCMAICView;
     UIImageView *_arrowImage;
+    XDPopUpView *popView;
 }
 @end
 
@@ -58,6 +68,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         fileOperation = [ZXYFileOperation sharedSelf];
         isCMICDown = NO;
         insertViewL = [[InsertView alloc] initWithMessage:@"请稍后..." andSuperV:self.view withPoint:150];
+        popView = [[XDPopUpView alloc] init];
     }
     return self;
 }
@@ -75,7 +86,6 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     [backBtn addTarget:self action:@selector(backView) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
-    
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -200,6 +210,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
                     cellArt = (DataArtListCellTableViewCell *)oneObject;
                 }
             }
+            cellArt.delegate = self;
         }
         StartArtList *artList = [arrArtList objectAtIndex:indexPath.row];
         cellArt.authodLbl.text = artList.author;
@@ -208,6 +219,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         cellArt.lookNums.text   = [NSString stringWithFormat:@"%d",artList.beScanTime.intValue ];
         cellArt.collectNum.text = [NSString stringWithFormat:@"%d", artList.beStoreTime.intValue ];
         cellArt.indexLbl.text   = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
+        cellArt.artDetail = artList;
         NSString *pathString = [fileOperation findArtOfStartByUrl:artList.url_Small];
         if([fileOperation fileExistsAtPath:pathString])
         {
@@ -236,6 +248,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             }
             
         }
+        galleryCell.delegate = self;
         if(indexPath.section == 2)
         {
             StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
@@ -244,6 +257,8 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
             galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+            galleryCell.artDetail = artist.id_Art;
+            galleryCell.isArtist = YES;
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url_small andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])
             {
@@ -262,6 +277,8 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
             galleryCell.collectionNums.text = [NSString stringWithFormat:@"%d", artist.beStoreTime.intValue ];
             galleryCell.indexLbl.text = [NSString stringWithFormat:@"%ld",(long)(indexPath.row+1)];
             galleryCell.numOfArts.text = [NSString stringWithFormat:@"%d件作品",artist.workCount.intValue];
+            galleryCell.artDetail = artist.id_Art;
+            galleryCell.isArtist  = NO;
             NSString *filePath = [fileOperation findArtistOfStartByUrl:artist.url andID:artist.id_Art.stringValue withType:@""];
             if([fileOperation fileExistsAtPath:filePath])
             {
@@ -362,6 +379,20 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         StartArtList *art = [arrArtList objectAtIndex:indexPath.row];
         ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:art.id_Art.stringValue andWorkUrl:art.url withBundleName:@"ArtDetailViewController"];
         [self.navigationController pushViewController:artDetailViewController animated:YES];
+    }
+    else if(indexPath.section == 3)
+    {
+        StartGalleryList *gallery = [arrGalleryList objectAtIndex:indexPath.row];
+        LCYShowDetailViewController *showDVC = [[LCYShowDetailViewController alloc] init];
+        showDVC.galleryID = [gallery.id_Art stringValue];
+        [self.navigationController pushViewController:showDVC animated:YES];
+    }
+    else if(indexPath.section == 2)
+    {
+        StartArtistsList *artist = [arrArtistsList objectAtIndex:indexPath.row];
+        LCYArtistDetailViewController *artistDVC = [[LCYArtistDetailViewController alloc] init];
+        artistDVC.artistID = artist.id_Art.stringValue;
+        [self.navigationController pushViewController:artistDVC animated:YES];
     }
 }
 
@@ -502,4 +533,456 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         [alertView show];
     }
 }
+
+#pragma mark - 绘制数据折现代理
+- (void)drawPointLine:(NSNumber *)artsID withType:(DrawPointType) typeDraw
+{
+    NSLog(@"绘制折现");
+    NSLog(@"artsID is %d and type is %d",artsID.integerValue,typeDraw);
+    if(typeDraw == DrawArtsPoint)
+    {
+        [popView GetStarWorkPVInfoById:[artsID stringValue]];
+    }
+    else if(typeDraw == DrawArtistsPoint)
+    {
+        [popView GetStarArtistPVInfoById:[artsID stringValue]];
+    }
+    else
+    {
+        [popView GetStarGalleryPVInfoById:artsID.stringValue];
+    }
+    [popView setpopupviewshow:YES];
+}
+
+- (void)GetStarWorkPVInfoById:(NSString*)workID// 明星作品查看折线图
+{
+    
+    if ([XDTools NetworkReachable]){
+        NSString *body = [NSString stringWithFormat:@"<GetStarWorkPVInfoById xmlns=\"http://tempuri.org/\">"
+                          "<workId>%@</workId>"
+                          "</GetStarWorkPVInfoById>",workID];
+        __weak ASIFormDataRequest *request = [XDTools postRequestWithDict:body API:GETStarWorkPVInfoById];
+        [request setCompletionBlock:^{
+            [XDTools hideProgress:self.view];
+            //[XDTools hideProgress:self.contentView];
+            NSString *responseString = [request responseString];
+            // NSDictionary *tempDic = [XDTools  JSonFromString:responseString];
+            DDLOG(@"responseString:%@", responseString);
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            int statusCode = [request responseStatusCode];
+            NSString *soapAction = [[request requestHeaders] objectForKey:@"SOAPAction"];
+            
+            NSArray *arraySOAP =[soapAction componentsSeparatedByString:@"/"];
+            int count = [arraySOAP count] - 1;
+            NSString *methodName = [arraySOAP objectAtIndex:count];
+            
+            // Use when fetching text data
+            NSString *result = nil;
+            if (statusCode == 200) {
+                //表示正常请求
+                result = [SoapXmlParseHelper SoapMessageResultXml:responseString ServiceMethodName:methodName];
+                NSDictionary  *responseDict = [XDTools JSonFromString:result];
+                if ([[responseDict objectForKey:@"code"] intValue]==0){
+                    DDLOG(@"res = %@",responseDict);
+                    
+                    pointArr = [[NSMutableArray alloc]init];
+                    pointArr2 = [[NSMutableArray alloc]init];
+                    NSArray * arr1 = [[NSArray alloc]init];
+                    NSArray *arr2 = [[NSArray alloc]init];
+                    
+                    arr1 = [responseDict valueForKey:@"firstLineChart"];
+                    arr2 = [responseDict valueForKey:@"secondLineChart"];
+                    int arrcount1 = arr1.count;
+                    if (arrcount1>12) {
+                        arrcount1=12;
+                    }
+                    
+                    for (int i = 0; i < arrcount1; i++) {
+                        
+                        [pointArr addObject:[NSValue valueWithCGPoint:CGPointMake(i*15, [[arr1 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    int arrcount = arr2.count;
+                    if (arrcount>12) {
+                        arrcount=12;
+                    }
+                    for (int i = 0; i < arrcount; i++) {
+                        
+                        [pointArr2 addObject:[NSValue valueWithCGPoint:CGPointMake(i*15, [[arr2 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    
+                    historyHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighAttention"]];
+                    
+                    if (![historyHighAttention isKindOfClass:[NSNull class]]&&![historyHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel2.text =[NSString stringWithFormat:@"%@次", historyHighAttention];//
+                    }
+                    
+                    historyHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighScan"]];
+                    
+                    if (![historyHighScan isKindOfClass:[NSNull class]]&&![historyHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel1.text = [NSString stringWithFormat:@"%@次", historyHighScan];//
+                    }
+                    
+                    threeMonthHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighAttention"]];
+                    
+                    if (![threeMonthHighAttention isKindOfClass:[NSNull class]]&&![threeMonthHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel4.text = [NSString stringWithFormat:@"%@次", threeMonthHighAttention];//
+                    }
+                    
+                    threeMonthHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighScan"]];
+                    
+                    if (![threeMonthHighScan isKindOfClass:[NSNull class]]&&![threeMonthHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel3.text = [NSString stringWithFormat:@"%@次", threeMonthHighScan];//
+                    }
+                    
+                    todayAttentionData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayAttentionData"]];
+                    
+                    if (![todayAttentionData isKindOfClass:[NSNull class]]&&![todayAttentionData isEqualToString:@"<null>"]) {
+                        
+                        occNum.text = [NSString stringWithFormat:@"关注: %@", todayAttentionData];//
+                    }
+                    
+                    todayScanData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayScanData"]];
+                    
+                    if (![todayScanData isKindOfClass:[NSNull class]]&&![todayScanData isEqualToString:@"<null>"]) {
+                        
+                        scanNum.text = [NSString stringWithFormat:@"浏览: %@", todayScanData];//
+                    }
+                    float ratefloat=0.0;
+                    if ([todayScanData intValue]==!0) {
+                        
+                        ratefloat = [todayAttentionData floatValue]/[todayScanData floatValue];
+                    }
+                    
+                    rateNum.text =[NSString stringWithFormat:@"关注率: %.1f %%",ratefloat];
+                    
+                    if (Chartline!=nil) {
+                        [Chartline removeFromSuperview];
+                    }
+                    
+                    Chartline = [[LineChartViewDemo alloc] initWithFrame:CGRectMake(0, 50, 200, 90)];
+                    Chartline.backgroundColor = [UIColor clearColor];
+                    
+                    //横轴
+                    NSMutableArray *hArr = [[NSMutableArray alloc]init ];//WithCapacity:arrcount-1];
+                    
+                    for (int i = 0; i < 12; i++) {
+                        [hArr addObject:[NSString stringWithFormat:@"%d",i]];
+                    }
+                    
+                    
+                    //                    [Chartline setHDesc:hArr];
+                    //                    [line setVDesc:vArr];
+                    
+                    [Chartline setArray:pointArr];
+                    [Chartline setArray1:pointArr2];
+                    
+                    [imageView addSubview:Chartline];
+                }
+            }
+        }];
+        
+        [request setFailedBlock:^{
+            [XDTools hideProgress:self.view];
+        }];
+        
+        [request startAsynchronous];
+        [XDTools showProgress:self.view];
+    }else{
+        [XDTools showTips:brokenNetwork toView:self.view];
+    }
+    
+}
+
+/**/
+- (void)GetStarArtistPVInfoById:(NSString*)workID// 明星艺术家
+{
+    
+    if ([XDTools NetworkReachable]){
+        NSString *body = [NSString stringWithFormat:@"<GetStarArtistPVInfoById xmlns=\"http://tempuri.org/\">"
+                          "<artistId>%@</artistId>"
+                          "</GetStarArtistPVInfoById>",workID];
+        __weak ASIFormDataRequest *request = [XDTools postRequestWithDict:body API:GETStarArtistPVInfoById];
+        [request setCompletionBlock:^{
+            [XDTools hideProgress:self.view];
+            //[XDTools hideProgress:self.contentView];
+            NSString *responseString = [request responseString];
+            // NSDictionary *tempDic = [XDTools  JSonFromString:responseString];
+            DDLOG(@"responseString:%@", responseString);
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            int statusCode = [request responseStatusCode];
+            NSString *soapAction = [[request requestHeaders] objectForKey:@"SOAPAction"];
+            
+            NSArray *arraySOAP =[soapAction componentsSeparatedByString:@"/"];
+            int count = [arraySOAP count] - 1;
+            NSString *methodName = [arraySOAP objectAtIndex:count];
+            
+            // Use when fetching text data
+            NSString *result = nil;
+            if (statusCode == 200) {
+                //表示正常请求
+                result = [SoapXmlParseHelper SoapMessageResultXml:responseString ServiceMethodName:methodName];
+                NSDictionary  *responseDict = [XDTools JSonFromString:result];
+                if ([[responseDict objectForKey:@"code"] intValue]==0){
+                    DDLOG(@"res = %@",responseDict);
+                    
+                    pointArr = [[NSMutableArray alloc]init];
+                    pointArr2 = [[NSMutableArray alloc]init];
+                    NSArray * arr1 = [[NSArray alloc]init];
+                    NSArray *arr2 = [[NSArray alloc]init];
+                    
+                    arr1 = [responseDict valueForKey:@"firstLineChart"];
+                    arr2 = [responseDict valueForKey:@"secondLineChart"];
+                    
+                    //                    for (int i = 0; i < arr1.count; i++) {
+                    //
+                    //                        [pointArr addObject:[NSValue valueWithCGPoint:CGPointMake([[arr1 objectAtIndex:i] intValue], 1 * i)]];
+                    //
+                    //                    }
+                    //
+                    //                    for (int i = 0; i < arr2.count; i++) {
+                    //
+                    //                        [pointArr2 addObject:[NSValue valueWithCGPoint:CGPointMake([[arr2 objectAtIndex:i] intValue], 1 * i)]];
+                    //
+                    //                    }
+                    
+                    for (int i = 0; i < arr1.count; i++) {
+                        
+                        [pointArr addObject:[NSValue valueWithCGPoint:CGPointMake(i*10, [[arr1 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    for (int i = 0; i < arr2.count; i++) {
+                        
+                        [pointArr2 addObject:[NSValue valueWithCGPoint:CGPointMake(i*10, [[arr2 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    
+                    historyHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighAttention"]];
+                    
+                    if (![historyHighAttention isKindOfClass:[NSNull class]]&&![historyHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel2.text =[NSString stringWithFormat:@"%@次", historyHighAttention];//
+                    }
+                    
+                    historyHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighScan"]];
+                    
+                    if (![historyHighScan isKindOfClass:[NSNull class]]&&![historyHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel1.text = [NSString stringWithFormat:@"%@次", historyHighScan];//
+                    }
+                    
+                    threeMonthHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighAttention"]];
+                    
+                    if (![threeMonthHighAttention isKindOfClass:[NSNull class]]&&![threeMonthHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel4.text = [NSString stringWithFormat:@"%@次", threeMonthHighAttention];//
+                    }
+                    
+                    threeMonthHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighScan"]];
+                    
+                    if (![threeMonthHighScan isKindOfClass:[NSNull class]]&&![threeMonthHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel3.text = [NSString stringWithFormat:@"%@次", threeMonthHighScan];//
+                    }
+                    
+                    todayAttentionData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayAttentionData"]];
+                    
+                    if (![todayAttentionData isKindOfClass:[NSNull class]]&&![todayAttentionData isEqualToString:@"<null>"]) {
+                        
+                        occNum.text = [NSString stringWithFormat:@"关注: %@", todayAttentionData];//
+                    }
+                    
+                    todayScanData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayScanData"]];
+                    
+                    if (![todayScanData isKindOfClass:[NSNull class]]&&![todayScanData isEqualToString:@"<null>"]) {
+                        
+                        scanNum.text = [NSString stringWithFormat:@"浏览: %@", todayScanData];//
+                    }
+                    float ratefloat=0.0;
+                    if ([todayScanData intValue]==!0) {
+                        
+                        ratefloat = [todayAttentionData floatValue]/[todayScanData floatValue];
+                    }
+                    
+                    rateNum.text =[NSString stringWithFormat:@"关注率: %.1f %%",ratefloat];
+                    
+                    if (Chartline!=nil) {
+                        [Chartline removeFromSuperview];
+                    }
+                    
+                    Chartline = [[LineChartViewDemo alloc] initWithFrame:CGRectMake(0, 50, 200, 90)];
+                    Chartline.backgroundColor = [UIColor clearColor];
+                    
+                    [Chartline setArray:pointArr];
+                    [Chartline setArray1:pointArr2];
+                    
+                    [imageView addSubview:Chartline];
+                }
+            }
+        }];
+        
+        [request setFailedBlock:^{
+            [XDTools hideProgress:self.view];
+        }];
+        
+        [request startAsynchronous];
+        [XDTools showProgress:self.view];
+    }else{
+        [XDTools showTips:brokenNetwork toView:self.view];
+    }
+    
+}
+
+/**/
+- (void)GetStarGalleryPVInfoById:(NSString*)workID// 明星画廊
+{
+    
+    if ([XDTools NetworkReachable]){
+        NSString *body = [NSString stringWithFormat:@"<GetStarGalleryPVInfoById xmlns=\"http://tempuri.org/\">"
+                          "<galleryId>%@</galleryId>"
+                          "</GetStarGalleryPVInfoById>",workID];
+        __weak ASIFormDataRequest *request = [XDTools postRequestWithDict:body API:GETStarGalleryPVInfoById];
+        [request setCompletionBlock:^{
+            [XDTools hideProgress:self.view];
+            //[XDTools hideProgress:self.contentView];
+            NSString *responseString = [request responseString];
+            // NSDictionary *tempDic = [XDTools  JSonFromString:responseString];
+            DDLOG(@"responseString:%@", responseString);
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            int statusCode = [request responseStatusCode];
+            NSString *soapAction = [[request requestHeaders] objectForKey:@"SOAPAction"];
+            
+            NSArray *arraySOAP =[soapAction componentsSeparatedByString:@"/"];
+            int count = [arraySOAP count] - 1;
+            NSString *methodName = [arraySOAP objectAtIndex:count];
+            
+            // Use when fetching text data
+            NSString *result = nil;
+            if (statusCode == 200) {
+                //表示正常请求
+                result = [SoapXmlParseHelper SoapMessageResultXml:responseString ServiceMethodName:methodName];
+                NSDictionary  *responseDict = [XDTools JSonFromString:result];
+                if ([[responseDict objectForKey:@"code"] intValue]==0){
+                    DDLOG(@"res = %@",responseDict);
+                    
+                    pointArr = [[NSMutableArray alloc]init];
+                    pointArr2 = [[NSMutableArray alloc]init];
+                    NSArray * arr1 = [[NSArray alloc]init];
+                    NSArray *arr2 = [[NSArray alloc]init];
+                    
+                    arr1 = [responseDict valueForKey:@"firstLineChart"];
+                    arr2 = [responseDict valueForKey:@"secondLineChart"];
+                    
+                    //                    for (int i = 0; i < arr1.count; i++) {
+                    //
+                    //                        [pointArr addObject:[NSValue valueWithCGPoint:CGPointMake([[arr1 objectAtIndex:i] intValue], 1 * i)]];
+                    //
+                    //                    }
+                    //
+                    //                    for (int i = 0; i < arr2.count; i++) {
+                    //
+                    //                        [pointArr2 addObject:[NSValue valueWithCGPoint:CGPointMake([[arr2 objectAtIndex:i] intValue], 1 * i)]];
+                    //
+                    //                    }
+                    
+                    for (int i = 0; i < arr1.count; i++) {
+                        
+                        [pointArr addObject:[NSValue valueWithCGPoint:CGPointMake(i*10, [[arr1 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    for (int i = 0; i < arr2.count; i++) {
+                        
+                        [pointArr2 addObject:[NSValue valueWithCGPoint:CGPointMake(i*10, [[arr2 objectAtIndex:i] intValue]/10)]];
+                        
+                    }
+                    
+                    
+                    historyHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighAttention"]];
+                    
+                    if (![historyHighAttention isKindOfClass:[NSNull class]]&&![historyHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel2.text =[NSString stringWithFormat:@"%@次", historyHighAttention];//
+                    }
+                    
+                    historyHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"historyHighScan"]];
+                    
+                    if (![historyHighScan isKindOfClass:[NSNull class]]&&![historyHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel1.text = [NSString stringWithFormat:@"%@次", historyHighScan];//
+                    }
+                    
+                    threeMonthHighAttention = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighAttention"]];
+                    
+                    if (![threeMonthHighAttention isKindOfClass:[NSNull class]]&&![threeMonthHighAttention isEqualToString:@"<null>"]) {
+                        
+                        topLabel4.text = [NSString stringWithFormat:@"%@次", threeMonthHighAttention];//
+                    }
+                    
+                    threeMonthHighScan = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"threeMonthHighScan"]];
+                    
+                    if (![threeMonthHighScan isKindOfClass:[NSNull class]]&&![threeMonthHighScan isEqualToString:@"<null>"]) {
+                        
+                        topLabel3.text = [NSString stringWithFormat:@"%@次", threeMonthHighScan];//
+                    }
+                    
+                    todayAttentionData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayAttentionData"]];
+                    
+                    if (![todayAttentionData isKindOfClass:[NSNull class]]&&![todayAttentionData isEqualToString:@"<null>"]) {
+                        
+                        occNum.text = [NSString stringWithFormat:@"关注: %@", todayAttentionData];//
+                    }
+                    
+                    todayScanData = [NSString stringWithFormat:@"%@",[responseDict valueForKey:@"todayScanData"]];
+                    
+                    if (![todayScanData isKindOfClass:[NSNull class]]&&![todayScanData isEqualToString:@"<null>"]) {
+                        
+                        scanNum.text = [NSString stringWithFormat:@"浏览: %@", todayScanData];//
+                    }
+                    float ratefloat=0.0;
+                    if ([todayScanData intValue]==!0) {
+                        
+                        ratefloat = [todayAttentionData floatValue]/[todayScanData floatValue];
+                    }
+                    
+                    rateNum.text =[NSString stringWithFormat:@"关注率: %.1f %%",ratefloat];
+                    if (Chartline!=nil) {
+                        [Chartline removeFromSuperview];
+                    }
+                    Chartline = [[LineChartViewDemo alloc] initWithFrame:CGRectMake(0, 50, 200, 90)];
+                    Chartline.backgroundColor = [UIColor clearColor];
+                    
+                    [Chartline setArray:pointArr];
+                    [Chartline setArray1:pointArr2];
+                    
+                    [imageView addSubview:Chartline];
+                }
+            }
+        }];
+        
+        [request setFailedBlock:^{
+            [XDTools hideProgress:self.view];
+        }];
+        
+        [request startAsynchronous];
+        [XDTools showProgress:self.view];
+    }else{
+        [XDTools showTips:brokenNetwork toView:self.view];
+    }
+    
+    
+}
+
 @end

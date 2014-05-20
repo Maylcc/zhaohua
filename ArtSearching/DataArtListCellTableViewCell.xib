@@ -41,8 +41,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hotPoint_data.png" translatesAutoresizingMaskIntoConstraints="NO" id="C8h-48-DPp">
-                                <rect key="frame" x="264" y="2" width="19" height="19"/>
+                            <imageView userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hotPoint_data.png" translatesAutoresizingMaskIntoConstraints="NO" id="C8h-48-DPp">
+                                <rect key="frame" x="252" y="2" width="38" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="artist_Attention.png" translatesAutoresizingMaskIntoConstraints="NO" id="2V7-SD-YuG">
