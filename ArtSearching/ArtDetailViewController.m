@@ -98,11 +98,13 @@
     
     [self getDataFromServe];
     NSArray *allDetails = [dataProvider readCoreDataFromDB:@"ArtDetail" withContent:self.workID andKey:@"id_Art"];
-    commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
+    //commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
     
+    commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail"withContent:self.workID andKey:@"workid"];
     if(allDetails.count)
     {
         artDetail = [allDetails objectAtIndex:0];
+        self.title = artDetail.workName;
     }
     [contentTableView reloadData];
     artShare = [[ArtShareViewController alloc] initWithSuperView:self.view];
@@ -162,7 +164,8 @@
         artDetail = [allDetails objectAtIndex:0];
     }
     
-    commentArr = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
+    //commentArr = [dataProvider readCoreDataFromDB:@"CommentDetail" withContent:self.workID andKey:@"workid" orderBy:@"comdate" isDes:NO];
+    commentArr   = [dataProvider readCoreDataFromDB:@"CommentDetail"withContent:self.workID andKey:@"workid"];
     [contentTableView reloadData];
 }
 
@@ -312,6 +315,7 @@
     if(imageData)
     {
         ShowBigImageViewController *bigImage = [[ShowBigImageViewController alloc] initWithImageData:imageData];
+        bigImage.title = self.title;
         bigImage.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         UINavigationController *navigation =[ [UINavigationController alloc]initWithRootViewController:bigImage];
         [self presentViewController:navigation animated:YES completion:^{

@@ -229,6 +229,8 @@
 		8B565BB618FFA497002520D3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB018FFA497002520D3 /* Icon.png */; };
 		8B565BB718FFA497002520D3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB118FFA497002520D3 /* Icon@2x.png */; };
 		8B565BBA18FFA947002520D3 /* back_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B565BB918FFA947002520D3 /* back_icon@2x.png */; };
+		8B646146192AF02A00FD5EF0 /* HotDataForViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B646144192AF02A00FD5EF0 /* HotDataForViewController.m */; };
+		8B646147192AF02A00FD5EF0 /* HotDataForViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B646145192AF02A00FD5EF0 /* HotDataForViewController.xib */; };
 		8B6E96C41901364B006E6752 /* 1_07@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E96BE1901364B006E6752 /* 1_07@2x.png */; };
 		8B6E96C51901364B006E6752 /* 22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E96BF1901364B006E6752 /* 22@2x.png */; };
 		8B6E96C61901364B006E6752 /* artist_Attention@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E96C01901364B006E6752 /* artist_Attention@2x.png */; };
@@ -750,6 +752,9 @@
 		8B565BB918FFA947002520D3 /* back_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_icon@2x.png"; sourceTree = "<group>"; };
 		8B565BBB18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		8B565BBC18FFACF4002520D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8B646143192AF02A00FD5EF0 /* HotDataForViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotDataForViewController.h; sourceTree = "<group>"; };
+		8B646144192AF02A00FD5EF0 /* HotDataForViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotDataForViewController.m; sourceTree = "<group>"; };
+		8B646145192AF02A00FD5EF0 /* HotDataForViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HotDataForViewController.xib; sourceTree = "<group>"; };
 		8B6E96BE1901364B006E6752 /* 1_07@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1_07@2x.png"; sourceTree = "<group>"; };
 		8B6E96BF1901364B006E6752 /* 22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "22@2x.png"; sourceTree = "<group>"; };
 		8B6E96C01901364B006E6752 /* artist_Attention@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "artist_Attention@2x.png"; sourceTree = "<group>"; };
@@ -1657,6 +1662,9 @@
 				8B49BA79190E1EE800F7725D /* PlotViewViewController.xib */,
 				8B240B991929DEAC006A134A /* XDPopUpView.h */,
 				8B240B9A1929DEAC006A134A /* XDPopUpView.m */,
+				8B646143192AF02A00FD5EF0 /* HotDataForViewController.h */,
+				8B646144192AF02A00FD5EF0 /* HotDataForViewController.m */,
+				8B646145192AF02A00FD5EF0 /* HotDataForViewController.xib */,
 				8B49BA24190E1B1100F7725D /* drawPoint */,
 				8B06167519079AAB00C7D300 /* authorDetail */,
 				8BBEE1281905170D0067FE37 /* ArtDetail */,
@@ -1912,6 +1920,7 @@
 				2FB88F2118FE4723006880E7 /* Frameworks */,
 				2FB88F2218FE4723006880E7 /* Resources */,
 				17B863F705464FCDA676ABE5 /* Copy Pods Resources */,
+				8B646148192B2A8100FD5EF0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2030,6 +2039,7 @@
 				8B7773FA1925B4A8000F35DC /* ArtShareViewController.xib in Resources */,
 				28730D761906410B005EA7DE /* LCYAddProfileViewController.xib in Resources */,
 				8BBEE1101903610A0067FE37 /* placehold_image@2x.png in Resources */,
+				8B646147192AF02A00FD5EF0 /* HotDataForViewController.xib in Resources */,
 				8B6E96C71901364B006E6752 /* artist_Fav@2x.png in Resources */,
 				280F3E0B190673A2000217D7 /* LCYUserInformationViewController.xib in Resources */,
 				28730D7119063F32005EA7DE /* LCYRegisterStep2ViewController.xib in Resources */,
@@ -2136,7 +2146,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\nKEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		38493CF2535C42288406E8C0 /* Check Pods Manifest.lock */ = {
@@ -2153,6 +2163,19 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		8B646148192B2A8100FD5EF0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "KEYWORDS=\"TODO:|FIXME:|\\?\\?\\?:\"\nfind \"${SRCROOT}\" \\( -name \"*.h\" -or -name \"*.m\" \\) -print0 | xargs -0 egrep --with-filename --line-number --only-matching \"($KEYWORDS).*\\$\" | perl -p -e \"s/($KEYWORDS)/ warning: \\$1/\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2189,6 +2212,7 @@
 				289BD34E1908F017000A8C4B /* LCYRegisterGetValidateResult.m in Sources */,
 				2F1CB6411920ACD000ACA658 /* LCYArtistDetailLine2TableViewCell.m in Sources */,
 				8BBEE143190524E80067FE37 /* UserCommentCell.m in Sources */,
+				8B646146192AF02A00FD5EF0 /* HotDataForViewController.m in Sources */,
 				8B49BA18190DF7E800F7725D /* FolderCoverView.m in Sources */,
 				8B565BA918FFA0C3002520D3 /* DataListViewController.m in Sources */,
 				8B95E76E1921B14900852590 /* CXMLElement.m in Sources */,

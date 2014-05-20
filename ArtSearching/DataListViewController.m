@@ -31,6 +31,7 @@
 #import "XDPopUpView.h"
 #import "LCYShowDetailViewController.h"
 #import "LCYArtistDetailViewController.h"
+#import "HotDataForViewController.h"
 #define GETStarWorkPVInfoById               @"GetStarWorkPVInfoById"// 明星作品折线图数据
 #define GETStarArtistPVInfoById             @"GetStarArtistPVInfoById"// 明星艺术家
 #define GETStarGalleryPVInfoById            @"GetStarGalleryPVInfoById"// 明星画廊
@@ -48,6 +49,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     NSDictionary *dataOfCMAICView;
     UIImageView *_arrowImage;
     XDPopUpView *popView;
+    HotDataForViewController *hotData;
 }
 @end
 
@@ -69,6 +71,9 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         isCMICDown = NO;
         insertViewL = [[InsertView alloc] initWithMessage:@"请稍后..." andSuperV:self.view withPoint:150];
         popView = [[XDPopUpView alloc] init];
+        hotData = [[HotDataForViewController alloc] initWithNibName:@"HotDataForViewController" bundle:nil];
+        hotData.view.frame = CGRectMake(0, 200, 320, 237);
+
     }
     return self;
 }
@@ -455,7 +460,7 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         NSString *needAnswerAgain = [dic valueForKey:@"needansweragain"];
         // !!!:判断是否更新
         // TODO:此处需要打开注释，服务器端没有完成，现阶段注释才能进行下一个功能的开发
-        /*
+        
         if([needUpdate isEqualToString:@"yes"])
         {
             NSLog(@"需要更新本地题库");
@@ -499,11 +504,11 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
         // !!!:显示数据
         else
         {
-         */
+         
             [self tableViewOpenGl];
             [self performSelectorOnMainThread:@selector(hideMessage) withObject:nil waitUntilDone:YES];
             NSLog(@"显示数据");
-       // }
+        }
     }
     else
     {
@@ -542,6 +547,8 @@ blue:((float)(0x3a3a3a & 0xFF))/255.0 alpha:1.0]
     if(typeDraw == DrawArtsPoint)
     {
         [popView GetStarWorkPVInfoById:[artsID stringValue]];
+                //[hotData setPlotType:PlotTypeWork withID:artsID.stringValue];
+        //[self.view addSubview:hotData.view];
     }
     else if(typeDraw == DrawArtistsPoint)
     {
