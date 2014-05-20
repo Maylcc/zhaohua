@@ -113,6 +113,10 @@
 		2F3836F81916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F3836F61916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib */; };
 		2F3836FB19163B1200C020ED /* applyAccepted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F3836F919163B1200C020ED /* applyAccepted@2x.png */; };
 		2F3836FC19163B1200C020ED /* applyRejected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2F3836FA19163B1200C020ED /* applyRejected@2x.png */; };
+		2F48ECCA1929CF4F0010DC95 /* LCYGetUserInfoResultUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F48ECC81929CF4F0010DC95 /* LCYGetUserInfoResultUser.m */; };
+		2F48ECCC1929E4FB0010DC95 /* LCYUserInfoCollectionCellHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F48ECCB1929E4FB0010DC95 /* LCYUserInfoCollectionCellHeader.xib */; };
+		2F48ECD7192A00560010DC95 /* LCYGetFavoriteArtWorksBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F48ECD3192A00560010DC95 /* LCYGetFavoriteArtWorksBase.m */; };
+		2F48ECD8192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F48ECD4192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.m */; };
 		2F527C6E191B1AF70040879F /* LCYRenrenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F527C6C191B1AF70040879F /* LCYRenrenDetailViewController.m */; };
 		2F527C6F191B1AF70040879F /* LCYRenrenDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F527C6D191B1AF70040879F /* LCYRenrenDetailViewController.xib */; };
 		2F527C72191B1B570040879F /* LCYWaterFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F527C71191B1B570040879F /* LCYWaterFlowLayout.m */; };
@@ -451,6 +455,13 @@
 		2F3836F61916389200C020ED /* LCYApplyAccAndRegTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYApplyAccAndRegTableViewCell.xib; sourceTree = "<group>"; };
 		2F3836F919163B1200C020ED /* applyAccepted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "applyAccepted@2x.png"; sourceTree = "<group>"; };
 		2F3836FA19163B1200C020ED /* applyRejected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "applyRejected@2x.png"; sourceTree = "<group>"; };
+		2F48ECC81929CF4F0010DC95 /* LCYGetUserInfoResultUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetUserInfoResultUser.m; sourceTree = "<group>"; };
+		2F48ECC91929CF4F0010DC95 /* LCYGetUserInfoResultUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetUserInfoResultUser.h; sourceTree = "<group>"; };
+		2F48ECCB1929E4FB0010DC95 /* LCYUserInfoCollectionCellHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYUserInfoCollectionCellHeader.xib; sourceTree = "<group>"; };
+		2F48ECD3192A00560010DC95 /* LCYGetFavoriteArtWorksBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetFavoriteArtWorksBase.m; sourceTree = "<group>"; };
+		2F48ECD4192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYGetFavoriteArtWorksInfos.m; sourceTree = "<group>"; };
+		2F48ECD5192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetFavoriteArtWorksInfos.h; sourceTree = "<group>"; };
+		2F48ECD6192A00560010DC95 /* LCYGetFavoriteArtWorksBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYGetFavoriteArtWorksBase.h; sourceTree = "<group>"; };
 		2F527C6B191B1AF70040879F /* LCYRenrenDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LCYRenrenDetailViewController.h; sourceTree = "<group>"; };
 		2F527C6C191B1AF70040879F /* LCYRenrenDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LCYRenrenDetailViewController.m; sourceTree = "<group>"; };
 		2F527C6D191B1AF70040879F /* LCYRenrenDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LCYRenrenDetailViewController.xib; sourceTree = "<group>"; };
@@ -806,6 +817,8 @@
 		282B680C190527FB000DC945 /* userInfo */ = {
 			isa = PBXGroup;
 			children = (
+				2F48ECC91929CF4F0010DC95 /* LCYGetUserInfoResultUser.h */,
+				2F48ECC81929CF4F0010DC95 /* LCYGetUserInfoResultUser.m */,
 				2888378B190DE8CB00562EEC /* LCYSimpleCodeResult.h */,
 				2888378C190DE8CB00562EEC /* LCYSimpleCodeResult.m */,
 				28883797190E02D800562EEC /* LCYRegisterOneResult.h */,
@@ -826,9 +839,14 @@
 				28730D721906410B005EA7DE /* LCYAddProfileViewController.h */,
 				28730D731906410B005EA7DE /* LCYAddProfileViewController.m */,
 				28730D741906410B005EA7DE /* LCYAddProfileViewController.xib */,
+				2F48ECD5192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.h */,
+				2F48ECD4192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.m */,
+				2F48ECD6192A00560010DC95 /* LCYGetFavoriteArtWorksBase.h */,
+				2F48ECD3192A00560010DC95 /* LCYGetFavoriteArtWorksBase.m */,
 				280F3E07190673A2000217D7 /* LCYUserInformationViewController.h */,
 				280F3E08190673A2000217D7 /* LCYUserInformationViewController.m */,
 				280F3E09190673A2000217D7 /* LCYUserInformationViewController.xib */,
+				2F48ECCB1929E4FB0010DC95 /* LCYUserInfoCollectionCellHeader.xib */,
 				2F37D07D191C7FDE00526375 /* LCYUserDetailInfoViewController.h */,
 				2F37D07E191C7FDE00526375 /* LCYUserDetailInfoViewController.m */,
 				2F37D07F191C7FDE00526375 /* LCYUserDetailInfoViewController.xib */,
@@ -1835,6 +1853,7 @@
 				8B565BB518FFA497002520D3 /* Icon_ios7@2x.png in Resources */,
 				2FB88F7E18FE9D9A006880E7 /* tab_button4_in@2x.png in Resources */,
 				8B95E78B1921C6DE00852590 /* AnswerSelectCellTableViewCell.xib in Resources */,
+				2F48ECCC1929E4FB0010DC95 /* LCYUserInfoCollectionCellHeader.xib in Resources */,
 				2F527C76191B4C320040879F /* LCYRenrenDetailSecondLineCell.xib in Resources */,
 				2820EA5A1900D1B50053B15D /* i_want_build_plus@2x.png in Resources */,
 				8B7773F31925A926000F35DC /* xlshareimg@2x.png in Resources */,
@@ -1967,6 +1986,7 @@
 				8B2C847F1925F4730064B7EA /* ShareHelper.m in Sources */,
 				8B49B856190DF6C900F7725D /* DataAcquisitionViewController.m in Sources */,
 				2F0B6B621925F32C00D295A1 /* LCYGetGalleryInfoByIDGallery.m in Sources */,
+				2F48ECD8192A00560010DC95 /* LCYGetFavoriteArtWorksInfos.m in Sources */,
 				8B95E7851921C68F00852590 /* AnswerQuestionViewController.m in Sources */,
 				2FB88F3D18FE4723006880E7 /* ArtSearching.xcdatamodeld in Sources */,
 				288837B9190E608500562EEC /* ASINetworkQueue.m in Sources */,
@@ -1998,10 +2018,12 @@
 				8B06167319075D2400C7D300 /* ShowBigImageViewController.m in Sources */,
 				8BA8D0BD1920ABC5004ED279 /* XMLParserHelper.m in Sources */,
 				8B6E96E1190136B0006E6752 /* ZXYProvider.m in Sources */,
+				2F48ECD7192A00560010DC95 /* LCYGetFavoriteArtWorksBase.m in Sources */,
 				28730D6919061882005EA7DE /* LCYRegisterStep1ViewController.m in Sources */,
 				8B95E78A1921C6DE00852590 /* AnswerSelectCellTableViewCell.m in Sources */,
 				8B9C2B03192319E40059BAF8 /* AnswerSubmitCell.m in Sources */,
 				28623401190F4F2800747E26 /* SoapXmlParseHelper.m in Sources */,
+				2F48ECCA1929CF4F0010DC95 /* LCYGetUserInfoResultUser.m in Sources */,
 				2F8C2C7F1915E79100C12F4E /* LCYGetOwnExhibitionResult.m in Sources */,
 				28623405190F4F9300747E26 /* JSONKit.m in Sources */,
 				8B95E7741921B14900852590 /* CXMLNode_XPathExtensions.m in Sources */,

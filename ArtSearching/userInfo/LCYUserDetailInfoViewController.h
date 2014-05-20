@@ -10,4 +10,5 @@
 
 @interface LCYUserDetailInfoViewController : UIViewController
 
+
 @end

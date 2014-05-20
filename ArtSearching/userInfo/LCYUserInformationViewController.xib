@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYUserInformationViewController">
             <connections>
+                <outlet property="collectionAndTableBackgroundView" destination="jaL-hL-muh" id="eXa-1E-aLI"/>
+                <outlet property="icyCollectionView" destination="jAD-KN-h5C" id="L4U-fy-Pci"/>
+                <outlet property="icyTableView" destination="mNa-LL-xZs" id="iol-Th-IYe"/>
+                <outlet property="mySegmentedControl" destination="pbL-ZC-RAl" id="aq1-vW-LA6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,24 +18,61 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pbL-ZC-RAl">
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pbL-ZC-RAl">
                     <rect key="frame" x="20" y="70" width="280" height="29"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="Xky-fo-oTr"/>
+                    </constraints>
                     <segments>
                         <segment title="作品收藏"/>
                         <segment title="关注艺术家和画廊"/>
                     </segments>
                     <color key="tintColor" red="0.3960784375667572" green="0.59215688705444336" blue="0.19215686619281769" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="mySegmentedControlValueChanged:" destination="-1" eventType="valueChanged" id="NNF-cv-Xcl"/>
+                    </connections>
                 </segmentedControl>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="mNa-LL-xZs">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jaL-hL-muh">
                     <rect key="frame" x="0.0" y="106" width="320" height="462"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.94117647409439087" green="0.94117647409439087" blue="0.94117647409439087" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="jaL-hL-muh" secondAttribute="bottom" id="7Vt-ir-D7G"/>
+                <constraint firstItem="pbL-ZC-RAl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="B25-3h-lle"/>
+                <constraint firstItem="jaL-hL-muh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CtD-nB-gpQ"/>
+                <constraint firstAttribute="trailing" secondItem="pbL-ZC-RAl" secondAttribute="trailing" constant="20" id="ZWs-lZ-R2l"/>
+                <constraint firstItem="jaL-hL-muh" firstAttribute="top" secondItem="pbL-ZC-RAl" secondAttribute="bottom" constant="8" id="ZfW-yP-kak"/>
+                <constraint firstAttribute="trailing" secondItem="jaL-hL-muh" secondAttribute="trailing" id="hUP-jJ-fWi"/>
+                <constraint firstItem="pbL-ZC-RAl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="rJL-yx-X5X"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
+        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mNa-LL-xZs">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="462"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="dataSource" destination="-1" id="mzn-8e-98t"/>
+                <outlet property="delegate" destination="-1" id="Rmj-8G-jvF"/>
+            </connections>
+        </tableView>
+        <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" id="jAD-KN-h5C">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="462"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <collectionViewLayout key="collectionViewLayout" id="CnN-hF-ZLH" customClass="CHTCollectionViewWaterfallLayout"/>
+            <cells/>
+            <connections>
+                <outlet property="dataSource" destination="-1" id="qQG-YU-TRa"/>
+                <outlet property="delegate" destination="-1" id="l31-5E-2AU"/>
+            </connections>
+        </collectionView>
     </objects>
 </document>

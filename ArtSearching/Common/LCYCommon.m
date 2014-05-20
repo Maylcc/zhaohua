@@ -16,6 +16,7 @@ NSString *const hostIMGPrefix = @"http://115.29.41.251";
 NSString *const ActivityList  = @"ActivityList";
 //NSString *const ActivityOrganizationListSearchByKey     = @"ActivityOrganizationListSearchByKey";
 NSString *const Login         = @"Login";
+NSString *const GetUserInfo   = @"GetUserInfo";
 NSString *const RegisterGetValidate     = @"RegisterGetValidate";
 NSString *const RegisterOne             = @"RegisterOne";
 NSString *const RegisterTwo             = @"RegisterTwo";
@@ -30,10 +31,12 @@ NSString *const WorkListCategory        = @"WorkListCategory";
 NSString *const WorkListCategoryById    = @"WorkListCategoryById";
 NSString *const GetArtistInforById      = @"GetArtistInforById";
 NSString *const GetGalleryInfoById      = @"GetGalleryInfoById";
+NSString *const GetFavoriteArtWorks     = @"GetFavoriteArtWorks";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
 NSString *const UserDefaultsUserId      = @"userLoginID";
+NSString *const UserDefaultsUserPhone   = @"userPhoneNumber";
 
 #pragma mark - 凶猛的数据
 NSString *const hostForXM     = @"http://115.29.41.251:88/webservice_art_base.asmx/";
@@ -133,7 +136,7 @@ NSString *const getQuestionlIndex   = @"GetQuestionlIndex";
 
 + (BOOL)isUserLogin{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
+    BOOL isLogin = [userDefaults boolForKey:UserDefaultsIsLogin];
     return isLogin;
 }
 
@@ -141,6 +144,12 @@ NSString *const getQuestionlIndex   = @"GetQuestionlIndex";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *userID = [userDefaults objectForKey:UserDefaultsUserId];
     return userID;
+}
+
++ (NSString *)currentUserPhoneNumber{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userPhoneNumber = [userDefaults objectForKey:UserDefaultsUserPhone];
+    return userPhoneNumber;
 }
 
 + (BOOL)isFileExistsAt:(NSString *)path{

@@ -237,6 +237,7 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setBool:YES forKey:UserDefaultsIsLogin];
         [userDefaults setObject:[NSString stringWithFormat:@"%.f",result_t.uid] forKey:UserDefaultsUserId];
+        [userDefaults setObject:[LCYRegisterGlobal sharedInstance].phoneNumber forKey:UserDefaultsUserPhone];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         // 验证失败

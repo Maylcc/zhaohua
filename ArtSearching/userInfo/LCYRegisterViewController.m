@@ -14,6 +14,10 @@
 
 @interface LCYRegisterViewController ()
 <NSXMLParserDelegate>
+{
+    NSString *phoneNumber;
+    NSString *password;
+}
 
 /**
  *  新用户注册
@@ -81,6 +85,8 @@
 - (void)getLaunchData{
     NSDictionary *parameters = @{@"phone": self.userNameTextField.text,
                                  @"password": self.passwordTextField.text};
+    phoneNumber = self.userNameTextField.text;
+    password = self.passwordTextField.text;
     if ([LCYCommon networkAvailable]) {
         [LCYCommon postRequestWithAPI:Login parameters:parameters successDelegate:self failedBlock:^{
             // TODO:处理网络错误
@@ -171,6 +177,7 @@
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setBool:YES forKey:UserDefaultsIsLogin];
         [userDefaults setObject:userID forKey:UserDefaultsUserId];
+        [userDefaults setObject:phoneNumber forKey:UserDefaultsUserPhone];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
