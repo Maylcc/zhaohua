@@ -89,6 +89,13 @@
 + (NSString *)currentUserID;
 
 /**
+ *  返回当前用户绑定的电话号码
+ *
+ *  @return 电话号码字符串
+ */
++ (NSString *)currentUserPhoneNumber;
+
+/**
  *  将Data写入到文件，文件路径为Path，自动根据文件路径创建文件夹
  *
  *  @param data 待写入的数据
@@ -101,6 +108,7 @@ CA_EXTERN NSString *const hostIMGPrefix;    /**< 图片地址前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
 //CA_EXTERN NSString *const ActivityOrganizationListSearchByKey;      /**< 搜索 */
 CA_EXTERN NSString *const Login;            /**< 登录 */
+CA_EXTERN NSString *const GetUserInfo;      /**< 获得用户详细信息，头像，简介，用户名，ID */
 CA_EXTERN NSString *const RegisterGetValidate;      /**< 获取验证码 */
 CA_EXTERN NSString *const RegisterOne;      /**< 注册第一步：发送手机号与验证码 */
 CA_EXTERN NSString *const RegisterTwo;      /**< 注册第二步：发送密码 */
@@ -115,12 +123,14 @@ CA_EXTERN NSString *const GetOwnExhibition; /**< 我的展览 */
 CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
 CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */
 CA_EXTERN NSString *const WorkListCategoryById;     /**< 获取分类信息（二级分类） */
+CA_EXTERN NSString *const GetFavoriteArtWorks;      /**< 获取所有收藏作品 */
 
 
 
 #pragma mark - UserDefaults
-CA_EXTERN NSString *const UserDefaultsIsLogin;                      /**< 是否已经登陆 */
-CA_EXTERN NSString *const UserDefaultsUserId;                       /**< 已经登录的用户名（需要另行检查是否已经登录）*/
+CA_EXTERN NSString *const UserDefaultsIsLogin;              /**< 是否已经登陆 */
+CA_EXTERN NSString *const UserDefaultsUserId;               /**< 已经登录的用户名（需要另行检查是否已经登录）*/
+CA_EXTERN NSString *const UserDefaultsUserPhone;            /**< 已经登录的用户手机号（需要另行检查是否已经登录） */
 
 #pragma mark - 凶猛的数据
 CA_EXTERN NSString *const hostForXM;  /**< 接口URL前缀 */

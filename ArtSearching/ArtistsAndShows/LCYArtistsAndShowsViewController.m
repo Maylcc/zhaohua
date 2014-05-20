@@ -379,6 +379,7 @@
                 if (self.myDownloadOperation.isCancelled) {
                     self.myDownloadOperation = [[LCYArtistAndShowsDownloadImageOperation alloc] init];
                     self.myDownloadOperation.delegate = self;
+                    [self.myDownloadOperation initConfigure];
                     [self.queue addOperation:self.myDownloadOperation];
                 }
                 [self.myDownloadOperation addImageName:originalPath];

@@ -12,6 +12,7 @@
 #import "LCYArtistDetailLine1TableViewCell.h"
 #import "LCYArtistDetailLine2TableViewCell.h"
 #import "LCYImageDownloadOperation.h"
+#import "ArtShareViewController.h"
 
 @interface LCYArtistDetailViewController ()<LCYArtistDetailViewControllerXMLParserDelegate,UITableViewDelegate,UITableViewDataSource,LCYImageDownloadOperationDelegate,LCYArtistDetailLine2TableViewCellDelegate>
 {
@@ -213,40 +214,48 @@
 #pragma mark - LCYArtistDetailLine2TableViewCellDelegate 点击关注和分享
 - (void)sharedButtonDidClicked{
     if (!isShareViewShown) {
-        // 显示分享菜单
-        CGRect frame;
-        if (IS_IPHONE5) {
-            frame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
-        } else {
-            frame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
-        }
-        self.shareView.frame = frame;
-        [self.view addSubview:self.shareView];
+        ArtShareViewController *artShare = [[ArtShareViewController alloc] initWithSuperView:self.view];
+        [artShare presentShareView];
+        [artShare setCloseMethod:@selector(closeMyShare) withOwner:self];
         isShareViewShown = YES;
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect newFrame;
-            if (IS_IPHONE5) {
-                newFrame = CGRectMake(0, 568-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
-            } else {
-                newFrame = CGRectMake(0, 480-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
-            }
-            [self.shareView setFrame:newFrame];
-        }];
+//        // 显示分享菜单
+//        CGRect frame;
+//        if (IS_IPHONE5) {
+//            frame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
+//        } else {
+//            frame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
+//        }
+//        self.shareView.frame = frame;
+//        [self.view addSubview:self.shareView];
+//        isShareViewShown = YES;
+//        [UIView animateWithDuration:0.3 animations:^{
+//            CGRect newFrame;
+//            if (IS_IPHONE5) {
+//                newFrame = CGRectMake(0, 568-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
+//            } else {
+//                newFrame = CGRectMake(0, 480-self.shareView.frame.size.height, 320, self.shareView.frame.size.height);
+//            }
+//            [self.shareView setFrame:newFrame];
+//        }];
     } else {
-        // 隐藏分享菜单
-        isShareViewShown = NO;
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect newFrame;
-            if (IS_IPHONE5) {
-                newFrame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
-            } else {
-                newFrame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
-            }
-            [self.shareView setFrame:newFrame];
-        } completion:^(BOOL finished) {
-            [self.shareView removeFromSuperview];
-        }];
+//        // 隐藏分享菜单
+//        isShareViewShown = NO;
+//        [UIView animateWithDuration:0.3 animations:^{
+//            CGRect newFrame;
+//            if (IS_IPHONE5) {
+//                newFrame = CGRectMake(0, 568, 320, self.shareView.frame.size.height);
+//            } else {
+//                newFrame = CGRectMake(0, 480, 320, self.shareView.frame.size.height);
+//            }
+//            [self.shareView setFrame:newFrame];
+//        } completion:^(BOOL finished) {
+//            [self.shareView removeFromSuperview];
+//        }];
     }
+}
+
+- (void)closeMyShare{
+    isShareViewShown = NO;
 }
 @end
 

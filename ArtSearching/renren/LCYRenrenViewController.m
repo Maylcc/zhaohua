@@ -173,7 +173,7 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
     if (item.tag == 4) {
         // 注册、登陆、显示用户收藏等
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        BOOL isLogin = [[userDefaults objectForKey:UserDefaultsIsLogin] boolValue];
+        BOOL isLogin = [userDefaults boolForKey:UserDefaultsIsLogin];
         if (!isLogin) {
             // 跳转到注册界面
             LCYRegisterViewController *registerVC = [[LCYRegisterViewController alloc] init];
@@ -187,14 +187,14 @@ typedef NS_ENUM(NSInteger, LCYRenrenDownloadStatus){
     }
     if (item.tag == 2) {
         // 艺术家、画廊
-        LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        LCYAppDelegate *appDelegate = (LCYAppDelegate *)[UIApplication sharedApplication].delegate;
         LCYArtistsAndShowsViewController *twoVC = [[LCYArtistsAndShowsViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:twoVC];
         [appDelegate.window setRootViewController:nav];
     }
     if (item.tag == 3) {
         // 列表
-        LCYAppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+        LCYAppDelegate *appDelegate = (LCYAppDelegate *)[UIApplication sharedApplication].delegate;
         LCYSearchingListViewController *searchVC = [[LCYSearchingListViewController alloc] init];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchVC];
         [appDelegate.window setRootViewController:nav];

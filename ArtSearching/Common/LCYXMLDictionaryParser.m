@@ -29,6 +29,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate didFinishGetXMLInfo:jsonResponse];
         });
+    } else if (self.delegate &&
+               [self.delegate respondsToSelector:@selector(parser:didFinishGetXMLInfo:)]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate parser:self didFinishGetXMLInfo:jsonResponse];
+        });
     }
 }
 @end
