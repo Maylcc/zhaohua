@@ -14,11 +14,30 @@ typedef NS_ENUM(NSInteger, LCYUserInfoStatus) {
 };
 
 @interface LCYUserInformationViewController : UIViewController
-
+@end
+@interface LCYUserInfomationCollectionCellHeader : UICollectionReusableView
+@property (weak, nonatomic) IBOutlet UILabel *icyLabel;
 @end
 
-@interface LCYUserInfomationCollectionCellHeader : UICollectionReusableView
 
-@property (weak, nonatomic) IBOutlet UILabel *icyLabel;
+#pragma mark - 下拉刷新
+@class LCYUserInformationRefreshParser;
+@protocol LCYUserInformationRefreshParserDelegate <NSObject>
+@optional
+- (void)pullDownParserDidEnd:(LCYUserInformationRefreshParser *)parser withResultInfo:(NSDictionary *)info;
+@end
+@interface LCYUserInformationRefreshParser : NSObject<NSXMLParserDelegate>
+@property LCYUserInfoStatus currentStatus;
+@property (weak, nonatomic) id<LCYUserInformationRefreshParserDelegate>delegate;
+@end
 
+#pragma mark - 上拉加载更多
+@class LCYUserInformationLoadMoreParser;
+@protocol LCYUserInformationLoadMoreParserDelegate <NSObject>
+@optional
+- (void)pushUpParserDidEnd:(LCYUserInformationLoadMoreParser *)parser withResultInfo:(NSDictionary *)info;
+@end
+@interface LCYUserInformationLoadMoreParser : NSObject<NSXMLParserDelegate>
+@property LCYUserInfoStatus currentStatus;
+@property (weak, nonatomic) id<LCYUserInformationLoadMoreParserDelegate>delegate;
 @end

@@ -15,13 +15,17 @@
 #import "LCYGetFavoriteArtWorksInfos.h"
 #import "LCYGetFavoriteArtWorksBase.h"
 #import "LCYImageDownloadOperation.h"
+#import "MJRefresh.h"
+#import "ArtDetailViewController.h"
 
-@interface LCYUserInformationViewController () <UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,LCYImageDownloadOperationDelegate>
+@interface LCYUserInformationViewController () <UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,LCYImageDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYUserInformationRefreshParserDelegate,LCYUserInformationLoadMoreParserDelegate>
 {
     BOOL isNibRegistered;   /**< collection cell */
     BOOL isNib2Registered;  /**< collection header */
     LCYUserInfoStatus currentStatus;
     NSInteger worksPageNumber;      /**< 作品收藏-下载页数 */
+    BOOL isWorksLoading;    /**< 收藏作品正在加载中 */
+    BOOL isOthersLoading;   /**< 艺术家和画廊正在加载中 */
 }
 
 /**
@@ -54,6 +58,10 @@
  */
 @property (strong, nonatomic) LCYImageDownloadOperation *myOperation;
 
+
+@property (strong, nonatomic) MJRefreshHeaderView *collectionHeader;
+@property (strong, nonatomic) MJRefreshFooterView *collectionFooter;
+
 @end
 
 @implementation LCYUserInformationViewController
@@ -74,6 +82,8 @@
     isNib2Registered = NO;
     currentStatus = LCYUserInfoStatusCarePics;
     worksPageNumber = 0;
+    isWorksLoading = NO;
+    isOthersLoading = NO;
     
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -90,6 +100,16 @@
     UIBarButtonItem *rightSettingItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
     self.navigationItem.rightBarButtonItem = rightSettingItem;
     
+    // collection
+    // 添加下拉刷新
+    _collectionHeader = [[MJRefreshHeaderView alloc] init];
+    _collectionHeader.delegate = self;
+    _collectionHeader.scrollView = self.icyCollectionView;
+    // 添加上拉加载更多
+    _collectionFooter = [[MJRefreshFooterView alloc] init];
+    _collectionFooter.delegate = self;
+    _collectionFooter.scrollView = self.icyCollectionView;
+    
     [self firstLoadRemoteData];
 }
 
@@ -97,6 +117,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc{
+    [_collectionHeader free];
+    [_collectionFooter free];
 }
 
 
@@ -162,9 +187,10 @@
         [LCYCommon showHUDTo:self.view withTips:nil];
         NSDictionary *parameter = @{@"UserId": userID,
                                     @"PageNo": @"0",
-                                    @"PageNum": @"15"};
+                                    @"PageNum": @"5"};
         self.worksCollectionParser = [[LCYXMLDictionaryParser alloc] init];
         self.worksCollectionParser.delegate = self;
+        isWorksLoading = YES;
         [LCYCommon postRequestWithAPI:GetFavoriteArtWorks parameters:parameter successDelegate:self.worksCollectionParser failedBlock:nil];
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -240,6 +266,14 @@
     return nil;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    LCYGetFavoriteArtWorksInfos *info = [self.myFavouriteWorks objectAtIndex:indexPath.row];
+    NSString *artID = [NSString stringWithFormat:@"%.f",info.infosIdentifier];
+    NSString *artURL = info.url;
+    ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:artID andWorkUrl:artURL withBundleName:@"ArtDetailViewController"];
+    [self.navigationController pushViewController:artDetailViewController animated:YES];
+}
+
 #pragma mark - Layout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     LCYGetFavoriteArtWorksInfos *artWork = [self.myFavouriteWorks objectAtIndex:indexPath.row];
@@ -272,9 +306,11 @@
                 [tempArray addObjectsFromArray:baseInfo.infos];
                 self.myFavouriteWorks = [NSArray arrayWithArray:tempArray];
             }
-            [self.icyTableView reloadData];
+            worksPageNumber++;
+            [self.icyCollectionView reloadData];
         }
         [LCYCommon hideHUDFrom:self.view];
+        isWorksLoading = NO;
         if (self.mySegmentedControl.selectedSegmentIndex == 0) {
             [self showCollectionView];
         }
@@ -290,6 +326,145 @@
     }
 }
 
+#pragma mark - MJRefreshBaseViewDelegate
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView{
+    if (_collectionHeader == refreshView) {
+        LCYLOG(@"下拉刷新");
+        [self pullDownToRefresh];
+    } else if (_collectionFooter == refreshView){
+        LCYLOG(@"上拉加载更多");
+        [self pushUpToLoadMore];
+    }
+}
+
+- (void)pullDownToRefresh{
+    // Collection View 刷新
+    if (currentStatus == LCYUserInfoStatusCarePics) {
+        if (!isWorksLoading && !isOthersLoading) {
+            if ([LCYCommon networkAvailable]) {
+                worksPageNumber = 0;
+                NSString *userID = [LCYCommon currentUserID];
+                NSDictionary *parameter = @{@"UserId": userID,
+                                             @"PageNo": @"0",
+                                             @"PageNum": @"5"};
+                isWorksLoading = YES;
+                LCYUserInformationRefreshParser *parser = [[LCYUserInformationRefreshParser alloc] init];
+                parser.currentStatus = LCYUserInfoStatusCarePics;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetFavoriteArtWorks parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.collectionHeader endRefreshing];
+        }
+    }
+    // Table View 刷新
+//    else {
+//        if (!isArtistLoading && !isShowsLoading) {
+//            if ([LCYCommon networkAvailable]) {
+//                showsPageNumber = 0;
+//                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+//                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+//                isShowsLoading = YES;
+//                LCYArtistsAndShowsPullDownRefreshParser *parser = [[LCYArtistsAndShowsPullDownRefreshParser alloc] init];
+//                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+//                parser.delegate = self;
+//                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+//            } else {
+//                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//                [networkUnabailableAlert show];
+//            }
+//        } else {
+//            [self.headerView endRefreshing];
+//        }
+//    }
+}
+
+- (void)pushUpToLoadMore{
+    // 艺术家加载更多
+    if (currentStatus == LCYUserInfoStatusCarePics) {
+        if (!isWorksLoading && !isOthersLoading) {
+            if ([LCYCommon networkAvailable]) {
+                NSString *userID = [LCYCommon currentUserID];
+                NSDictionary *parameter = @{@"UserId": userID,
+                                            @"PageNo":[NSString stringWithFormat:@"%ld",(long)worksPageNumber],
+                                             @"PageNum":@"5"};
+                isWorksLoading = YES;
+                LCYUserInformationLoadMoreParser *parser = [[LCYUserInformationLoadMoreParser alloc] init];
+                parser.currentStatus = LCYUserInfoStatusCarePics;
+                parser.delegate = self;
+                [LCYCommon postRequestWithAPI:GetFavoriteArtWorks parameters:parameter successDelegate:parser failedBlock:nil];
+            } else {
+                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [networkUnabailableAlert show];
+            }
+        } else {
+            [self.collectionFooter endRefreshing];
+        }
+    } else if (currentStatus == LCYUserInfoStatusOthers){
+//        if (!isArtistLoading && !isShowsLoading) {
+//            if ([LCYCommon networkAvailable]) {
+//                // 加载更多
+//                NSDictionary *parameter = @{ @"pageIndex":[NSString stringWithFormat:@"%ld",(long)showsPageNumber],
+//                                             @"limit":[NSString stringWithFormat:@"%ld",(long)numberOfShowsPerPage]};
+//                isShowsLoading = YES;
+//                LCYArtistsAndShowsPushUpRefreshParser *parser = [[LCYArtistsAndShowsPushUpRefreshParser alloc] init];
+//                parser.currentStatus = LCYArtistsAndShowsStatusShows;
+//                parser.delegate = self;
+//                [LCYCommon postRequestWithAPI:GetGalleryList parameters:parameter successDelegate:parser failedBlock:nil];
+//            } else {
+//                UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//                [networkUnabailableAlert show];
+//            }
+//        } else {
+//            [self.footerView endRefreshing];
+//        }
+    }
+    
+}
+
+#pragma mark - 下拉刷新解析完毕
+- (void)pullDownParserDidEnd:(LCYUserInformationRefreshParser *)parser withResultInfo:(NSDictionary *)info{
+    if (parser.currentStatus == LCYUserInfoStatusCarePics) {
+        LCYGetFavoriteArtWorksBase *baseInfo = [LCYGetFavoriteArtWorksBase modelObjectWithDictionary:info];
+        self.myFavouriteWorks = [NSArray arrayWithArray:baseInfo.infos];
+        [self.icyCollectionView reloadData];
+        [self.collectionHeader endRefreshing];
+        isWorksLoading = NO;
+        if (self.mySegmentedControl.selectedSegmentIndex == 0) {
+            [self showCollectionView];
+        }
+    }
+}
+
+#pragma mark - 上拉加载更多解析完毕
+- (void)pushUpParserDidEnd:(LCYUserInformationLoadMoreParser *)parser withResultInfo:(NSDictionary *)info{
+    if (parser.currentStatus == LCYUserInfoStatusCarePics) {
+        LCYGetFavoriteArtWorksBase *baseInfo = [LCYGetFavoriteArtWorksBase modelObjectWithDictionary:info];
+        if (baseInfo.infos.count == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        } else {
+            if (!self.myFavouriteWorks) {
+                self.myFavouriteWorks = baseInfo.infos;
+            }else {
+                NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.myFavouriteWorks];
+                [tempArray addObjectsFromArray:baseInfo.infos];
+                self.myFavouriteWorks = [NSArray arrayWithArray:tempArray];
+            }
+            worksPageNumber++;
+            [self.icyCollectionView reloadData];
+        }
+        isWorksLoading = NO;
+        if (self.mySegmentedControl.selectedSegmentIndex == 0) {
+            [self showCollectionView];
+        }
+        [self.collectionFooter endRefreshing];
+    }
+}
+
 @end
 
 
@@ -299,4 +474,79 @@
     }
     return self;
 }
+@end
+
+@interface LCYUserInformationRefreshParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYUserInformationRefreshParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSAssert(self.currentStatus==LCYUserInfoStatusCarePics||self.currentStatus==LCYUserInfoStatusOthers, @"需设置当前加载内容类型");
+    if (self.currentStatus == LCYUserInfoStatusCarePics) {
+//        LCYGetArtistListResult *result = [LCYGetArtistListResult modelObjectWithDictionary:jsonResponse];
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pullDownParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pullDownParserDidEnd:self withResultInfo:jsonResponse];
+            });
+        }
+    } else if (self.currentStatus == LCYUserInfoStatusOthers) {
+//        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+//        if (self.delegate &&
+//            [self.delegate respondsToSelector:@selector(pullDownParserDidEnd:withResultInfo:)]) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.delegate pullDownParserDidEnd:self withResultInfo:result];
+//            });
+//        }
+    }
+}
+@end
+
+
+@interface LCYUserInformationLoadMoreParser ()
+@property (strong, nonatomic) NSMutableString *xmlTempString;
+@end
+@implementation LCYUserInformationLoadMoreParser
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict{
+    self.xmlTempString = [[NSMutableString alloc] init];
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string{
+    [self.xmlTempString appendString:string];
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName{
+    NSData *data = [self.xmlTempString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:kNilOptions
+                                                                   error:&error];
+    NSAssert(self.currentStatus==LCYUserInfoStatusCarePics||self.currentStatus==LCYUserInfoStatusOthers, @"需设置当前加载内容类型");
+    if (self.currentStatus == LCYUserInfoStatusCarePics) {
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate pushUpParserDidEnd:self withResultInfo:jsonResponse];
+            });
+        }
+    } else if(self.currentStatus == LCYUserInfoStatusOthers) {
+//        LCYShowsGalleryGalleryList *result = [LCYShowsGalleryGalleryList modelObjectWithDictionary:jsonResponse];
+//        if (self.delegate &&
+//            [self.delegate respondsToSelector:@selector(pushUpParserDidEnd:withResultInfo:)]) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                [self.delegate pushUpParserDidEnd:self withResultInfo:result];
+//            });
+//        }
+    }
+}
+
 @end
