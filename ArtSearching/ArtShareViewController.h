@@ -12,10 +12,10 @@
 - (void)presentShareView;
 - (void)setCloseMethod:(SEL)selector withOwner:(id)owner;
 @property (weak, nonatomic) IBOutlet UIImageView *blurImageView;
-- (IBAction)closeShareView:(id)sender;
-- (IBAction)wxShare:(id)sender;
-- (IBAction)pyShare:(id)sender;
-- (IBAction)wbShare:(id)sender;
+//- (IBAction)closeShareView:(id)sender;
+//- (IBAction)wxShare:(id)sender;
+//- (IBAction)pyShare:(id)sender;
+//- (IBAction)wbShare:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *clipMethod;
-
+-(IBAction)shareViewBtnCLick:(id)sender;
 @end

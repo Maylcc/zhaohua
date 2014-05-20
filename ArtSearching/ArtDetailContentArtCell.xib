@@ -140,12 +140,34 @@
                             <action selector="actionForSharing:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="R8x-ul-L3C"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mxf-vW-1G9">
+                        <rect key="frame" x="7" y="189" width="149" height="35"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="actionCollect:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="YzW-6U-nQz"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q0a-PA-mB0">
+                        <rect key="frame" x="204" y="242" width="116" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <connections>
+                            <action selector="addComment:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="8M4-ZU-wcP"/>
+                        </connections>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
                 <outlet property="authodLbl" destination="vJZ-3g-Myn" id="eYw-2H-xdw"/>
+                <outlet property="collectBtn" destination="Mxf-vW-1G9" id="FXJ-sC-Ps5"/>
                 <outlet property="commentNum" destination="GWZ-Fg-4vM" id="UOc-Ob-h8y"/>
                 <outlet property="concerdNum" destination="gTk-Mp-uuH" id="lfq-RF-SEQ"/>
+                <outlet property="concerdNumImage" destination="rh0-XL-vA3" id="nwb-E6-6nF"/>
                 <outlet property="sizeLbl" destination="h82-EI-RqC" id="0Mj-Sx-v7R"/>
                 <outlet property="titleLbl" destination="O4Q-DS-ofw" id="HwO-Du-VC5"/>
                 <outlet property="typeLbl" destination="pAF-Ni-bud" id="XyL-22-dLP"/>
