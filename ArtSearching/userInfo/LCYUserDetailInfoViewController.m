@@ -146,11 +146,10 @@
     self.userInfo = [LCYGetUserInfoResultUser modelObjectWithDictionary:info];
     self.userNameLabel.text = [NSString stringWithFormat:@"姓名：%@", self.userInfo.uname];
     [LCYCommon hideHUDFrom:self.view];
-//    if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]]) {
-//        self.avatarImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]];
-//    } else {
-        [self downloadAvatarImage];
-   // }
+    if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]]) {
+        self.avatarImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]];
+    }
+    [self downloadAvatarImage];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -257,8 +256,8 @@
         
     }];
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    NSData *data = UIImageJPEGRepresentation(image, 0.1);
-    NSString *stringData = [data base64EncodedStringWithOptions:0];
+//    NSData *data = [LCYCommon compressImage:image];
+//    NSString *stringData = [data base64EncodedStringWithOptions:0];
     [self upLoadImage:image];
     NSLog(@"hello worl");
 }
@@ -279,7 +278,7 @@
     NSData *data = [XDTools compressImage:image];
     NSString * postImage = [data base64EncodedString];
     
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID];
+    NSString *uid = [LCYCommon currentUserID];
     NSString * dataLength = [NSString stringWithFormat:@"%d",[data length]];
     DDLOG(@"dataLength:%@", dataLength);
     if ([XDTools NetworkReachable]){
@@ -369,7 +368,7 @@
                 if ([[responseDict objectForKey:@"code"] intValue]==0){
                     
                     [XDTools showTips:@"修改成功" toView:self.view];
-                    
+                    [self downloadAvatarImage];
                 }else{
                     [XDTools showTips:@"修改头像失败" toView:self.view];
                 }
