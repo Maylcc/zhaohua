@@ -26,6 +26,9 @@
                         <state key="normal" title="分享">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="shareButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="SUd-Ta-wLb"/>
+                        </connections>
                     </button>
                 </subviews>
             </tableViewCellContentView>

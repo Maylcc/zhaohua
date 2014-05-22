@@ -178,6 +178,7 @@
         [userDefaults setBool:YES forKey:UserDefaultsIsLogin];
         [userDefaults setObject:userID forKey:UserDefaultsUserId];
         [userDefaults setObject:phoneNumber forKey:UserDefaultsUserPhone];
+        [LCYCommon changeUserPassword:password];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

@@ -238,6 +238,7 @@
         [userDefaults setBool:YES forKey:UserDefaultsIsLogin];
         [userDefaults setObject:[NSString stringWithFormat:@"%.f",result_t.uid] forKey:UserDefaultsUserId];
         [userDefaults setObject:[LCYRegisterGlobal sharedInstance].phoneNumber forKey:UserDefaultsUserPhone];
+        [LCYCommon changeUserPassword:[LCYRegisterGlobal sharedInstance].password];
         [self.navigationController popToRootViewControllerAnimated:YES];
     } else {
         // 验证失败

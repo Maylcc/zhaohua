@@ -13,6 +13,7 @@
 #import "LCYArtistDetailLine2TableViewCell.h"
 #import "LCYImageDownloadOperation.h"
 #import "ArtShareViewController.h"
+#import "LCYAllImagesForArtistViewController.h"
 
 @interface LCYArtistDetailViewController ()<LCYArtistDetailViewControllerXMLParserDelegate,UITableViewDelegate,UITableViewDataSource,LCYImageDownloadOperationDelegate,LCYArtistDetailLine2TableViewCellDelegate>
 {
@@ -203,6 +204,13 @@
         }
         cell.textLabel.text = [NSString stringWithFormat:@"作品（%.f）",self.artistInfo.artistWorkCount];
         return cell;
+    }
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 2) {
+        LCYAllImagesForArtistViewController *allImagesVC = [[LCYAllImagesForArtistViewController alloc] init];
+        allImagesVC.artistID = self.artistID;
+        [self.navigationController pushViewController:allImagesVC animated:YES];
     }
 }
 

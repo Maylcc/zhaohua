@@ -204,7 +204,12 @@
         if (indexPath.row<arrayCount) {
             ImageInfo *info = [self.worksArray objectAtIndex:indexPath.row];
             cell.icyImage.contentMode = UIViewContentModeScaleToFill;
-            cell.icyImage.image = [UIImage imageNamed:info.imageName];
+//            cell.icyImage.image = [UIImage imageNamed:info.imageName];
+            if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.imageURL]]) {
+                cell.icyImage.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.imageURL]];
+            } else {
+                cell.icyImage.image = [UIImage imageNamed:@"placehold_image.png"];
+            }
         } else if (indexPath.row == arrayCount){
             cell.icyImage.contentMode = UIViewContentModeCenter;
             cell.icyImage.image = [UIImage imageNamed:@"build_plus.png"];

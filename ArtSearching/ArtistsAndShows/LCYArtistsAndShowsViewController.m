@@ -487,7 +487,7 @@
         [self.navigationController pushViewController:artistDVC animated:YES];
     } else if (currentStatus == LCYArtistsAndShowsStatusShows){
         LCYShowsGalleryGalleries *gallery = [self.showsArray objectAtIndex:indexPath.row];
-        NSString *galleryID = [NSString stringWithFormat:@"%.f,",gallery.galleriesIdentifier];
+        NSString *galleryID = [NSString stringWithFormat:@"%.f",gallery.galleriesIdentifier];
         // 跳转到画廊详细
         LCYShowDetailViewController *showDVC = [[LCYShowDetailViewController alloc] init];
         showDVC.galleryID = galleryID;
@@ -509,8 +509,6 @@
 #pragma mark - MJRefreshBase
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"HH : mm : ss.SSS";
     if (self.headerView == refreshView) {
         LCYLOG(@"下拉刷新");
         [self pullDownToRefresh];

@@ -17,8 +17,9 @@
 #import "LCYImageDownloadOperation.h"
 #import "MJRefresh.h"
 #import "ArtDetailViewController.h"
+#import "LCYImageWithThumbDownloadOperation.h"
 
-@interface LCYUserInformationViewController () <UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,LCYImageDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYUserInformationRefreshParserDelegate,LCYUserInformationLoadMoreParserDelegate>
+@interface LCYUserInformationViewController () <UITableViewDataSource,UITableViewDelegate,UICollectionViewDataSource,UICollectionViewDelegate,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,LCYImageDownloadOperationDelegate,MJRefreshBaseViewDelegate,LCYUserInformationRefreshParserDelegate,LCYUserInformationLoadMoreParserDelegate,LCYImageWithThumbDownloadOperationDelegate>
 {
     BOOL isNibRegistered;   /**< collection cell */
     BOOL isNib2Registered;  /**< collection header */
@@ -26,6 +27,7 @@
     NSInteger worksPageNumber;      /**< 作品收藏-下载页数 */
     BOOL isWorksLoading;    /**< 收藏作品正在加载中 */
     BOOL isOthersLoading;   /**< 艺术家和画廊正在加载中 */
+    BOOL isOthersLoadedOnce;    /**< 艺术家和画廊是否已经开启过下载 */
 }
 
 /**
@@ -54,10 +56,16 @@
 
 @property (strong, nonatomic) NSOperationQueue *queue;
 /**
- *  各种图片下载的线程
+ *  各种图片下载的线程(不需要缩略图的)
  */
 @property (strong, nonatomic) LCYImageDownloadOperation *myOperation;
+/**
+ *  图片下载线程（需要缩略图的-瀑布流图片）
+ */
+@property (strong, nonatomic) LCYImageWithThumbDownloadOperation *myThumbOperation;
 
+
+@property (strong, nonatomic) NSMutableArray *collectionDownloadListArray;
 
 @property (strong, nonatomic) MJRefreshHeaderView *collectionHeader;
 @property (strong, nonatomic) MJRefreshFooterView *collectionFooter;
@@ -84,6 +92,8 @@
     worksPageNumber = 0;
     isWorksLoading = NO;
     isOthersLoading = NO;
+    isOthersLoadedOnce = NO;
+    self.collectionDownloadListArray = [NSMutableArray array];
     
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -111,6 +121,8 @@
     _collectionFooter.scrollView = self.icyCollectionView;
     
     [self firstLoadRemoteData];
+    
+    LCYLOG(@"password=%@",[LCYCommon userPassword]);
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,6 +161,9 @@
                 [self hideCollectionView];
                 [self showTableView];
                 currentStatus = LCYUserInfoStatusOthers;
+                if (!isOthersLoadedOnce) {
+                    // TODO:首次加载
+                }
             }
             break;
         default:
@@ -219,27 +234,37 @@
     }
     LCYMyCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     LCYGetFavoriteArtWorksInfos *info = [self.myFavouriteWorks objectAtIndex:indexPath.row];
-    if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.url]]) {
-        cell.icyImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.url]];
+    if ([LCYCommon isFileExistsAt:[LCYCommon thumbPathForImagePath:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.url]]]) {
+        cell.icyImageView.image = [UIImage imageWithContentsOfFile:[LCYCommon thumbPathForImagePath:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:info.url]]];
     } else {
         cell.icyImageView.image = [UIImage imageNamed:@"placehold_image.png"];
-        // 开启线程或加入已有线程，下载图片
-        if (!self.queue) {
-            self.queue = [[NSOperationQueue alloc] init];
+        BOOL isImageInQueue = NO;
+        for (NSString *imageURL in self.collectionDownloadListArray) {
+            if ([info.url isEqualToString:imageURL]) {
+                isImageInQueue = YES;
+                break;
+            }
         }
-        if (!self.myOperation) {
-            self.myOperation = [[LCYImageDownloadOperation alloc] init];
-            self.myOperation.delegate = self;
-            [self.myOperation initConfigure];
-            [self.queue addOperation:self.myOperation];
+        if (!isImageInQueue) {
+            // 开启线程或加入已有线程，下载图片
+            if (!self.queue) {
+                self.queue = [[NSOperationQueue alloc] init];
+            }
+            if (!self.myThumbOperation) {
+                self.myThumbOperation = [[LCYImageWithThumbDownloadOperation alloc] init];
+                self.myThumbOperation.delegate = self;
+                [self.myThumbOperation initConfigure];
+                [self.queue addOperation:self.myThumbOperation];
+            }
+            if (self.myThumbOperation.isCancelled) {
+                self.myThumbOperation = [[LCYImageWithThumbDownloadOperation alloc] init];
+                [self.myThumbOperation initConfigure];
+                self.myThumbOperation.delegate = self;
+                [self.queue addOperation:self.myThumbOperation];
+            }
+            [self.myThumbOperation addImageName:info.url ratio:info.imageRatio];
+            [self.collectionDownloadListArray addObject:info.url];
         }
-        if (self.myOperation.isCancelled) {
-            self.myOperation = [[LCYImageDownloadOperation alloc] init];
-            [self.myOperation initConfigure];
-            self.myOperation.delegate = self;
-            [self.queue addOperation:self.myOperation];
-        }
-        [self.myOperation addImageName:info.url];
     }
     cell.titleLabel.text = info.title;
     cell.artistNameLabel.text = info.author;
@@ -258,7 +283,7 @@
     if ([kind isEqualToString:CHTCollectionElementKindSectionHeader]) {
         LCYUserInfomationCollectionCellHeader *header = [collectionView dequeueReusableSupplementaryViewOfKind:CHTCollectionElementKindSectionHeader withReuseIdentifier:identifier forIndexPath:indexPath];
         if (self.myFavouriteWorks) {
-            header.icyLabel.text = [NSString stringWithFormat:@"收藏作品（%d）", self.myFavouriteWorks.count];
+            header.icyLabel.text = [NSString stringWithFormat:@"收藏作品（%lu）", (unsigned long)[self.myFavouriteWorks count]];
         }
         
         return header;
@@ -319,10 +344,14 @@
 
 #pragma mark - LCYImageDownloadOperationDelegate
 - (void)imageDownloadDidFinished{
+    if (self.mySegmentedControl.selectedSegmentIndex == 1) {
+        [self.icyTableView reloadData];
+    }
+}
+
+- (void)imageWithThumbDownloadDidFinished{
     if (self.mySegmentedControl.selectedSegmentIndex == 0) {
         [self.icyCollectionView reloadData];
-    } else {
-        [self.icyTableView reloadData];
     }
 }
 
@@ -430,6 +459,7 @@
     if (parser.currentStatus == LCYUserInfoStatusCarePics) {
         LCYGetFavoriteArtWorksBase *baseInfo = [LCYGetFavoriteArtWorksBase modelObjectWithDictionary:info];
         self.myFavouriteWorks = [NSArray arrayWithArray:baseInfo.infos];
+        worksPageNumber++;
         [self.icyCollectionView reloadData];
         [self.collectionHeader endRefreshing];
         isWorksLoading = NO;

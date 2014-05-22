@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LCYShowDetailLine2TableViewCell : UITableViewCell
+@protocol LCYShowDetailLine2TableViewCellDelegate <NSObject>
+@optional
+- (void)sharedButtonDidClicked;
+@end
 
+@interface LCYShowDetailLine2TableViewCell : UITableViewCell
+@property (weak, nonatomic) id<LCYShowDetailLine2TableViewCellDelegate>delegate;
 @end
