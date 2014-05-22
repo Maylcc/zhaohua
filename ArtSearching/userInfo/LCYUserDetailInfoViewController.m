@@ -14,11 +14,13 @@
 #import "LCYXDTools.h"
 #import "SoapXmlParseHelper.h"
 #import "XDTools.h"
+#import "Base64.h"
 
 @interface LCYUserDetailInfoViewController ()<LCYXMLDictionaryParserDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     BOOL isLogoutBtnShow;/** <判断登出按钮是否显示 */
     CGPoint begainPoint;
+    NSString *portal;
 }
 - (IBAction)changePhoneNum:(id)sender;
 - (IBAction)changePassword:(id)sender;
@@ -257,17 +259,89 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     NSData *data = UIImageJPEGRepresentation(image, 0.1);
     NSString *stringData = [data base64EncodedStringWithOptions:0];
-    [self changeHeaderPic:stringData];
+    [self upLoadImage:image];
     NSLog(@"hello worl");
 }
 
--(void)changeHeaderPic:(NSString *)portal{
+- (void)upLoadImage:(UIImage*)image
+{
+    //    [MobClick event:@"upload_image"];
+    
+    if (image ==nil) {
+        return;
+    }
+    NSDate * date = [NSDate date];
+    DDLOG(@"date:%@",date);
+    double time = [date timeIntervalSince1970];
+    int timex = time/1;
+    NSString * postTime = [NSString stringWithFormat:@"%d",timex];
+    DDLOG(@"postTime:%@",postTime);
+    NSData *data = [XDTools compressImage:image];
+    NSString * postImage = [data base64EncodedString];
+    
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID];
+    NSString * dataLength = [NSString stringWithFormat:@"%d",[data length]];
+    DDLOG(@"dataLength:%@", dataLength);
+    if ([XDTools NetworkReachable]){
+        NSString *body = [NSString stringWithFormat:@" <UploadFile xmlns=\"http://tempuri.org/\">"
+                          "<fs>%@</fs>"
+                          "<FileName>%@</FileName>"
+                          "</UploadFile>",postImage,[NSString stringWithFormat:@"%@.jpg",uid]];
+        
+        __weak ASIFormDataRequest *request = [XDTools postRequestWithDict:body API:UPLOADFILE];
+        [request setCompletionBlock:^{
+            [XDTools hideProgress:self.view];
+            //[XDTools hideProgress:self.contentView];
+            NSString *responseString = [request responseString];
+            // NSDictionary *tempDic = [XDTools  JSonFromString:responseString];
+            DDLOG(@"responseString:%@", responseString);
+            
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+            int statusCode = [request responseStatusCode];
+            NSString *soapAction = [[request requestHeaders] objectForKey:@"SOAPAction"];
+            
+            NSArray *arraySOAP =[soapAction componentsSeparatedByString:@"/"];
+            int count = [arraySOAP count] - 1;
+            NSString *methodName = [arraySOAP objectAtIndex:count];
+            
+            // Use when fetching text data
+            NSString *result = nil;
+            if (statusCode == 200) {
+                //表示正常请求
+                result = [SoapXmlParseHelper SoapMessageResultXml:responseString ServiceMethodName:methodName];
+                NSDictionary  *responseDict = [XDTools JSonFromString:result];
+                DDLOG(@"respodic = %@",responseDict);
+                if ([[responseDict objectForKey:@"code"] intValue]==0){
+                    portal = [responseDict objectForKey:@"url"];
+                    [self changeHeaderPic];
+                }else{
+                    [XDTools showTips:@"头像上传失败" toView:self.view];
+                }
+            }
+        }];
+        
+        [request setFailedBlock:^{
+            [XDTools hideProgress:self.view];
+        }];
+        
+        [request startAsynchronous];
+        [XDTools showProgress:self.view];
+    }else{
+        [XDTools showTips:brokenNetwork toView:self.view];
+    }
+    
+    
+    
+}
+
+
+-(void)changeHeaderPic{
     if ([XDTools NetworkReachable]){
         NSString *body = [NSString stringWithFormat:@" <ChangePortal xmlns=\"http://tempuri.org/\">"
                           "<uid>%@</uid>"
                           "<password>%@</password>"
                           "<portal>%@</portal>"
-                          "</ChangePortal>",self.userID,@"",portal];
+                          "</ChangePortal>",self.userID,[LCYCommon userPassword],portal];
         
         __weak ASIFormDataRequest *request = [XDTools postRequestWithDict:body API:CHANGEPORTAL];
         [request setCompletionBlock:^{
