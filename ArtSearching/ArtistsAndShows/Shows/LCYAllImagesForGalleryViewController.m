@@ -15,6 +15,7 @@
 #import "LCYMyCollectionCell.h"
 #import "LCYImageDownloadOperation.h"
 #import "MJRefresh.h"
+#import "ArtDetailViewController.h"
 
 #define LIMIT_PER_PAGE @"10"
 
@@ -125,6 +126,26 @@
         isDataLoading = NO;
         [self.icyCollectionView reloadData];
         [LCYCommon hideHUDFrom:self.view];
+    }else if (parser == self.pullDownParser) {
+        GetArtworkListByGallryIdBase *baseInfo = [GetArtworkListByGallryIdBase modelObjectWithDictionary:info];
+        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [self.headerView endRefreshing];
+    } else if (parser == self.pushUpParser) {
+        GetArtworkListByGallryIdBase *baseInfo = [GetArtworkListByGallryIdBase modelObjectWithDictionary:info];
+        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.workListArray];
+        [tempArray addObjectsFromArray:baseInfo.workList];
+        self.workListArray = [NSArray arrayWithArray:tempArray];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [self.footerView endRefreshing];
+        if (baseInfo.workList.count == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
     }
 }
 
@@ -187,6 +208,13 @@
     }
     [cell checkOff];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    GetArtworkListByGallryIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
+    NSString *workID = [NSString stringWithFormat:@"%.f",info.workId];
+    ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:workID andWorkUrl:info.imageUrl withBundleName:@"ArtDetailViewController"];
+    [self.navigationController pushViewController:artDetailViewController animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
