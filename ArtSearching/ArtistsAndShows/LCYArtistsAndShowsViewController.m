@@ -509,8 +509,6 @@
 #pragma mark - MJRefreshBase
 - (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"HH : mm : ss.SSS";
     if (self.headerView == refreshView) {
         LCYLOG(@"下拉刷新");
         [self pullDownToRefresh];

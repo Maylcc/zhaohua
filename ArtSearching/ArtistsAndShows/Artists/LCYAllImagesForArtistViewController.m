@@ -13,10 +13,13 @@
 #import "LCYMyCollectionCell.h"
 #import "GetArtworkListByArtistIdBase.h"
 #import "GetArtworkListByArtistIdWorkList.h"
+#import "MJRefresh.h"
+#import "LCYImageDownloadOperation.h"
+#import "ArtDetailViewController.h"
 
 #define LIMIT_PER_PAGE @"10"
 
-@interface LCYAllImagesForArtistViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate>
+@interface LCYAllImagesForArtistViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,MJRefreshBaseViewDelegate,LCYImageDownloadOperationDelegate>
 {
     NSInteger pageIndex;
     BOOL isDataLoading;
@@ -27,6 +30,30 @@
  *  所有作品列表
  */
 @property (strong, nonatomic) NSArray *workListArray;
+
+@property (strong, nonatomic) MJRefreshHeaderView *headerView;
+@property (strong, nonatomic) MJRefreshFooterView *footerView;
+
+/**
+ *  首次加载解析器
+ */
+@property (strong, nonatomic) LCYXMLDictionaryParser *firstLoadParser;
+/**
+ *  下拉刷新解析器
+ */
+@property (strong, nonatomic) LCYXMLDictionaryParser *pullDownParser;
+/**
+ *  上拉加载更多解析器
+ */
+@property (strong, nonatomic) LCYXMLDictionaryParser *pushUpParser;
+
+/**
+ *  需要下载的数组（避免重复下载同一张图片）
+ */
+@property (strong, nonatomic) NSMutableArray *downloadListArray;
+
+@property (strong, nonatomic) NSOperationQueue *queue;
+@property (strong, nonatomic) LCYImageDownloadOperation *myOperation;
 @end
 
 @implementation LCYAllImagesForArtistViewController
@@ -56,6 +83,15 @@
     UIBarButtonItem *leftBackItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBackItem;
     
+    // 添加下拉和上拉
+    self.headerView = [[MJRefreshHeaderView alloc] init];
+    self.headerView.delegate = self;
+    self.headerView.scrollView = self.icyCollectionView;
+    self.footerView = [[MJRefreshFooterView alloc] init];
+    self.footerView.delegate = self;
+    self.footerView.scrollView = self.icyCollectionView;
+    
+    
     [self loadRemoteData];
 }
 
@@ -63,6 +99,11 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc{
+    [_headerView free];
+    [_footerView free];
 }
 
 #pragma mark - Actions
@@ -76,10 +117,10 @@
         NSDictionary *parameter = @{@"id": self.artistID,
                                     @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
                                     @"limit": LIMIT_PER_PAGE};
-        LCYXMLDictionaryParser *parser = [[LCYXMLDictionaryParser alloc] init];
-        parser.delegate = self;
+        self.firstLoadParser = [[LCYXMLDictionaryParser alloc] init];
+        self.firstLoadParser.delegate = self;
         isDataLoading = YES;
-        [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:parser failedBlock:nil];
+        [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.firstLoadParser failedBlock:nil];
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [networkUnabailableAlert show];
@@ -102,7 +143,55 @@
         isNibRegistered = YES;
     }
     LCYMyCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    GetArtworkListByArtistIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
+    cell.titleLabel.text = info.workTitle;
+    cell.artistNameLabel.text = info.artistName;
+    cell.viewerCountLabel.text = [NSString stringWithFormat:@"%.f",info.beScanTime];
+    
+    NSString *imageURL = info.imageUrlS;
+    if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageURL]]) {
+        cell.icyImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageURL]];
+    } else {
+        cell.icyImageView.image = [UIImage imageNamed:@"placehold_image.png"];
+        if (!self.downloadListArray) {
+            self.downloadListArray = [NSMutableArray array];
+        }
+        BOOL hasDownloaded = NO;
+        for (NSString *oneString in self.downloadListArray) {
+            if ([oneString isEqualToString:imageURL]) {
+                hasDownloaded = YES;
+                break;
+            }
+        }
+        if (!hasDownloaded) {
+            // 开启下载线程
+            [self.downloadListArray addObject:imageURL];
+            if (!self.queue) {
+                self.queue = [[NSOperationQueue alloc] init];
+            }
+            if (!self.myOperation) {
+                self.myOperation = [[LCYImageDownloadOperation alloc] init];
+                self.myOperation.delegate = self;
+                [self.myOperation initConfigure];
+                [self.queue addOperation:self.myOperation];
+            }
+            if (self.myOperation.isCancelled) {
+                self.myOperation = [[LCYImageDownloadOperation alloc] init];
+                self.myOperation.delegate = self;
+                [self.queue addOperation:self.myOperation];
+            }
+            [self.myOperation addImageName:imageURL];
+        }
+    }
+    [cell checkOff];
     return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    GetArtworkListByArtistIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
+    NSString *workID = [NSString stringWithFormat:@"%.f",info.workId];
+    ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:workID andWorkUrl:info.imageUrl withBundleName:@"ArtDetailViewController"];
+    [self.navigationController pushViewController:artDetailViewController animated:YES];
 }
 
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
@@ -116,11 +205,89 @@
 
 #pragma mark - LCYXMLDictionaryParserDelegate
 - (void)parser:(LCYXMLDictionaryParser *)parser didFinishGetXMLInfo:(NSDictionary *)info{
-    GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
-    self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
-    [self.icyCollectionView reloadData];
-    [LCYCommon hideHUDFrom:self.view];
+    if (parser == self.firstLoadParser) {
+        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
+        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [LCYCommon hideHUDFrom:self.view];
+    } else if (parser == self.pullDownParser) {
+        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
+        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [self.headerView endRefreshing];
+    } else if (parser == self.pushUpParser) {
+        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
+        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.workListArray];
+        [tempArray addObjectsFromArray:baseInfo.workList];
+        self.workListArray = [NSArray arrayWithArray:tempArray];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [self.footerView endRefreshing];
+        if (baseInfo.workList.count == 0) {
+            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [noMoreDataAlert show];
+        }
+    }
 }
 
+#pragma mark - MJRefreshBase
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    if (self.headerView == refreshView) {
+        LCYLOG(@"下拉刷新");
+        [self pullDownToRefresh];
+    } else {
+        LCYLOG(@"上拉刷新");
+        [self pushUpToLoadMore];
+    }
+}
+- (void)pushUpToLoadMore{
+    if (!isDataLoading) {
+        if ([LCYCommon networkAvailable]) {
+            NSDictionary *parameter = @{@"id": self.artistID,
+                                        @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
+                                        @"limit": LIMIT_PER_PAGE};
+            isDataLoading = YES;
+            self.pushUpParser = [[LCYXMLDictionaryParser alloc] init];
+            self.pushUpParser.delegate = self;
+            [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.pushUpParser failedBlock:nil];
+        } else {
+            UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [networkUnabailableAlert show];
+        }
+    } else {
+        [self.footerView endRefreshing];
+    }
+}
+
+- (void)pullDownToRefresh{
+    if (!isDataLoading) {
+        if ([LCYCommon networkAvailable]) {
+            pageIndex = 0;
+            NSDictionary *parameter = @{@"id": self.artistID,
+                                        @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
+                                        @"limit": LIMIT_PER_PAGE};
+            isDataLoading = YES;
+            self.pullDownParser = [[LCYXMLDictionaryParser alloc] init];
+            self.pullDownParser.delegate = self;
+            [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.pullDownParser failedBlock:nil];
+        } else {
+            UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [networkUnabailableAlert show];
+        }
+    } else {
+        [self.headerView endRefreshing];
+    }
+}
+
+#pragma mark - ImageDownloadOperation
+- (void)imageDownloadDidFinished{
+    [self.icyCollectionView reloadData];
+}
 
 @end
