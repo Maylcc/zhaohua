@@ -174,4 +174,5 @@ CA_EXTERN NSString *const answerQuestion;/**< 回答问题URL*/
 CA_EXTERN NSString *const getQuestionlIndex;/**< 取得相关问题的指数信息 */
 CA_EXTERN NSString *const getAddStore      ; /** < 关注 */
 CA_EXTERN NSString *const addCom     ;   /** < 评论 */
+CA_EXTERN NSString *const changePortal;  /** <改变头像 */
 @end
