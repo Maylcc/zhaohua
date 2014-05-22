@@ -13,12 +13,15 @@
 #import "LCYShowDetailLine1TableViewCell.h"
 #import "LCYShowDetailLine2TableViewCell.h"
 #import "LCYShowDetailLine3TableViewCell.h"
+#import "ArtShareViewController.h"
+#import "LCYAllImagesForGalleryViewController.h"
 
-@interface LCYShowDetailViewController ()<UITableViewDelegate,UITableViewDataSource,LCYXMLDictionaryParserDelegate>
+@interface LCYShowDetailViewController ()<UITableViewDelegate,UITableViewDataSource,LCYXMLDictionaryParserDelegate,LCYShowDetailLine2TableViewCellDelegate>
 {
     BOOL isLine1NibRegistered;
     BOOL isLine2NibRegistered;
     BOOL isLine3NibRegistered;
+    BOOL isShareViewShown;
 }
 /**
  *  主界面数据列表
@@ -28,6 +31,7 @@
  *  画廊详细信息，由服务器加载
  */
 @property (strong, nonatomic) LCYGetGalleryInfoByIDGalleryInfo *galleryInfo;
+
 
 @end
 
@@ -49,6 +53,7 @@
     isLine1NibRegistered = NO;
     isLine2NibRegistered = NO;
     isLine3NibRegistered = NO;
+    isShareViewShown = NO;
     
     // 设置返回按键
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,7 +82,7 @@
 - (void)loadRemoteData{
     if ([LCYCommon networkAvailable]) {
         [LCYCommon showHUDTo:self.view withTips:nil];
-        NSDictionary *parameter = @{@"id": [NSNumber numberWithInteger:[self.galleryID integerValue]]};
+        NSDictionary *parameter = @{@"id": self.galleryID};
         LCYXMLDictionaryParser *parser = [[LCYXMLDictionaryParser alloc] init];
         parser.delegate = self;
         [LCYCommon postRequestWithAPI:GetGalleryInfoById parameters:parameter successDelegate:parser failedBlock:^{
@@ -140,6 +145,13 @@
         LCYShowDetailLine1TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier0];
         cell.galleryNameLabel.text = self.galleryInfo.gallery.name;
         cell.galleryPlaceLabel.text = self.galleryInfo.gallery.city;
+        NSString *imagePath = self.galleryInfo.gallery.logoUrl;
+        NSString *filePath = [[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:@"/uploads/GalleryLogo"] stringByAppendingPathComponent:imagePath];
+        if ([LCYCommon isFileExistsAt:filePath]) {
+            cell.icyImageView.image = [UIImage imageWithContentsOfFile:filePath];
+        } else {
+            cell.icyImageView.image = [UIImage imageNamed:@"akalin.jpg"];
+        }
         return cell;
     } else if (indexPath.row == 1) {
         // 第二行，显示关注和分享按钮
@@ -150,6 +162,7 @@
             isLine2NibRegistered = YES;
         }
         LCYShowDetailLine2TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier1];
+        cell.delegate = self;
         return cell;
     } else if (indexPath.row == 2) {
         // 第三行，显示详细信息
@@ -175,6 +188,28 @@
         return cell;
     }
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 3) {
+        // 显示画廊作品
+        LCYAllImagesForGalleryViewController *allImageVC = [[LCYAllImagesForGalleryViewController alloc] init];
+        allImageVC.galleryID = self.galleryID;
+        [self.navigationController pushViewController:allImageVC animated:YES];
+    }
+}
+
+#pragma mark - 关注和分享
+- (void)sharedButtonDidClicked{
+    if (!isShareViewShown) {
+        ArtShareViewController *artShare = [[ArtShareViewController alloc] initWithSuperView:self.view];
+        [artShare presentShareView];
+        [artShare setCloseMethod:@selector(closeMyShare) withOwner:self];
+        isShareViewShown = YES;
+    }
+}
+- (void)closeMyShare{
+    isShareViewShown = NO;
 }
 
 @end

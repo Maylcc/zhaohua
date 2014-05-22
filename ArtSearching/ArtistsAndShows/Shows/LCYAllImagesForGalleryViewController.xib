@@ -4,9 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYAllImagesForArtistViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LCYAllImagesForGalleryViewController">
             <connections>
-                <outlet property="icyCollectionView" destination="v2f-PA-fDZ" id="C9u-1D-uwR"/>
+                <outlet property="icyCollectionView" destination="Mc4-vu-KkE" id="jmL-5M-XSU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,24 +15,24 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="v2f-PA-fDZ">
+                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Mc4-vu-KkE">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <collectionViewLayout key="collectionViewLayout" id="5mM-P4-454" customClass="CHTCollectionViewWaterfallLayout"/>
+                    <collectionViewLayout key="collectionViewLayout" id="TtN-ZR-zQq" customClass="CHTCollectionViewWaterfallLayout"/>
                     <cells/>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="vPv-jB-esU"/>
-                        <outlet property="delegate" destination="-1" id="Vu9-97-guk"/>
+                        <outlet property="dataSource" destination="-1" id="qKt-wt-cfF"/>
+                        <outlet property="delegate" destination="-1" id="hgZ-4w-vpl"/>
                     </connections>
                 </collectionView>
             </subviews>
             <color key="backgroundColor" red="0.94117647409439087" green="0.94117647409439087" blue="0.94117647409439087" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="v2f-PA-fDZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6zp-Us-PmD"/>
-                <constraint firstItem="v2f-PA-fDZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="b0f-1F-DGJ"/>
-                <constraint firstAttribute="bottom" secondItem="v2f-PA-fDZ" secondAttribute="bottom" id="bkR-op-MpG"/>
-                <constraint firstAttribute="trailing" secondItem="v2f-PA-fDZ" secondAttribute="trailing" id="sIb-eF-xc2"/>
+                <constraint firstItem="Mc4-vu-KkE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0cp-n1-WbE"/>
+                <constraint firstItem="Mc4-vu-KkE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7KW-AT-2lY"/>
+                <constraint firstAttribute="trailing" secondItem="Mc4-vu-KkE" secondAttribute="trailing" id="Jco-8l-PKJ"/>
+                <constraint firstAttribute="bottom" secondItem="Mc4-vu-KkE" secondAttribute="bottom" id="Yjm-uB-uf7"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

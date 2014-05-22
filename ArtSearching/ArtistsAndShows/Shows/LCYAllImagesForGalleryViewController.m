@@ -1,25 +1,24 @@
 //
-//  LCYAllImagesForArtistViewController.m
+//  LCYAllImagesForGalleryViewController.m
 //  ArtSearching
 //
-//  Created by eagle on 14-5-21.
+//  Created by eagle on 14-5-22.
 //  Copyright (c) 2014年 Duostec. All rights reserved.
 //
 
-#import "LCYAllImagesForArtistViewController.h"
-#import <CHTCollectionViewWaterfallLayout/CHTCollectionViewWaterfallLayout.h>
+#import "LCYAllImagesForGalleryViewController.h"
+#import "GetArtworkListByGallryIdWorkList.h"
+#import "GetArtworkListByGallryIdBase.h"
 #import "LCYCommon.h"
 #import "LCYXMLDictionaryParser.h"
+#import <CHTCollectionViewWaterfallLayout/CHTCollectionViewWaterfallLayout.h>
 #import "LCYMyCollectionCell.h"
-#import "GetArtworkListByArtistIdBase.h"
-#import "GetArtworkListByArtistIdWorkList.h"
-#import "MJRefresh.h"
 #import "LCYImageDownloadOperation.h"
-#import "ArtDetailViewController.h"
+#import "MJRefresh.h"
 
 #define LIMIT_PER_PAGE @"10"
 
-@interface LCYAllImagesForArtistViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,CHTCollectionViewDelegateWaterfallLayout,LCYXMLDictionaryParserDelegate,MJRefreshBaseViewDelegate,LCYImageDownloadOperationDelegate>
+@interface LCYAllImagesForGalleryViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,LCYXMLDictionaryParserDelegate,CHTCollectionViewDelegateWaterfallLayout,LCYImageDownloadOperationDelegate,MJRefreshBaseViewDelegate>
 {
     NSInteger pageIndex;
     BOOL isDataLoading;
@@ -27,36 +26,24 @@
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *icyCollectionView;
 /**
- *  所有作品列表
- */
-@property (strong, nonatomic) NSArray *workListArray;
-
-@property (strong, nonatomic) MJRefreshHeaderView *headerView;
-@property (strong, nonatomic) MJRefreshFooterView *footerView;
-
-/**
  *  首次加载解析器
  */
 @property (strong, nonatomic) LCYXMLDictionaryParser *firstLoadParser;
-/**
- *  下拉刷新解析器
- */
 @property (strong, nonatomic) LCYXMLDictionaryParser *pullDownParser;
-/**
- *  上拉加载更多解析器
- */
 @property (strong, nonatomic) LCYXMLDictionaryParser *pushUpParser;
 
-/**
- *  需要下载的数组（避免重复下载同一张图片）
- */
+@property (strong, nonatomic) NSArray *workListArray;
 @property (strong, nonatomic) NSMutableArray *downloadListArray;
 
 @property (strong, nonatomic) NSOperationQueue *queue;
 @property (strong, nonatomic) LCYImageDownloadOperation *myOperation;
+
+@property (strong, nonatomic) MJRefreshHeaderView *headerView;
+@property (strong, nonatomic) MJRefreshFooterView *footerView;
+
 @end
 
-@implementation LCYAllImagesForArtistViewController
+@implementation LCYAllImagesForGalleryViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -72,7 +59,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     pageIndex = 0;
-    isDataLoading = YES;
+    isDataLoading = NO;
     isNibRegistered = NO;
     
     // 设置返回按键
@@ -90,7 +77,6 @@
     self.footerView = [[MJRefreshFooterView alloc] init];
     self.footerView.delegate = self;
     self.footerView.scrollView = self.icyCollectionView;
-    
     
     [self loadRemoteData];
 }
@@ -110,24 +96,39 @@
 - (void)backToParent{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 - (void)loadRemoteData{
     if ([LCYCommon networkAvailable]) {
         [LCYCommon showHUDTo:self.view withTips:nil];
-        NSDictionary *parameter = @{@"id": self.artistID,
+        NSDictionary *parameter = @{@"id": self.galleryID,
                                     @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
                                     @"limit": LIMIT_PER_PAGE};
         self.firstLoadParser = [[LCYXMLDictionaryParser alloc] init];
         self.firstLoadParser.delegate = self;
         isDataLoading = YES;
-        [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.firstLoadParser failedBlock:nil];
+        [LCYCommon postRequestWithAPI:GetArtworkListByGallryId parameters:parameter successDelegate:self.firstLoadParser failedBlock:^{
+            [LCYCommon hideHUDFrom:self.view];
+            UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"网络连接错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [errorAlert show];
+        }];
     } else {
         UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [networkUnabailableAlert show];
     }
 }
 
-#pragma mark - UICollectionView
+#pragma mark - 远程数据解析完毕
+- (void)parser:(LCYXMLDictionaryParser *)parser didFinishGetXMLInfo:(NSDictionary *)info{
+    if (parser == self.firstLoadParser) {
+        GetArtworkListByGallryIdBase *baseInfo = [GetArtworkListByGallryIdBase modelObjectWithDictionary:info];
+        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
+        pageIndex++;
+        isDataLoading = NO;
+        [self.icyCollectionView reloadData];
+        [LCYCommon hideHUDFrom:self.view];
+    }
+}
+
+#pragma mark - UICollection
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     if (!self.workListArray) {
         return 0;
@@ -135,6 +136,7 @@
         return [self.workListArray count];
     }
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     static NSString * identifier = @"LCYMyCollectionCellIdentifier";
     if (!isNibRegistered) {
@@ -143,7 +145,7 @@
         isNibRegistered = YES;
     }
     LCYMyCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    GetArtworkListByArtistIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
+    GetArtworkListByGallryIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
     cell.titleLabel.text = info.workTitle;
     cell.artistNameLabel.text = info.artistName;
     cell.viewerCountLabel.text = [NSString stringWithFormat:@"%.f",info.beScanTime];
@@ -187,52 +189,13 @@
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    GetArtworkListByArtistIdWorkList *info = [self.workListArray objectAtIndex:indexPath.row];
-    NSString *workID = [NSString stringWithFormat:@"%.f",info.workId];
-    ArtDetailViewController *artDetailViewController = [[ArtDetailViewController alloc] initWithWorkID:workID andWorkUrl:info.imageUrl withBundleName:@"ArtDetailViewController"];
-    [self.navigationController pushViewController:artDetailViewController animated:YES];
-}
-
 #pragma mark - CHTCollectionViewDelegateWaterfallLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    GetArtworkListByArtistIdWorkList *artWork = [self.workListArray objectAtIndex:indexPath.row];
+    GetArtworkListByGallryIdWorkList *artWork = [self.workListArray objectAtIndex:indexPath.row];
     return CGSizeMake(163.0, 163.0/artWork.ratio+37);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(10, 10, 10, 10);
-}
-
-#pragma mark - LCYXMLDictionaryParserDelegate
-- (void)parser:(LCYXMLDictionaryParser *)parser didFinishGetXMLInfo:(NSDictionary *)info{
-    if (parser == self.firstLoadParser) {
-        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
-        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
-        pageIndex++;
-        isDataLoading = NO;
-        [self.icyCollectionView reloadData];
-        [LCYCommon hideHUDFrom:self.view];
-    } else if (parser == self.pullDownParser) {
-        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
-        self.workListArray = [NSArray arrayWithArray:baseInfo.workList];
-        pageIndex++;
-        isDataLoading = NO;
-        [self.icyCollectionView reloadData];
-        [self.headerView endRefreshing];
-    } else if (parser == self.pushUpParser) {
-        GetArtworkListByArtistIdBase *baseInfo = [GetArtworkListByArtistIdBase modelObjectWithDictionary:info];
-        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:self.workListArray];
-        [tempArray addObjectsFromArray:baseInfo.workList];
-        self.workListArray = [NSArray arrayWithArray:tempArray];
-        pageIndex++;
-        isDataLoading = NO;
-        [self.icyCollectionView reloadData];
-        [self.footerView endRefreshing];
-        if (baseInfo.workList.count == 0) {
-            UIAlertView *noMoreDataAlert = [[UIAlertView alloc] initWithTitle:@"" message:@"没有更多数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [noMoreDataAlert show];
-        }
-    }
 }
 
 #pragma mark - MJRefreshBase
@@ -249,13 +212,13 @@
 - (void)pushUpToLoadMore{
     if (!isDataLoading) {
         if ([LCYCommon networkAvailable]) {
-            NSDictionary *parameter = @{@"id": self.artistID,
+            NSDictionary *parameter = @{@"id": self.galleryID,
                                         @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
                                         @"limit": LIMIT_PER_PAGE};
             isDataLoading = YES;
             self.pushUpParser = [[LCYXMLDictionaryParser alloc] init];
             self.pushUpParser.delegate = self;
-            [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.pushUpParser failedBlock:nil];
+            [LCYCommon postRequestWithAPI:GetArtworkListByGallryId parameters:parameter successDelegate:self.pushUpParser failedBlock:nil];
         } else {
             UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [networkUnabailableAlert show];
@@ -269,13 +232,13 @@
     if (!isDataLoading) {
         if ([LCYCommon networkAvailable]) {
             pageIndex = 0;
-            NSDictionary *parameter = @{@"id": self.artistID,
+            NSDictionary *parameter = @{@"id": self.galleryID,
                                         @"pageidx":[NSString stringWithFormat:@"%ld",(long)pageIndex],
                                         @"limit": LIMIT_PER_PAGE};
             isDataLoading = YES;
             self.pullDownParser = [[LCYXMLDictionaryParser alloc] init];
             self.pullDownParser.delegate = self;
-            [LCYCommon postRequestWithAPI:GetArtworkListByArtistId parameters:parameter successDelegate:self.pullDownParser failedBlock:nil];
+            [LCYCommon postRequestWithAPI:GetArtworkListByGallryId parameters:parameter successDelegate:self.pullDownParser failedBlock:nil];
         } else {
             UIAlertView *networkUnabailableAlert = [[UIAlertView alloc] initWithTitle:@"无法找到网络" message:@"请检查您的网络连接状态" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [networkUnabailableAlert show];
@@ -289,5 +252,4 @@
 - (void)imageDownloadDidFinished{
     [self.icyCollectionView reloadData];
 }
-
 @end

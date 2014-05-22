@@ -121,6 +121,8 @@
     _collectionFooter.scrollView = self.icyCollectionView;
     
     [self firstLoadRemoteData];
+    
+    LCYLOG(@"password=%@",[LCYCommon userPassword]);
 }
 
 - (void)didReceiveMemoryWarning

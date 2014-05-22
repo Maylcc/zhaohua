@@ -487,7 +487,7 @@
         [self.navigationController pushViewController:artistDVC animated:YES];
     } else if (currentStatus == LCYArtistsAndShowsStatusShows){
         LCYShowsGalleryGalleries *gallery = [self.showsArray objectAtIndex:indexPath.row];
-        NSString *galleryID = [NSString stringWithFormat:@"%.f,",gallery.galleriesIdentifier];
+        NSString *galleryID = [NSString stringWithFormat:@"%.f",gallery.galleriesIdentifier];
         // 跳转到画廊详细
         LCYShowDetailViewController *showDVC = [[LCYShowDetailViewController alloc] init];
         showDVC.galleryID = galleryID;

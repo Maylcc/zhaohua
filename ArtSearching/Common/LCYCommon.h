@@ -82,6 +82,21 @@
 + (BOOL)isUserLogin;
 
 /**
+ *  获取当前用户记录的密码
+ *
+ *  @return 密码字符串
+ */
++ (NSString *)userPassword;
+/**
+ *  修改当前用户的密码
+ *
+ *  @param password 新密码
+ *
+ *  @return 修改成功或失败
+ */
++ (BOOL)changeUserPassword:(NSString *)password;
+
+/**
  *  返回当前用户ID，需要自己先判断是否已经登录
  *
  *  @return 用户ID字符串
@@ -134,6 +149,7 @@ CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */
 CA_EXTERN NSString *const WorkListCategoryById;     /**< 获取分类信息（二级分类） */
 CA_EXTERN NSString *const GetFavoriteArtWorks;      /**< 获取所有收藏作品 */
 CA_EXTERN NSString *const GetArtworkListByArtistId; /**< 分页获取此艺术家的所有作品 */
+CA_EXTERN NSString *const GetArtworkListByGallryId; /**< 分页获取此画廊的所有作品 */
 
 
 
@@ -141,6 +157,9 @@ CA_EXTERN NSString *const GetArtworkListByArtistId; /**< 分页获取此艺术�
 CA_EXTERN NSString *const UserDefaultsIsLogin;              /**< 是否已经登陆 */
 CA_EXTERN NSString *const UserDefaultsUserId;               /**< 已经登录的用户名（需要另行检查是否已经登录）*/
 CA_EXTERN NSString *const UserDefaultsUserPhone;            /**< 已经登录的用户手机号（需要另行检查是否已经登录） */
+
+#pragma mark - 加密
+CA_EXTERN NSString *const EncryptionKey;        /**< AES加密-密钥 */
 
 #pragma mark - 凶猛的数据
 CA_EXTERN NSString *const hostForXM;  /**< 接口URL前缀 */

@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "Reachability.h"
 #import "MBProgressHUD.h"
+#import "Base64.h"
 
 NSString *const hostURLPrefix = @"http://115.29.41.251:88/webservice_art_base.asmx/";
 NSString *const hostIMGPrefix = @"http://115.29.41.251";
@@ -33,11 +34,14 @@ NSString *const GetArtistInforById      = @"GetArtistInforById";
 NSString *const GetGalleryInfoById      = @"GetGalleryInfoById";
 NSString *const GetFavoriteArtWorks     = @"GetFavoriteArtWorks";
 NSString *const GetArtworkListByArtistId    = @"GetArtworkListByArtistId";
+NSString *const GetArtworkListByGallryId    = @"GetArtworkListByGallryId";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
 NSString *const UserDefaultsUserId      = @"userLoginID";
 NSString *const UserDefaultsUserPhone   = @"userPhoneNumber";
+
+NSString *const EncryptionKey           = @"Tiancai-LiChaoyi";
 
 #pragma mark - 凶猛的数据
 NSString *const hostForXM     = @"http://115.29.41.251:88/webservice_art_base.asmx/";
@@ -182,5 +186,17 @@ NSString *const addCom             = @"AddCom";
     NSString *thumbName = [[absName stringByAppendingString:@"_thumb"] stringByAppendingPathExtension:imageExtension];
     NSString *fullThumbPath = [leadingPath stringByAppendingPathComponent:thumbName];
     return fullThumbPath;
+}
+
++ (BOOL)changeUserPassword:(NSString *)password{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[password base64EncodedString] forKey:@"userPassword"];
+    return YES;
+}
+
++ (NSString *)userPassword{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *password = [userDefaults objectForKey:@"userPassword"];
+    return [password base64DecodedString];
 }
 @end
