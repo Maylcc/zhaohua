@@ -22,5 +22,7 @@
 @interface ImageInfo : NSObject
 @property (strong, nonatomic) NSString *imageURL;
 @property (strong, nonatomic) NSString *imageName;
+@property (strong, nonatomic) NSString *imageID;
 + (id)infoWithURL:(NSString *)URL name:(NSString *)name;
++ (id)infoWithURL:(NSString *)URL imageID:(NSString *)imageID;
 @end

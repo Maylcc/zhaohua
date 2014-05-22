@@ -32,6 +32,7 @@ NSString *const WorkListCategoryById    = @"WorkListCategoryById";
 NSString *const GetArtistInforById      = @"GetArtistInforById";
 NSString *const GetGalleryInfoById      = @"GetGalleryInfoById";
 NSString *const GetFavoriteArtWorks     = @"GetFavoriteArtWorks";
+NSString *const GetArtworkListByArtistId    = @"GetArtworkListByArtistId";
 
 
 NSString *const UserDefaultsIsLogin     = @"isUserLogin";
@@ -172,5 +173,14 @@ NSString *const addCom             = @"AddCom";
         [fileManager createDirectoryAtPath:pathWithoutFileName withIntermediateDirectories:YES attributes:nil error:nil];
     }
     [data writeToFile:path atomically:YES];
+}
+
++ (NSString *)thumbPathForImagePath:(NSString *)path{
+    NSString *leadingPath = [path stringByDeletingLastPathComponent];
+    NSString *absName = [[path lastPathComponent] stringByDeletingPathExtension];
+    NSString *imageExtension = [[path lastPathComponent] pathExtension];
+    NSString *thumbName = [[absName stringByAppendingString:@"_thumb"] stringByAppendingPathExtension:imageExtension];
+    NSString *fullThumbPath = [leadingPath stringByAppendingPathComponent:thumbName];
+    return fullThumbPath;
 }
 @end

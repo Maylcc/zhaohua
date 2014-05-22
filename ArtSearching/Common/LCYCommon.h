@@ -103,6 +103,15 @@
  */
 + (void)writeData:(NSData *)data toFilePath:(NSString *)path;
 
+/**
+ *  返回图片的缩略图位置
+ *
+ *  @param path 原图位置
+ *
+ *  @return 缩略图路径
+ */
++ (NSString *)thumbPathForImagePath:(NSString *)path;
+
 CA_EXTERN NSString *const hostURLPrefix;    /**< 接口URL前缀 */
 CA_EXTERN NSString *const hostIMGPrefix;    /**< 图片地址前缀 */
 CA_EXTERN NSString *const ActivityList;     /**< 展览列表 */
@@ -124,6 +133,7 @@ CA_EXTERN NSString *const GetApplyerInfo;   /**< 我的展览-申请者信息 */
 CA_EXTERN NSString *const WorkListCategory; /**< 获取分类信息 */
 CA_EXTERN NSString *const WorkListCategoryById;     /**< 获取分类信息（二级分类） */
 CA_EXTERN NSString *const GetFavoriteArtWorks;      /**< 获取所有收藏作品 */
+CA_EXTERN NSString *const GetArtworkListByArtistId; /**< 分页获取此艺术家的所有作品 */
 
 
 
