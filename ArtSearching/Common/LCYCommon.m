@@ -57,6 +57,8 @@ NSString *const getQuestionlIndex   = @"GetQuestionlIndex";
 NSString *const getAddStore        = @"AddStore";
 NSString *const addCom             = @"AddCom";
 NSString *const changePortal       = @"ChangePortal";
+NSString *const changePassword     = @"ChgPW";
+NSString *const changePhone        = @"ChangePhone";
 @implementation LCYCommon
 
 + (void)postRequestWithAPI:(NSString *)api parameters:(NSDictionary *)parameters successDelegate:(id<NSXMLParserDelegate>)delegate failedBlock:(void (^)(void))failed{

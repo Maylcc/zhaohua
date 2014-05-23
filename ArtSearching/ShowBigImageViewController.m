@@ -8,6 +8,7 @@
 
 #import "ShowBigImageViewController.h"
 #import "InsertView.h"
+#import "LCYCommon.h"
 @interface ShowBigImageViewController ()
 {
     CGFloat zs ;
@@ -86,9 +87,24 @@
     insert = [[InsertView alloc] initWithMessage:@"保存成功" andSuperV:self.view withPoint:200];
     UIImage *imageForView = [UIImage imageWithData:self.imageData];
     float radio = imageForView.size.height/imageForView.size.width;
-    [self.bigImageView setFrame:CGRectMake(0, self.bigImageView.frame.origin.y, self.view.frame.size.width, 320*radio)];
+    if(!IS_IPHONE5)
+    {
+        
+    }
+    if(IS_IPHONE5)
+    {
+        [self.bigImageView setFrame:CGRectMake(0, self.bigImageView.frame.origin.y, self.view.frame.size.width, 320*radio)];
+    }
+    else
+    {
+        [self.bigImageView setFrame:CGRectMake(0, self.bigImageView.frame.origin.y+45, self.view.frame.size.width, 320*radio)];
+    }
+    if(!IS_IPHONE5)
+    {
+        tabBar.frame = CGRectMake(0, self.view.frame.size.height-40, self.view.frame.size.width, 40);
+    }
     //self.bigImageScroll.frame = CGRectMake(0, 0, imageForView.size.width, imageForView.size.height);
-    //self.bigImageScroll.contentSize = CGSizeMake(imageForView.size.width/2, imageForView.size.height/2);
+    self.bigImageScroll.contentSize = CGSizeMake(self.bigImageView.bounds.size.width, self.bigImageView.bounds.size.height+45);
     NSLog(@"size is %f   ,   %f",imageForView.size.width,imageForView.size.height);
     [super viewWillAppear:animated];
     //[self.bigImageScroll setContentSize:CGSizeMake(20000,20000)];

@@ -183,4 +183,6 @@ CA_EXTERN NSString *const getQuestionlIndex;/**< 取得相关问题的指数信�
 CA_EXTERN NSString *const getAddStore      ; /** < 关注 */
 CA_EXTERN NSString *const addCom     ;   /** < 评论 */
 CA_EXTERN NSString *const changePortal;  /** <改变头像 */
+CA_EXTERN NSString *const changePassword; /** <修改密码 */
+CA_EXTERN NSString *const changePhone; /** <修改电话 */
 @end

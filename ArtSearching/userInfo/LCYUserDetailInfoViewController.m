@@ -15,19 +15,36 @@
 #import "SoapXmlParseHelper.h"
 #import "XDTools.h"
 #import "Base64.h"
-
-@interface LCYUserDetailInfoViewController ()<LCYXMLDictionaryParserDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+#import "TouchXML.h"
+#import "InsertView.h"
+#define NUMBERS @"0123456789\n"
+@interface LCYUserDetailInfoViewController ()<LCYXMLDictionaryParserDelegate,UIScrollViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,InsertViewDoneDelegate>
 {
     BOOL isLogoutBtnShow;/** <判断登出按钮是否显示 */
     CGPoint begainPoint;
     NSString *portal;
+    UIImage  *selectImage;
+    NSInteger changeUserInfoType;
+    IBOutlet UIView *changeInfoView;
+    __weak IBOutlet UILabel *changInfoViewTitle;
+    __weak IBOutlet UILabel *changeInfoViewfirstItem;
+    __weak IBOutlet UILabel *changInfoViewSecondItem;
+    __weak IBOutlet UILabel *changeInfoViewThirdItem;
+    __weak IBOutlet UITextField *firstText;
+    __weak IBOutlet UITextField *secondText;
+    __weak IBOutlet UITextField *thirdText;
+    NSArray *allTextField;
 }
+@property (weak, nonatomic) IBOutlet UIButton *submitChangeInfo;
+- (IBAction)hideChangeInfoView:(id)sender;
 - (IBAction)changePhoneNum:(id)sender;
 - (IBAction)changePassword:(id)sender;
 - (IBAction)changePotal:(id)sender;
+- (IBAction)hideKeyBoart:(id)sender;
 /**
  *  用户头像
  */
+- (IBAction)submitChang:(id)sender;
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 /**
  *  用户姓名
@@ -64,6 +81,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -85,7 +103,11 @@
     self.userID = [LCYCommon currentUserID];
     self.userPhoneNumber = [LCYCommon currentUserPhoneNumber];
     self.phoneNumberLabel.text = [NSString stringWithFormat:@"绑定手机：%@",[LCYCommon currentUserPhoneNumber]];
-    
+    allTextField = [NSArray arrayWithObjects:firstText,secondText,thirdText, nil];
+    for(UITextField *text in allTextField)
+    {
+        text.delegate = self;
+    }
     [self loadRemoteData];
 }
 
@@ -148,14 +170,34 @@
     [LCYCommon hideHUDFrom:self.view];
     if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]]) {
         self.avatarImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]];
+    } else {
+        [self downloadAvatarImage];
     }
-    [self downloadAvatarImage];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    for(UITextField *text in allTextField)
+    {
+        [text resignFirstResponder];
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    changeInfoView.frame = CGRectMake(0, self.view.frame.size.height-changeInfoView.frame.size.height, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    [UIView commitAnimations];
     UITouch *touch = [touches anyObject];
+    
     begainPoint = [touch locationInView:self.view];
+}
+
+- (IBAction)hideKeyBoart:(id)sender
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    changeInfoView.frame = CGRectMake(0, self.view.frame.size.height-changeInfoView.frame.size.height, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    [UIView commitAnimations];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -164,10 +206,12 @@
     CGPoint currentPoint = [touch locationInView:self.view];
     if(currentPoint.y-10 > begainPoint.y)
     {
+        isLogoutBtnShow = YES;
         [self showOrHideLogOutBtn];
     }
     else if(currentPoint.y < begainPoint.y-10)
     {
+        isLogoutBtnShow = NO;
         [self showOrHideLogOutBtn];
     }
 }
@@ -182,12 +226,12 @@
     if(isLogoutBtnShow)
     {
        self.logoutButton.frame = CGRectMake(0, self.view.frame.size.height, self.logoutButton.frame.size.width, self.logoutButton.frame.size.height);
-        isLogoutBtnShow = NO;
+        
     }
     else
     {
         self.logoutButton.frame = CGRectMake(0, self.view.frame.size.height-self.logoutButton.frame.size.height, self.logoutButton.frame.size.width, self.logoutButton.frame.size.height);
-        isLogoutBtnShow = YES;
+        
     }
     [UIView commitAnimations];
 }
@@ -195,15 +239,239 @@
 /**
  * 修改电话号码
  */
-- (IBAction)changePhoneNum:(id)sender {
+- (IBAction)hideChangeInfoView:(id)sender
+{
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(removeChangeInfoView)];
+    changeInfoView.frame = CGRectMake(0, self.view.frame.size.height, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    [UIView commitAnimations];
 }
+
+- (void)removeChangeInfoView
+{
+    [changeInfoView removeFromSuperview];
+}
+#pragma mark - 修改密码、电话
+- (IBAction)changePhoneNum:(id)sender
+{
+    [self changeUserInfoWithType:1];
+}
+
 
 /**
  * 修改密码
  */
-- (IBAction)changePassword:(id)sender {
+- (IBAction)changePassword:(id)sender
+{
+    [self changeUserInfoWithType:0];
 }
 
+/**
+ *修改个人信息
+ *@param type 0代表修改密码，1代表修改电话.
+ */
+- (void)changeUserInfoWithType:(NSInteger)type
+{
+    changeInfoView.frame = CGRectMake(0, self.view.frame.size.height, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    if(type == 0)
+    {
+        changeUserInfoType = 0;
+        firstText.secureTextEntry = YES;
+        secondText.secureTextEntry = YES;
+        thirdText.secureTextEntry  = YES;
+        changInfoViewTitle.text      = @"修改密码";
+        changeInfoViewfirstItem.text = @"请输入旧密码";
+        changInfoViewSecondItem.text = @"请输入新密码";
+        changeInfoViewThirdItem.text = @"在此输入新密码";
+    }
+    else
+    {
+        changeUserInfoType = 1;
+        firstText.secureTextEntry = NO;
+        thirdText.secureTextEntry = NO;
+        secondText.secureTextEntry   = YES;
+        changInfoViewTitle.text      = @"修改手机号";
+        changeInfoViewfirstItem.text = @"请输入旧手机号";
+        changInfoViewSecondItem.text = @"请输入密码";
+        changeInfoViewThirdItem.text = @"在此输入新手机号";
+    }
+    [self.view addSubview:changeInfoView];
+    for(UITextField *text in allTextField)
+    {
+        text.text = @"";
+    }
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    changeInfoView.frame = CGRectMake(0, self.view.frame.size.height-changeInfoView.frame.size.height, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    [UIView commitAnimations];
+}
+
+/*
+    提交修改的内容
+ */
+- (IBAction)submitChang:(id)sender
+{
+    if(![LCYCommon networkAvailable])
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"没有连接网络" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    for(UITextField *text in allTextField)
+    {
+        if(text.text.length == 0)
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不完整" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            return;
+        }
+    }
+    if(changeUserInfoType == 0)
+    {
+        if(![self checkValidate])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"两次密码输入的不一样" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+            return;
+            
+        }
+    }
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    AFHTTPRequestOperationManager *request = [AFHTTPRequestOperationManager manager];
+    request.responseSerializer = [AFXMLParserResponseSerializer serializer];
+    NSString *urlString;
+    NSDictionary *paramDic;
+    if(changeUserInfoType == 0)
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",hostForXM,changePassword];
+        paramDic = [NSDictionary dictionaryWithObjectsAndKeys:[LCYCommon currentUserID],@"Uid",firstText.text,@"oldpw",thirdText.text,@"newpw", nil];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@%@",hostForXM,changePhone];
+        paramDic = [NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"Uid",secondText.text,@"password",thirdText.text,@"newPhone",secondText.text,@"oldPhone", nil];
+        
+    }
+    [request POST:urlString parameters:paramDic success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"%@",[operation responseString]);
+        CXMLDocument *document = [[CXMLDocument alloc] initWithData:[operation responseData] encoding:NSUTF8StringEncoding options:0 error:nil];
+        CXMLElement *root = [document rootElement];
+        NSString *jsonString = [root stringValue];
+        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:nil];
+        if([(NSNumber *)[jsonDic objectForKey:@"code"] intValue] == 0)
+        {
+            NSLog(@"success");
+            if(changeUserInfoType == 0)
+            {
+                [LCYCommon changeUserPassword:secondText.text];
+            }
+            else
+            {
+                
+            }
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            InsertView *insert = [[InsertView alloc] initWithMessage:@"修改成功" andSuperV:self.view withPoint:150];
+            [insert setDelegate:self];
+            [insert showMessageViewWithTime:2];
+            [insert setAfterDoneSelector:@selector(hideChangeInfoView:)];
+        }
+        else
+        {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            
+            InsertView *insert = [[InsertView alloc] initWithMessage:@"修改失败" andSuperV:self.view withPoint:150];
+            [insert showMessageViewWithTime:1];
+            NSLog(@"error");
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+
+
+/*
+    检查修改的内容是不是合法
+ */
+- (BOOL)checkValidate
+{
+    if([secondText.text isEqualToString:thirdText.text])
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+/*
+    用来键盘不挡住view的
+
+ */
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    if(IS_IPHONE5)
+    {
+        changeInfoView.frame = CGRectMake(0, self.view.frame.size.height-changeInfoView.frame.size.height-100, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+    }
+    else
+    {
+        if(textField == firstText)
+        {
+        
+        }
+        else
+        {
+            changeInfoView.frame = CGRectMake(0, self.view.frame.size.height-changeInfoView.frame.size.height-100, changeInfoView.frame.size.width, changeInfoView.frame.size.height);
+        }
+    }
+    [UIView commitAnimations];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(changeUserInfoType == 1)
+    {
+        if(textField == secondText)
+        {
+            return YES;
+        }
+        NSCharacterSet *cs;
+        cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBERS] invertedSet];
+        NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL basicTest = [string isEqualToString:filtered];
+        if(!basicTest)
+        {
+            //当用户输入的不是数字时，提示用户要输入数字
+            return NO;
+        }
+        else
+        {
+            return YES;
+        }
+
+    }
+    else
+    {
+        return YES;
+    }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    
+}
+
+#pragma mark - 修改头像
 /**
  * 修改头像
  */
@@ -256,8 +524,9 @@
         
     }];
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-//    NSData *data = [LCYCommon compressImage:image];
-//    NSString *stringData = [data base64EncodedStringWithOptions:0];
+    selectImage = image;
+    NSData *data = UIImageJPEGRepresentation(image, 0.1);
+    NSString *stringData = [data base64EncodedStringWithOptions:0];
     [self upLoadImage:image];
     NSLog(@"hello worl");
 }
@@ -278,7 +547,7 @@
     NSData *data = [XDTools compressImage:image];
     NSString * postImage = [data base64EncodedString];
     
-    NSString *uid = [LCYCommon currentUserID];
+    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID];
     NSString * dataLength = [NSString stringWithFormat:@"%d",[data length]];
     DDLOG(@"dataLength:%@", dataLength);
     if ([XDTools NetworkReachable]){
@@ -368,7 +637,10 @@
                 if ([[responseDict objectForKey:@"code"] intValue]==0){
                     
                     [XDTools showTips:@"修改成功" toView:self.view];
-                    [self downloadAvatarImage];
+                    self.avatarImageView.image = selectImage;
+                    NSString *imageFileName = self.userInfo.uheadurl;
+                    [LCYCommon writeData:UIImageJPEGRepresentation(selectImage, 0.1) toFilePath:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName]];
+                    
                 }else{
                     [XDTools showTips:@"修改头像失败" toView:self.view];
                 }
