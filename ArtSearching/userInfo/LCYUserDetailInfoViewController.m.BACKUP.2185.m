@@ -547,7 +547,7 @@
     NSData *data = [XDTools compressImage:image];
     NSString * postImage = [data base64EncodedString];
     
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID];
+    NSString *uid = [LCYCommon currentUserID];
     NSString * dataLength = [NSString stringWithFormat:@"%d",[data length]];
     DDLOG(@"dataLength:%@", dataLength);
     if ([XDTools NetworkReachable]){

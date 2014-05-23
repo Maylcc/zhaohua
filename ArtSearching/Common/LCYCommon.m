@@ -202,4 +202,10 @@ NSString *const changePhone        = @"ChangePhone";
     NSString *password = [userDefaults objectForKey:@"userPassword"];
     return [password base64DecodedString];
 }
+
++ (BOOL)changeUserPhoneNumber:(NSString *)phoneNumber{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:phoneNumber forKey:UserDefaultsUserPhone];
+    return YES;
+}
 @end

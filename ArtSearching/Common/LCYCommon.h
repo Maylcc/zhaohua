@@ -109,6 +109,14 @@
  *  @return 电话号码字符串
  */
 + (NSString *)currentUserPhoneNumber;
+/**
+ *  修改当前用户手机号码
+ *
+ *  @param phoneNumber 新手机号
+ *
+ *  @return 是否修改成功
+ */
++ (BOOL)changeUserPhoneNumber:(NSString *)phoneNumber;
 
 /**
  *  将Data写入到文件，文件路径为Path，自动根据文件路径创建文件夹

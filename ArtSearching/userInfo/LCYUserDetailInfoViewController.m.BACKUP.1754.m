@@ -170,9 +170,14 @@
     [LCYCommon hideHUDFrom:self.view];
     if ([LCYCommon isFileExistsAt:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]]) {
         self.avatarImageView.image = [UIImage imageWithContentsOfFile:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:self.userInfo.uheadurl]];
+<<<<<<< HEAD
+    }
+    [self downloadAvatarImage];
+=======
     } else {
         [self downloadAvatarImage];
     }
+>>>>>>> pr/37
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -524,9 +529,14 @@
         
     }];
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+<<<<<<< HEAD
+//    NSData *data = [LCYCommon compressImage:image];
+//    NSString *stringData = [data base64EncodedStringWithOptions:0];
+=======
     selectImage = image;
     NSData *data = UIImageJPEGRepresentation(image, 0.1);
     NSString *stringData = [data base64EncodedStringWithOptions:0];
+>>>>>>> pr/37
     [self upLoadImage:image];
     NSLog(@"hello worl");
 }
@@ -547,7 +557,7 @@
     NSData *data = [XDTools compressImage:image];
     NSString * postImage = [data base64EncodedString];
     
-    NSString *uid = [[NSUserDefaults standardUserDefaults] objectForKey:kMY_USER_ID];
+    NSString *uid = [LCYCommon currentUserID];
     NSString * dataLength = [NSString stringWithFormat:@"%d",[data length]];
     DDLOG(@"dataLength:%@", dataLength);
     if ([XDTools NetworkReachable]){
@@ -637,10 +647,14 @@
                 if ([[responseDict objectForKey:@"code"] intValue]==0){
                     
                     [XDTools showTips:@"修改成功" toView:self.view];
+<<<<<<< HEAD
+                    [self downloadAvatarImage];
+=======
                     self.avatarImageView.image = selectImage;
                     NSString *imageFileName = self.userInfo.uheadurl;
                     [LCYCommon writeData:UIImageJPEGRepresentation(selectImage, 0.1) toFilePath:[[LCYCommon renrenMainImagePath] stringByAppendingPathComponent:imageFileName]];
                     
+>>>>>>> pr/37
                 }else{
                     [XDTools showTips:@"修改头像失败" toView:self.view];
                 }
